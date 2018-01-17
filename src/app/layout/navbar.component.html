@@ -1,0 +1,51 @@
+<nav class="navbar navbar-custom navbar-fixed-top" [ngClass]="{ 'top-nav-collapse': topNavCollapse }" role="navigation">
+  <div id="bandeau" class="bandeau" *ngIf="showIntro"> 
+    <div class="bandeau-content"> 
+        <button *ngIf="environnementIsProduction()" (click)="hideIntro()" class="no-style"> 
+          <strong>Service expérimental</strong>. 
+          Le ministère en charge de l'agriculture expérimente ce téléservice. 
+        </button>
+        <span *ngIf="!environnementIsProduction()" class="no-style"> 
+          <strong>Site de tests</strong>. 
+          Ce site est exclusivement dédié aux tests. Pour aller sur le site officiel, <a href="{{ productionUrl }}"><strong style="color: #0977ab;">cliquez ici</strong></a>. 
+        </span>
+      <button class="fa fa-close no-style" (click)="hideIntro()" role="button" aria-label="Supprimer ce message"> 
+        <span class="sr-only">Supprimer ce message</span> 
+      </button> 
+    </div> 
+  </div>
+  
+  <div class="container">
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" (click)="isCollapsed = !isCollapsed">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-left" [routerLink]="'/'">
+        <img alt="Marianne" src="assets/img/Marianne.png">
+      </a>
+      <a class="navbar-brand" [routerLink]="'/'">
+        <h1>IFT</h1>
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-right navbar-main-collapse" [collapse]="isCollapsed">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/" (click)="isCollapsed = true">Accueil</a></li>
+        <li dropdown>
+            <a href dropdownToggle (click)="false">Calcul IFT <b class="caret"></b></a>
+            <ul *dropdownMenu class="dropdown-menu">
+                <li><a [routerLink]="['/doses-reference']" (click)="isCollapsed = true">Doses de référence</a></li>
+                <li><a [routerLink]="['/traitement-ift']" (click)="isCollapsed = true">IFT de traitement</a></li>
+                <li><a [routerLink]="['/bilan-ift']" (click)="isCollapsed = true">Bilan IFT</a></li>
+            </ul>
+        </li>
+        <li><a [routerLink]="['/espace-partenaire']" (click)="isCollapsed = true">Espace Partenaire</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container -->
+</nav>
+
+<div class="logo-beta hidden-xs hidden-sm">{{ environmentName }}</div>

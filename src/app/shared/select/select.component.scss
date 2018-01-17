@@ -1,0 +1,27 @@
+:host {
+  position: relative;
+}
+
+small {
+  margin-left: 5px;
+  margin-bottom: 8px;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.suggestions {
+  .dropdown-menu {
+    top: unset;
+    left: 0em;
+    right: 0em;
+    margin-top: 5px;
+    display: block;
+    padding: 0;
+    cursor: pointer;
+  }
+  .active {
+    background-color: #BBB;
+  }
+}
+
+

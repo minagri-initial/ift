@@ -1,0 +1,67 @@
+@import '../styles/vars';
+
+.form-group, .data {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    .form-field {
+        flex-grow: 1
+    }
+
+    label {
+        flex-grow: 2;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+
+    input {
+        flex-grow: 1;
+        width: 100%;
+        max-width: 470px;
+        margin-bottom: 10px;
+    }
+
+}
+
+.verification-block div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    div {
+        margin: auto;
+        margin-left: 0;
+        flex: 1;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+}
+
+.error-block {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.value-traitement-ift {
+    text-align: center;
+    font-size: 9em;
+    font-weight: 600;
+}
+
+.value-segment {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.date-signature {
+    margin-bottom: 20px;
+    color: $primary_color;
+    font-size: 1.2em;
+    font-weight: 400;
+}

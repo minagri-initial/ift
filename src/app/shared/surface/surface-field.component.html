@@ -1,0 +1,32 @@
+<div class="form-group">
+    <label id="surface-traitee">{{ traitement && traitement.avantSemis ? 'Proportion de semences traitées' : 'Surface traitée' }}</label>
+    <mat-slider min="0" max="100" [value]="value" (change)="onSliderChange($event)" aria-labelledby="surface-traitee-percent" [disabled]="!surfaceTraiteeByPercent"></mat-slider>
+    <div class="input-group input-group-lg input-unite">
+        <input [(ngModel)]="value" name="surface" aria-labelledby="surface-traitee-percent"
+        class="form-control" describedby="surface-addon" [disabled]="!surfaceTraiteeByPercent">
+        <div class="input-group-addon" id="surface-addon">%</div>
+    </div>
+</div>
+<div class="text-right surface-traitee-select-toggle" *ngIf="surfaceTraiteeByPercent">
+    <button type="button" (click)="toggleSurfaceTraiteeByPercent($event)">
+        <label>Calculer le pourcentage</label>
+    </button>
+</div>
+
+<div class="form-group" *ngIf="!surfaceTraiteeByPercent">
+    <label id="surface-traitee">{{ traitement && traitement.avantSemis ? 'Quantité de semences traitées semées' : 'Surface traitée' }}</label>
+    <input [(ngModel)]="surfaceTraitee" (ngModelChange)="dataChanged($event)" type="text" class="form-control input-lg input-numeric" name="surface-traitee" aria-labelledby="surface-traitee" [placeholder]="traitement && traitement.avantSemis ? 'Semences traitées' : 'Surface traitée'" />
+    <input value='Unité' name="unite-surface-traitee" aria-labelledby="unite-surface-traitee"
+    class="form-control input-lg input-unite" disabled>
+</div>
+<div class="form-group" *ngIf="!surfaceTraiteeByPercent">
+    <label id="surface-totale">{{ traitement && traitement.avantSemis ? 'Quantité totale de semences semées' : 'Surface totale' }}</label>        
+    <input [(ngModel)]="surfaceTotale" (ngModelChange)="dataChanged($event)" type="text" class="form-control input-lg input-numeric" name="surface-totale" aria-labelledby="surface-totale" [placeholder]="traitement && traitement.avantSemis ? 'Semences semées' : 'Surface totale'" />
+    <input value='Unité' name="unite-surface-totale" aria-labelledby="unite-surface-totale"
+    class="form-control input-lg input-unite" disabled>
+</div>
+<div class="text-right surface-traitee-select-toggle" *ngIf="!surfaceTraiteeByPercent">
+    <button type="button" (click)="toggleSurfaceTraiteeByPercent($event)">
+        <label>Sélectionner le pourcentage</label>
+    </button>
+</div>

@@ -1,0 +1,176 @@
+@import '../styles/vars';
+
+.navbar.navbar-custom {
+    margin-bottom: 0;
+    >.container {
+        .navbar-header {
+            .navbar-toggle {
+                padding: 4px 6px;
+                font-size: 1em;
+                color: #fff;
+            }
+            .navbar-left img {
+                width: 70px;
+                margin: .2em .5em;
+                float: left;
+            }
+            .navbar-brand {
+                font-weight: 700;
+                height: 50px;
+                padding: 15px 5px;
+                line-height: 20px;
+                margin: 0px 0px;
+                h1 {
+                    margin: 0px 0px;
+                    color: #fff;
+                    font-size: 1.4em;
+                }
+            }
+        }
+        .nav li {
+            a {
+                transition: background .3s ease-in-out;
+            }
+            a:hover,
+            a:focus,
+            &.active {
+                background-color: rgba(255, 255, 255, .2);
+            }
+        }
+        ul.nav.navbar-nav {
+            background-color: rgba(255, 255, 255, .5);
+            li {
+                a {
+                    font-size: 0.85em;
+                    letter-spacing: 1px;
+                    color: #444;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                }
+            }
+            ul.dropdown-menu {
+                border-radius: 0;
+                li {
+                    border-bottom: 1px solid #f5f5f5;
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    a {
+                        padding: 10px 20px;
+                        &:hover,
+                        &:focus {
+                            background-color: #E6E6E6;
+                            color: #333
+                        }
+                    }
+                    &.open>a {
+                        background-color: #E6E6E6;
+                    }
+                }
+            }
+        }
+    }
+    &.top-nav-collapse {
+        background: #4F5050;
+        >.container {
+            ul.nav.navbar-nav {
+                background-color: rgba(0, 0, 0, 0);
+                li {
+                    a {
+                        transition: all .2s ease-in-out;
+                        color: #fff;
+                    }
+                    &.open>a {
+                        background-color: rgba(255, 255, 255, .2);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(min-width:768px) {
+    .navbar.navbar-custom {
+        padding: 20px 0;
+        border-bottom: 0;
+        letter-spacing: 1px;
+        background: rgba(79, 80, 80, .5);
+        color: #ffffff;
+        transition: background .5s ease-in-out, padding .5s ease-in-out;
+        &.top-nav-collapse {
+            padding: 0;
+            >.container {
+                ul.nav.navbar-nav ul.dropdown-menu li a {
+                    color: #666;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:480px) {
+    .navbar-custom .nav.navbar-nav {
+        background-color: rgba(255, 255, 255, .5);
+    }
+    .navbar.navbar-custom.navbar-fixed-top {
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Logo Bêta */
+
+.logo-beta {
+    text-align: center;
+    text-transform: uppercase;
+    position: fixed;
+    right: -35px;
+    width: 150px;
+    background-color: $primary_color;
+    color: white;
+    padding: 5px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    z-index: 1031;
+    top: 26px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+/* Service expérimental */
+
+.bandeau {
+    width: 100%;
+    background: #fff;
+    padding: 14px 14px 14px 14px;
+    color: #333;
+    z-index: 5;
+}
+
+.bandeau .bandeau-content {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.bandeau .bandeau-content span {
+    margin: 0 10px;
+}
+
+.bandeau strong {
+    font-weight: 700;
+}
+
+@media(min-width:768px) {
+    .navbar:not(.top-nav-collapse) .bandeau {
+        margin-top: -20px;
+        margin-bottom: 20px;
+    }
+}
+
+button.no-style {
+    background-color: transparent;
+    border: none;
+}

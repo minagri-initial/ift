@@ -1,0 +1,93 @@
+<section class="main-section bg-gray">
+    <div class="container container-ift">
+        
+        <form class="ift-form" #iftForm="ngForm" (ngSubmit)="onSubmit(iftForm)">
+            
+            <div class="ift-title text-center">
+                <h1>Vérifier un IFT</h1>
+                <i class="fa fa-2x fa-angle-down"></i>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 ift-block">
+                    
+                    <div class="form-group">
+                        <label id="signature-electronique">Signature électronique</label>
+                        <input [(ngModel)]="signature" type="text" name="signature-electronique" aria-labelledby="signature-eletronique" placeholder="Signature électronique"
+                                class="form-control input-lg"/>
+                    </div>
+
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn-skin btn-ift">
+                            Vérifier l'IFT</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="error">
+                <div class="col-md-10 col-md-offset-1 ift-block error-block">
+                    <div>{{ error }}</div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="traitementIftResult">
+                <div class="col-md-10 col-md-offset-1 ift-block verification-block">
+                    <div *ngIf="traitementIftResult.campagne">
+                        <div>Campagne</div>
+                        <div>{{ traitementIftResult.campagne.libelle }}</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.culture">
+                        <div>Culture</div>
+                        <div>{{ traitementIftResult.culture.libelle }}</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.numeroAmm">
+                        <div>Numéro AMM</div>
+                        <div>{{ traitementIftResult.numeroAmm.libelle }}</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.cible">
+                        <div>Cible</div>
+                        <div>{{ traitementIftResult.cible.libelle }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="traitementIftResult">
+                    <div class="col-md-10 col-md-offset-1 ift-block verification-block">
+                        <div *ngIf="traitementIftResult.traitement">
+                            <div>Traitement</div>
+                            <div>{{ traitementIftResult.traitement.libelle }}</div>
+                        </div>
+    
+                        <div *ngIf="!isTraitementAvantSemis()">
+                            <div>Dose appliquée</div>
+                            <div>{{ traitementIftResult.dose }}<span *ngIf="traitementIftResult.unite">&nbsp;{{ traitementIftResult.unite.libelle }}</span></div>
+                        </div>
+    
+                        <div *ngIf="traitementIftResult.volumeDeBouillie">
+                            <div>Volume de bouillie</div>
+                            <div>{{ traitementIftResult.volumeDeBouillie }} hL/hA</div>
+                        </div>
+
+                        <div>
+                            <div>Surface traitée</div>
+                            <div>{{ traitementIftResult.facteurDeCorrection }} %</div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 ift-block" *ngIf="traitementIftResult">
+                    <h3>IFT du traitement</h3>
+                    <div class="value-traitement-ift">{{ traitementIftResult.ift }}</div>
+                    <div class="value-segment" *ngIf="traitementIftResult.segment">Sur segment {{ traitementIftResult.segment.libelle }}</div>
+                    <p *ngIf="traitementIftResult.avertissement">{{ traitementIftResult.avertissement.libelle }}</p>
+                    <div class="text-right date-signature">Certifié le {{ getDateCreationSignature() }}</div>
+                </div>
+            </div>
+                
+        </form>
+    </div>
+</section>

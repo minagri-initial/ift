@@ -1,0 +1,56 @@
+@import '../styles/vars';
+
+.mat-card-title {
+    font-size: 1.5em;
+}
+
+.mat-card-subtitle,
+.mat-card-content {
+    font-size: 1.3em;
+}
+
+.cards {
+    display: flex;
+    flex-flow: row wrap;
+
+    .mat-card {
+        flex: 1;
+        @media (min-width: 768px) {
+            flex-basis: 30%;
+        }
+        @media (max-width: 767px) {
+            flex-basis: 100%;
+        }
+        margin: 1em;
+    }
+}
+
+.numero-amm-select-toggle {
+    
+    margin-bottom: 20px;
+
+    button {
+        color: $primary_color;
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+
+        label {
+            font-size: 1.2em;
+        }
+
+        &:hover, &:focus, label:hover, label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}
+
+.radio-button {
+    margin-right: 10px;
+}
+
+mat-radio-group {
+    margin-bottom: 0px;
+}

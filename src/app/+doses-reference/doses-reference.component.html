@@ -1,0 +1,107 @@
+<section class="main-section  bg-gray">
+
+    <div class="container container-ift" *ngIf="search.campagne">
+
+        <form class="ift-form" #iftForm="ngForm" (ngSubmit)="onSubmit(iftForm)">
+
+            <div class="text-center">
+                <h1>Doses de référence</h1>
+                <i class="fa fa-2x fa-angle-down"></i>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 campagne-title">
+
+                    <div class="arrow">
+                        <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== 0" (click)="previousCampagne()">
+                            <i class="fa fa-angle-left animated" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <h2 class="text-center">Campagne {{ search.campagne ? search.campagne.libelle : '' }}</h2>
+                    <div class="arrow">
+                        <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== campagnes.length - 1" (click)="nextCampagne()">
+                            <i class="fa fa-angle-right animated" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 ift-block">
+                    <app-culture-field [(ngModel)]="search.culture" name="culture" [campagne]="search.campagne" [numeroAmm]="search.numeroAmm"
+                        [cible]="search.cible">
+                    </app-culture-field>
+
+                    <app-produit-field [(ngModel)]="search.produit" name="produit" [campagne]="search.campagne" [culture]="search.culture" [cible]="search.cible"
+                        *ngIf="numeroAmmByProduct">
+                    </app-produit-field>
+                    <div class="text-right numero-amm-select-toggle" *ngIf="numeroAmmByProduct">
+                        <button type="button" (click)="toggleNumeroAmmByProduct($event)">
+                            <label>Votre produit n'est pas dans la liste ?</label>
+                        </button>
+                    </div>
+
+                    <app-numero-amm-field [(ngModel)]="search.numeroAmm" name="numeroAmm" [campagne]="search.campagne" [culture]="search.culture"
+                        [cible]="search.cible" *ngIf="!numeroAmmByProduct">
+                    </app-numero-amm-field>
+                    <div class="text-right numero-amm-select-toggle" *ngIf="!numeroAmmByProduct">
+                        <button type="button" (click)="toggleNumeroAmmByProduct($event)">
+                            <label>Rechercher un produit</label>
+                        </button>
+                    </div>
+
+                    <app-cible-field [(ngModel)]="search.cible" name="cible" [campagne]="search.campagne" [culture]="search.culture" [numeroAmm]="search.numeroAmm">
+                    </app-cible-field>
+
+                    <div class="form-group">
+                        <mat-radio-group class="radio-group" [(ngModel)]="typeDose" layout="row" name="typeDose">
+                            <mat-radio-button class="radio-button" *ngFor="let type of typeDoseList" [value]="type.value">
+                                {{type.libelle}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-checkbox [(ngModel)]="biocontroleUniquement" name="biocontroleUniquement">Biocontrôle uniquement</mat-checkbox>
+                    </div>
+
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn-skin btn-ift">
+                            <i *ngIf="searching" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                            <span *ngIf="!searching">Rechercher</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>Liste des doses de référence</h3>
+
+                    <div class="row">
+                        <div class="cards">
+                            <ng-template ngFor let-doseReference [ngForOf]="dosesReference">
+                                <mat-card>
+                                    <mat-card-title>{{doseReference.produit.libelle}}</mat-card-title>
+                                    <mat-card-subtitle>{{doseReference.numeroAmm.idMetier}}</mat-card-subtitle>
+                                    <mat-card-content>
+                                        <div>
+                                            <i class="fa fa-leaf" aria-hidden="true"></i> {{doseReference.culture.libelle}}</div>
+                                        <div *ngIf="doseReference.cible">
+                                            <i class="fa fa-bullseye" aria-hidden="true"></i> {{doseReference.cible.libelle}}</div>
+                                        <div *ngIf="doseReference.biocontrole == true">
+                                            <i class="fa fa-globe" aria-hidden="true"></i> Biocontrôle</div>
+                                        <div>
+                                            <i class="fa fa-flask" aria-hidden="true"></i> {{doseReference.dose}} {{doseReference.unite.libelle}}</div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </ng-template>
+                        </div>
+                        <div class="text-center" style="margin-top: 2em">
+                            <i *ngIf="loading" class="fa fa-spinner fa-spin" style="font-size: 40px"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>

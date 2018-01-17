@@ -1,0 +1,104 @@
+@import '../styles/vars';
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    .form-field {
+        flex-grow: 1
+    }
+
+    label {
+        flex-grow: 2;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+
+
+    input, app-select, mat-slider {
+        flex-grow: 1;
+        width: 100%;
+        max-width: 470px;
+        margin-bottom: 10px;
+    }
+
+    .input-numeric, mat-slider {
+        max-width: 324px;
+    }
+
+    .input-unite {
+        margin-left: 15px;
+        max-width: 130px;
+    }
+
+}
+
+.numero-amm-select-toggle {
+    
+    margin-bottom: 20px;
+
+    button {
+        color: $primary_color;
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+
+        label {
+            font-size: 1.2em;
+        }
+
+        &:hover, &:focus, label:hover, label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}
+
+.value-traitement-ift {
+    text-align: center;
+    font-size: 9em;
+    font-weight: 600;
+}
+
+.result-traitement-ift{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.value-segment {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.view-signature-electronique {
+    margin-bottom: 20px;
+
+    button {
+        color: $primary_color;
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+
+        label {
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+
+        &:hover, &:focus, label:hover, label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}
+
+.avertissement {
+    color: $primary_color;
+}

@@ -1,0 +1,26 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    .form-field {
+        flex-grow: 1;
+    }
+
+    label {
+        flex-grow: 2;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+
+    .datepicker, .typeahead {
+        flex-grow: 1;
+        width: 100%;
+        max-width: 470px;
+        margin-bottom: 10px;
+    }
+
+}

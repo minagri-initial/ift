@@ -1,0 +1,31 @@
+<section class="main-section bg-gray">
+    
+        <div class="container container-ift">
+    
+            <div *ngIf="campagne">
+                <div class="text-center">
+                    <h1>IFT de mon traitement</h1>
+                    <i class="fa fa-2x fa-angle-down"></i>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 campagne-title">
+
+                        <div class="arrow">
+                            <button class="btn-arrow" type="button" *ngIf="campagneIndex !== 0" (click)="previousCampagne()">
+                                <i class="fa fa-angle-left animated" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <h2 class="text-center">Campagne {{campagne.libelle}}</h2>
+                        <div class="arrow">
+                            <button class="btn-arrow" type="button" *ngIf="campagneIndex !== campagnes.length - 1" (click)="nextCampagne()">
+                                <i class="fa fa-angle-right animated" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <app-traitement-ift [traitement]="traitement" withSignature="true" name="traitement-ift"></app-traitement-ift>
+
+            </div>
+        </div>
+    </section>

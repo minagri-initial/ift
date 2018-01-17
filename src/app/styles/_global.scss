@@ -1,0 +1,208 @@
+/*
+    Theme Name: Squadfree
+    Theme URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
+    Author: BootstrapMade
+    Author URL: https://bootstrapmade.com
+*/
+
+
+/* ==== Google font ==== */
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|Montserrat:700|Merriweather:400italic');
+body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: #666;
+  background-color: #fff;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 20px;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: inherit;
+}
+
+p {
+  margin: 0 0 20px;
+  font-size: 1.2em;
+  line-height: 1.6em;
+}
+
+a {
+  color: $primary_color;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: $primary_color_accent;
+  }
+}
+
+
+/* misc */
+
+hr {
+  margin-top: 10px;
+}
+
+
+/* margins */
+
+.marginbot-0 {
+  margin-bottom: 0 !important;
+}
+
+.marginbot-10 {
+  margin-bottom: 10px !important;
+}
+
+.marginbot-20 {
+  margin-bottom: 20px !important;
+}
+
+.marginbot-30 {
+  margin-bottom: 30px !important;
+}
+
+.marginbot-40 {
+  margin-bottom: 40px !important;
+}
+
+.marginbot-50 {
+  margin-bottom: 50px !important;
+}
+
+.main-section {
+  padding-top: 50px;
+  min-height: 100vh;
+}
+
+
+/* --- section bg var --- */
+
+.bg-white {
+  background: #fff;
+}
+
+.bg-gray {
+  background: #f8f8f8;
+}
+
+.bg-dark {
+  background: #575757;
+}
+
+input.ng-invalid.ng-touched,
+.form-field.ng-invalid.ng-touched input
+{
+  border-color: #a94442;;
+}
+
+.mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill {
+  background-color: $primary_color;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $primary_color;
+}
+
+.mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-raised-button.mat-accent {
+  background-color: $primary_color;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: $primary_color;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $primary_color;
+}
+
+.mat-slider-thumb {
+  transform: scale(.9) !important;
+}
+
+.mat-slider:not(.mat-slider-disabled).cdk-mouse-focused .mat-slider-thumb, .mat-slider:not(.mat-slider-disabled).cdk-program-focused .mat-slider-thumb, .mat-slider:not(.mat-slider-disabled).cdk-touch-focused .mat-slider-thumb {
+  transform: scale(1.1) !important;
+}
+
+.mat-slider-horizontal .mat-slider-wrapper,
+.mat-slider-horizontal .mat-slider-track-wrapper,
+.mat-slider-horizontal .mat-slider-track-background,
+.mat-slider-horizontal .mat-slider-track-fill,
+.mat-slider-horizontal .mat-slider-ticks-container,
+.mat-slider-horizontal .mat-slider-ticks {
+  height: 4px !important;
+}
+
+a:active,
+button:active {
+    outline: none;
+}
+
+:focus,
+.open>a:focus {
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+input:required {
+    background: #fff url(/assets/img/asterix.png) no-repeat;
+    background-size: 10px;
+    background-position: right 4px top 4px;
+}
+
+.highlight {
+    font-weight: 800;
+}
+
+bs-datepicker-container, bs-daterangepicker-container {
+    z-index: 3000;
+}
+
+.theme-primary .bs-datepicker-body table td.selected span,
+.theme-primary .bs-datepicker-body table td[class*=select-] span:after,
+.theme-primary .bs-datepicker-body table td span.selected,
+.theme-primary .bs-datepicker-body table td span[class*=select-]:after,
+.theme-primary .bs-datepicker-head {
+  background-color: $primary_color;
+}
+
+typeahead-container.dropdown {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin-top: 5px;
+  padding: 0;
+
+  ul.dropdown-menu {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+  }
+
+  .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+    background-color: transparent;
+    color: black;
+  }
+
+  .dropdown-menu>.active, .dropdown-menu>.active, .dropdown-menu>.active {
+    background-color: #BBB;
+  }
+}

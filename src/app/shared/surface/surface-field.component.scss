@@ -1,0 +1,23 @@
+@import '../../styles/vars';
+
+.surface-traitee-select-toggle {
+
+    margin-bottom: 20px;
+
+    button {
+        color: $primary_color;
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+
+        label {
+            font-size: 1.2em;
+        }
+
+        &:hover, &:focus, label:hover, label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}

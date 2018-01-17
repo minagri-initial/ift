@@ -1,0 +1,6 @@
+<div class="form-group numero-amm-select">
+    <label id="numeroAmm">Numéro AMM<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
+    <app-select [(ngModel)]="value" name="numeroAmm" (onTermChanged)="termChanged($event)"
+        [list]="numerosAmm" optionField="idMetier" [required]="required"
+        aria-labelledby="numeroAmm" placeholder="Exemple : 9800280"></app-select>
+</div>

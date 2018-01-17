@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label id="culture">Culture<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
+    <app-select [(ngModel)]="value" name="culture" (onTermChanged)="termChanged($event)"
+    [list]="cultures" optionField="libelle" [required]="required"
+    aria-labelledby="culture" placeholder="Exemple : Pomme de terre"></app-select>
+</div>

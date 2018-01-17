@@ -1,0 +1,7 @@
+<div class="form-group numero-amm-select" >
+    <label id="produit">Produit<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
+    <app-select [(ngModel)]="value" name="produit" (onTermChanged)="termChanged($event)"
+        [list]="produits" optionField="libelle" [required]="required"
+        aria-labelledby="produit" placeholder="Exemple : NOVODOR FC">
+    </app-select>
+</div>

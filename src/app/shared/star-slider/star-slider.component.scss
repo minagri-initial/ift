@@ -1,0 +1,23 @@
+@import '../../styles/vars';
+
+span {
+    display: block;
+    margin: 1em 0;
+
+    i {
+        margin: 0 0.1em;
+        -webkit-transition: all 0.25s;
+        -moz-transition: all 0.25s;
+        -o-transition: all 0.25s;
+        transition: all 0.25s;
+        color: $primary_color;
+    }
+
+    i.highlight {
+        text-shadow: 0 0 20px $primary_color;
+    }
+
+    i:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+}

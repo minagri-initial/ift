@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label id="cible">Cible</label>
+    <app-select [(ngModel)]="value" name="cible" (onTermChanged)="termChanged($event)"
+        [list]="cibles" optionField="libelle"
+        aria-labelledby="cible" placeholder="Exemple : Doryphore"></app-select>
+</div>

@@ -1,0 +1,190 @@
+<!-- Section: intro -->
+<section #intro class="intro">
+
+  <div class="slogan">
+    <h2>Indicateur de Fréquence de Traitements phytosanitaires</h2>
+  </div>
+  <div class="page-scroll">
+    <button (click)="scroll(ift)" class="btn btn-circle">
+        <i class="fa fa-angle-double-down animated"></i>
+    </button>
+  </div>
+</section>
+<!-- /Section: intro -->
+
+<!-- Section: ift -->
+<section #ift class="home-section text-center">
+
+  <div class="heading-about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="section-heading">
+              <h2>Calculez votre IFT</h2>
+              <i class="fa fa-2x fa-angle-down"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-2 col-lg-offset-5">
+        <hr class="marginbot-50">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+          <div class="service-box">
+            <a [routerLink]="['/doses-reference']" (click)="scroll(intro)" class="btn btn-default service-icon">
+                <i class="fa fa-search" aria-hidden="true"></i><!-- Recherche des doses de référence -->
+            </a>
+            <div class="service-desc">
+              <h5>Doses de référence</h5>
+              <p>Consulter les doses de référence d'une culture, d'un produit ou d'une cible utilisées pour le calcul de l'IFT.</p>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="service-box">
+            <a [routerLink]="['traitement-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
+                <i class="fa fa-line-chart" aria-hidden="true"></i><!--IFT de traitement-->
+            </a>
+            <div class="service-desc">
+              <h5>IFT de traitement</h5>
+              <p>Calculer l'IFT de votre traitement.</p>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="service-box">
+            <a [routerLink]="['bilan-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
+                <i class="fa fa-table" aria-hidden="true"></i><!--Import csv-->
+            </a>
+            <div class="service-desc">
+              <h5>Bilan IFT</h5>
+              <p>Calculer le bilan d'IFT sur une ou un ensemble de parcelles à partir d'un import de fichiers.</p>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    
+
+  </div>
+</section>
+<!-- /Section: ift -->
+
+<!-- Section: partners -->
+<section id="verify" class="home-section text-center bg-gray">
+    
+    <div class="heading-contact">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="section-heading">
+                    <h2>Vérifier un IFT</h2>
+                    <i class="fa fa-2x fa-angle-down"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-2 col-lg-offset-5">
+            <hr class="marginbot-50">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="service-box">
+                    <a [routerLink]="['/verifier-traitement-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <div class="service-desc">
+                    <h5>Vérifier une signature</h5>
+                    <p>Afficher les informations associées à un IFT certifié à partir de sa signature électronique.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- /Section: partners -->
+    
+<!-- Section: partners -->
+<section id="partners" class="home-section text-center">
+
+  <div class="heading-contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="section-heading">
+              <h2>Découvrir notre API</h2>
+              <i class="fa fa-2x fa-angle-down"></i>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-2 col-lg-offset-5">
+        <hr class="marginbot-50">
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <div class="service-box">
+                <a [href]="swaggerUrl" target="_blank" class="btn btn-default service-icon" title="Consulter les API - ouvre dans une nouvelle fenêtre">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </a>
+                <div class="service-desc">
+                <h5>Consulter les API</h5>
+                <p>Afficher la documentation interactive pour débuter avec les API REST IFT.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="service-box">
+                <a href="https://github.com/Agrilab" target="_blank" class="btn btn-default service-icon" title="Accéder au code source - ouvre dans une nouvelle fenêtre">
+                    <i class="fa fa-github-alt" aria-hidden="true"></i>
+                </a>
+                <div class="service-desc">
+                <h5>Accéder au code source</h5>
+                <p>Le code source de cette application est disponible sur le dépôt Github d'Agrilab.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+</section>
+<!-- /Section: partners -->
+
+<section id="footer" class="home-section section-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="page-scroll marginbot-30">
+                    <button (click)="scroll(intro)" class="btn btn-circle">
+                        <i class="fa fa-angle-double-up animated"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

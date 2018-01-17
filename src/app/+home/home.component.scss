@@ -1,0 +1,186 @@
+/* ===========================
+--- General sections
+============================ */
+
+.home-section {
+    padding-top: 110px;
+    padding-bottom: 110px;
+	display:block;
+    position:relative;
+    z-index:120;
+}
+
+
+.section-heading h2 {
+	font-size: 2.5em;
+}
+.section-heading i {
+	margin-bottom: 20px;
+}
+
+
+/* ===========================
+--- Intro
+============================ */
+
+.intro {
+	width:100%;
+    position:relative;
+    background-color: rgba(130, 160, 30, 1);
+	background: url(/assets/img/bg1-min.jpg) no-repeat bottom center;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    .slogan {
+        text-align: center;
+        flex-grow: 1.2;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        h2 {
+            max-width: 90%;
+            font-size: 1.5em;
+            
+            color: #FFF;
+            text-shadow: none;
+            font-weight: 700;
+            font-family: Montserrat, sans-serif;
+            background-color: rgba(0, 0, 0, 0);
+            text-decoration: none;
+            text-transform: uppercase;
+            border-width: 0px;
+            border-color: #000;
+            border-style: none;
+            text-shadow: -0.5px 0 0.5px #000;
+        }
+
+        h4 {
+            color: #fff;
+            text-shadow: -1px 1px 1px #000;
+        }
+    }
+
+    .page-scroll {
+        text-align: center;
+        flex-grow: 0.1;
+    }
+}
+
+/* ===========================
+--- Services
+============================ */
+
+.service-box{
+    
+    .service-icon {
+        margin-bottom: 20px;
+        border-radius: 100%;
+        padding: 20px 20px;
+        
+        .fa {
+            font-size: 2.7em;
+        }
+    }	
+
+    .service-desc {
+        margin-bottom: 40px;
+    }
+}
+
+/* ===========================
+--- footer
+============================ */
+.section-footer {
+    background-color: #4F5050;
+    padding-top: 35px;
+    padding-bottom: 0px;
+    color: #fff;
+    font-size: 1em;
+
+    .page-scroll {
+        text-align: center;
+
+        .btn-circle {
+            padding: 4px 16px;
+        }
+    }
+}
+    
+/* ===========================
+--- Responsive
+============================ */
+
+@media (min-width:480px) {
+    
+    .intro {
+        background-size: cover;
+        height: 100vh;
+
+        .slogan {
+            h2 {
+                max-width: 90%;
+                font-size: 1.6em;
+            }
+        }
+
+        .page-scroll {
+            flex-grow: 0.2;
+        }
+    }
+
+
+}
+
+@media(min-width:768px) {
+    
+    .intro {
+        .slogan {
+            h2 {
+                max-width: 90%;
+                font-size: 2em;
+            }
+        }
+
+    }
+}
+
+@media(min-width:992px) {
+    .intro {
+        .slogan {
+            h2 {
+                max-width: none;
+                font-size: 2.5em;
+            }
+        }
+    }
+        
+}
+
+/* Media queries */
+@media(min-width:1200px) {
+    .intro {
+        .slogan {
+            h2 {
+                max-width: 60%;
+                font-size: 3em;
+            }
+        }
+
+        .page-scroll {
+            flex-grow: 0.3;
+        }
+    }
+
+}
+
+@media (max-width:480px) {
+
+    .intro {
+        background-size: cover;
+        height: 100vh;
+    }
+	
+}
