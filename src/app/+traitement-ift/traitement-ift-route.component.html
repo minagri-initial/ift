@@ -1,31 +1,55 @@
-<section class="main-section bg-gray">
-    
-        <div class="container container-ift">
-    
-            <div *ngIf="campagne">
-                <div class="text-center">
-                    <h1>IFT de mon traitement</h1>
-                    <i class="fa fa-2x fa-angle-down"></i>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 campagne-title">
+<!-- Section: intro -->
+<section #intro class="intro">
+    <div class="slogan">
+        <h1>IFT de mon traitement</h1>
+    </div>
+</section>
+<!-- /Section: intro -->
 
+<section class="main-section bg-gray">
+
+    <div class="container container-ift">
+
+        <div *ngIf="campagne">
+            <div class="row campagne-block">
+                <div class="col-md-10 col-md-offset-1 ift-block">
+                    <h2>Sélectionnez la période</h2>
+                    <div class="campagne-title">
                         <div class="arrow">
                             <button class="btn-arrow" type="button" *ngIf="campagneIndex !== 0" (click)="previousCampagne()">
-                                <i class="fa fa-angle-left animated" aria-hidden="true"></i>
+                                <i class="icon icon-angle-left animated" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <h2 class="text-center">Campagne {{campagne.libelle}}</h2>
+                        <div class="text-center">Campagne {{campagne.libelle}}</div>
                         <div class="arrow">
                             <button class="btn-arrow" type="button" *ngIf="campagneIndex !== campagnes.length - 1" (click)="nextCampagne()">
-                                <i class="fa fa-angle-right animated" aria-hidden="true"></i>
+                                <i class="icon icon-angle-right animated" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <app-traitement-ift [traitement]="traitement" withSignature="true" name="traitement-ift"></app-traitement-ift>
-
             </div>
+
+            <form class="ift-form" [formGroup]="form">
+                <app-traitement-ift [parent]="form" withSignature="true" name="traitement-ift"></app-traitement-ift>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
+
+<app-modal [headerTitle]="'IFT de mon traitement'">
+    <div modal-body>
+        <p>
+            L'IFT de traitement se calcule pour chaque traitement réalisé.
+            <br /> S'il s'agit d'un traitement de semences, l'IFT du traitement est fixé à 1, le cas échéant corrigé par la proportion
+            de semences effectivement traitées (ou par la proportion de surface de parcelles semée avec des semences traitées).
+            <br /> S'il s'agit d'un traitement au champ, l'IFT du traitement se calcule par le ratio entre la dose appliquée sur
+            la parcelle et la dose de référence, le cas échéant corrigé par le pourcentage de surface traitée. En l'absence
+            de doses de référence (produits sans dose, produits ou usages absents du référentiel), l'IFT du traitement est
+            pas défaut à 1, le cas échéant corrigé par le pourcentage de surfaces traitées.
+            <br />Concernant les bulbes et plants, si l'exploitant est producteur de bulbes ou plants, alors il calcule l'IFT selon
+            la même méthode que celle décrite pour les traitements au champ. Si l'exploitant est utilisateur de bulbes ou
+            plants traités, alors il calcule l'IFT selon la même méthode que celle décrite pour les traitements de semences.
+        </p>
+    </div>
+</app-modal>

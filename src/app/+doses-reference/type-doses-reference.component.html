@@ -1,0 +1,21 @@
+<div class="form-group filtre-form-group">
+    <mat-radio-group class="radio-group" [formControl]="typeDosesReference" layout="row" name="typeDose">
+        <mat-radio-button class="radio-button" *ngFor="let type of typeDoseList" [value]="type.value">
+            {{type.libelle}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <button class="btn btn-default info" type="button" (click)="showInfo()" title="{{ info1 + ' ' + info2 + ' ' + info3 + ' ' + info4 }}">
+        <i class="icon icon-question-circle" aria-hidden="true"></i>
+    </button>
+</div>
+
+<app-modal [headerTitle]="'Doses de référence'">
+    <div modal-body>
+        <p>
+            {{ info1 }}
+            <br />{{ info2 }}
+            <br />{{ info3 }}
+            <br />{{ info4 }}
+        </p>
+    </div>
+</app-modal>

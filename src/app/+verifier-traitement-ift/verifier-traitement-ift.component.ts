@@ -2,20 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm, AbstractControl } from '@angular/forms';
 import { MatSliderChange } from '@angular/material/slider';
-import * as _ from 'lodash';
 
 import { Campagne } from '../shared/campagne';
 import { Culture } from '../shared/culture';
 import { NumeroAmm, Produit } from '../shared/numero-amm';
 import { Cible } from '../shared/cible';
-import { Traitement } from '../shared/traitement';
+import { TypeTraitement } from '../shared/type-traitement';
 import { Unite } from '../shared/unite';
 import { DoseReferenceService } from '../shared/dose';
 import { Dose } from '../shared/dose/dose.model';
-import { VerifierTraitementIftService } from './verifier-traitement-ift.service';
-import { TraitementIftResult } from '../+traitement-ift/traitement-ift.model';
-
-declare var moment: any;
+import { TraitementIftResult, SignedTraitementIft, TraitementIft, TraitementIftService } from '../shared/traitement-ift';
 
 @Component({
     selector: 'app-verifier-traitement-ift',
@@ -25,45 +21,46 @@ declare var moment: any;
 export class VerifierTraitementIftComponent implements OnInit {
 
     traitementIftResult: TraitementIftResult;
-    signature: string;
+    id: string;
+    loadFromUrl = false;
     error: string;
 
     constructor(
-        private verifierTraitementIftService: VerifierTraitementIftService,
+        private traitementIftService: TraitementIftService,
         private route: ActivatedRoute
-    ) { }
+    ) {
+    }
 
     ngOnInit() {
+        this.route.params
+            .subscribe(params => {
+                if (params.id) {
+                    this.id = params.id;
+                    this.getTraitementIft();
+                }
+            });
     }
 
-    public onSubmit(form: NgForm) {
-        // Mark all field as touched to apply css errors
-        _.values(form.controls).forEach((control: AbstractControl) => {
-            control.markAsTouched();
-        });
+    public getTraitementIft() {
+        this.traitementIftService.get(this.id)
+            .subscribe(
+                (result: TraitementIftResult) => {
+                    this.traitementIftResult = result;
+                    this.error = undefined;
+                },
+                (error) => {
+                    this.error = JSON.parse(error.error).message;
+                    this.traitementIftResult = undefined;
+                }
+            );
+    }
 
-        if (form.valid) {
-            this.verifierTraitementIftService.get(this.signature)
-                .subscribe(
-                    (result: TraitementIftResult) => {
-                        this.traitementIftResult = result;
-                        this.error = undefined;
-                    },
-                    (error) => {
-                        this.error = JSON.parse(error.error).message;
-                        this.traitementIftResult = undefined;
-                    }
-                );
+    public getPercentage(value) {
+        if (value <= 2) {
+            return value / 2;
+        } else {
+            return 1;
         }
-    }
-
-    public isTraitementAvantSemis() {
-        return this.traitementIftResult.traitement && this.traitementIftResult.traitement.avantSemis === true;
-    }
-
-    public getDateCreationSignature() {
-        moment.locale('fr');
-        return moment(this.traitementIftResult.dateCreation).format('DD/MM/YYYY à HH:mm');
     }
 }
 

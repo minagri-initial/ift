@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { API_URL } from '../../app.config';
 import { Campagne } from '../campagne/campagne.model';
 import { Culture } from '../culture/culture.model';
 import { Cible } from '../cible/cible.model';
@@ -9,14 +8,14 @@ import { NumeroAmm } from '../numero-amm/numero-amm.model';
 import { Dose, DoseReference, ProduitDoseReference } from './dose.model';
 import { Produit } from '../numero-amm/produit.model';
 import { CustomEncoder } from '../http/custom-codec.class';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DoseReferenceService {
 
-    constructor(
-        @Inject(API_URL) private _apiUrl: string,
-        private _http: HttpClient
-    ) { }
+    private _apiUrl = environment.apiUrl;
+
+    constructor(private _http: HttpClient) { }
 
     get(campagne: Campagne, culture: Culture, numeroAmm: NumeroAmm, cible: Cible) {
         let queryParams = new HttpParams({ encoder: new CustomEncoder()});

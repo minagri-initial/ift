@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label id="traitement" class="green">
+        <span class="hidden-xs">
+            <i class="icon icon-flask" aria-hidden="true"></i>&nbsp;&nbsp;</span>Traitement
+        <span *ngIf="isRequired()"> *
+            <span class="sr-only"> Obligatoire</span>
+        </span>
+    </label>
+    <div class="form-select">
+        <initial-form-group labelText="Traitement" [inputErrors]="traitement.errors" [touched]="traitement.touched" [errorDefs]="{required: 'Le traitement est obligatoire'}">
+            <initial-select [formControl]="traitement" name="traitement" [items]="traitements" bindLabel="libelle" [filter]="false" aria-labelledby="traitement"
+                placeholder="Sélectionnez un traitement" class="select-lg"></initial-select>
+        </initial-form-group>
+    </div>
+    <button class="btn btn-default info" type="button" (click)="showInfo()" title="{{ info }}">
+        <i class="icon icon-question-circle" aria-hidden="true"></i>
+    </button>
+</div>
+
+<app-modal [headerTitle]="'Traitement'">
+    <div modal-body>
+        <p>{{ info }}</p>
+    </div>
+</app-modal>

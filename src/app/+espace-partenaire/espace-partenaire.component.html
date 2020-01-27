@@ -1,24 +1,110 @@
+<!-- Section: intro -->
+<section #intro class="intro">
+    <div class="slogan">
+        <h1>Espace partenaire</h1>
+    </div>
+</section>
+<!-- /Section: intro -->
+
 <section class="main-section bg-gray">
     <div class="container container-ift">
-        <div class="espace-partenaire">
-            <p><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp; Les données publiques d'IFT sont réutilisables dans le cadre de la politique d'Open Data
-                défini sur le site
-                <a href="https://www.data.gouv.fr/fr/" target="_blank" title="data.gouv.fr - ouvre dans une nouvelle fenêtre">data.gouv.fr</a>. La licence applicable est la
-                <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence" target="_blank" title="licence ouverte - ouvre dans une nouvelle fenêtre">licence ouverte</a>.</p>
+        <div class="row campagne-block">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <p>
+                    Les données publiques d'IFT sont réutilisables dans le cadre de la politique d'Open Data défini sur le site
+                    <a href="https://www.data.gouv.fr/fr/" target="_blank" rel="noopener" title="data.gouv.fr - ouvre dans une nouvelle fenêtre">data.gouv.fr</a>. La licence applicable est la
+                    <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence" target="_blank" rel="noopener" title="licence ouverte - ouvre dans une nouvelle fenêtre">licence ouverte</a>.</p>
 
-            <p>Par souci de transparence et de qualité des sources, vous devez spécifier la paternité des données lors de toute
-                réutilisation :</p>
+                <p>Par souci de transparence et de qualité des sources, vous devez spécifier la paternité des données lors de
+                    toute réutilisation :</p>
 
-            <ul>
-                <li>Ministère de l'agriculture et de l'alimentation</li>
-                <li>Direction générale de la performance économique et environnementale des entreprises / Service Compétitivité
-                    et performance environnementale / Sous-direction Performance environnementale et valorisation des territoires
-                    / Bureau Eau, sols et économie circulaire</li>
-                <li>IFT - Campagne concernée</li>
-            </ul>
+                <ul>
+                    <li>Ministère de l'agriculture et de l'alimentation</li>
+                    <li>Direction générale de la performance économique et environnementale des entreprises / Service Compétitivité
+                        et performance environnementale / Sous-direction Performance environnementale et valorisation des
+                        territoires / Bureau Eau, sols et économie circulaire</li>
+                    <li>IFT - Campagne concernée</li>
+                </ul>
+            </div>
+        </div>
 
-            <h1>Découvrez notre API</h1>
-            <p><a href="{{ apiUrl }}" target="_blank" title="Accédez à la documentation de notre API - ouvre dans une nouvelle fenêtre">Accédez à la documentation de notre API</a></p>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Pourquoi cette API ?</h2>
+                <p>L'Indicateur de Fréquence de Traitements phytopharmaceutiques (IFT) est un indicateur de suivi de l'utilisation
+                    des produits phytopharmaceutiques (pesticides) à l’échelle de l’exploitation agricole ou d’un groupe
+                    d’exploitations.
+                </p>
+                <p>Si votre application propose une fonction de calcul de l'IFT ? Ou l'édition de bilans d'IFT ? Inutile de
+                    dupliquer nos référentiels ou de développer un service de calcul, cette API est faite pour vous !
+                </p>
+                <p>Elle vous permet de :</p>
+                <ul>
+                    <li>consommer l'ensemble des données de référence à la base du calcul de l'IFT : campagnes culturales, produits,
+                        cibles, doses de références, ...</li>
+                    <li>calculer des IFT au niveau des traitements phytopharmaceutiques</li>
+                    <li>signer des IFT soumis aux contrôles des agents de l'ASP</li>
+                </ul>
+                <p>Pour plus d'information sur l'IFT, vous pouvez consulter le site institutionnel du ministère à l'adresse
+                    :
+                    <a href="http://agriculture.gouv.fr/indicateur-de-frequence-de-traitements-phytosanitaires-ift">http://agriculture.gouv.fr/indicateur-de-frequence-de-traitements-phytosanitaires-ift</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Découvrez notre API</h2>
+                <p>
+                    <a [href]="environment.swaggerUrl" target="_blank" rel="noopener" title="Accédez à la documentation de notre API - ouvre dans une
+                                            nouvelle fenêtre ">Accédez à la documentation de notre API</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Aller à l'essentiel...</h2>
+                <p>Dans la majorité des cas, les API vous permettent de requêter et de paginer les résultats sur les données
+                    de références :
+                </p>
+                <ul>
+                    <li>Lister les cultures commençant par "ci"
+                        <pre><code class="nowrap">curl -X GET --header 'Accept: application/json' '{{environment.apiUrl}}/cultures?filtre=ci'</code></pre>
+                    </li>
+                    <li>Calculer un IFT non certifié : Campagne culturale 2017, Traitement d'herbicide, Citronnier, Produit ACOMAC
+                        pour 6 L/HA
+                        <pre><code class="nowrap">curl -X GET --header 'Accept: application/json' '{{environment.apiUrl}}/ift/traitement?campagneIdMetier=2017&numeroAmmIdMetier=2090125&cultureIdMetier=1055&typeTraitementIdMetier=T21&dose=6'</code></pre>
+                    </li>
+                    <li>Calculer un IFT certifié avec une signature électronique : Campagne culturale 2017, Traitement d'herbicide,
+                        Citronnier, Produit ACOMAC pour 6 L/HA
+                        <pre><code class="nowrap">curl -X GET --header 'Accept: application/json' '{{environment.apiUrl}}/ift/traitement/certifie?campagneIdMetier=2017&numeroAmmIdMetier=2090125&cultureIdMetier=1055&typeTraitementIdMetier=T21&dose=6'</code></pre>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Se lancer !</h2>
+                <p>Le ministère en charge de l’agriculture met à votre disposition un environnement de pré-production pour tester
+                    vos développements. Il est accessible à l’adresse :
+                    <a [href]="environment.preproductionUrl">{{ environment.preproductionUrl }}</a>.
+                </p>
+
+                <ul>
+                    <li>Entrez dans la matrice
+                        <pre><code class="nowrap">curl -X GET --header 'Accept: application/json' '{{environment.apiUrl}}/hello'</code></pre>
+                    </li>
+                    <li>Codes sources et codes exemples sont disponibles sur GitHub :
+                        <a href="https://github.com/minagri-initial">https://github.com/minagri-initial</a>
+                    </li>
+                </ul>
+
+                <p>
+                    <i class="icon icon-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp; En cas de problèmes de sécurité, n'oubliez pas d'installer le certificat de l'API dans
+                    votre key store ;)</p>
+            </div>
         </div>
     </div>
 </section>

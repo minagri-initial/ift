@@ -1,0 +1,115 @@
+@import '../../styles/vars';
+$text-width: 180px;
+$num-width: 100px;
+$icon-width: 40px;
+$margin: 30px;
+.table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    &.table-header {
+        font-weight: bold;
+        background-color: #f5f5f5;
+        .table-column-wrapper {
+            //Header are hidden when column is wrapped
+            @media all and (max-width: ($margin + $text-width*2 + $num-width + $icon-width*4)) {
+                // fix the widths of the inner level wrappers, else they take
+                // children's natural size
+                width: $text-width;
+                div {
+                    flex-grow: 0; // but let them grow horizontally, 100% to fill the wrapper
+                    width: 100%;
+                }
+                div:not(:first-child) {
+                    display: none;
+                }
+            }
+        }
+    }
+    &:not(.table-header) {
+        cursor: pointer;
+        background-color: #8DCEC0;
+        color: black;
+        border-bottom: 1px solid white;
+        .table-column-wrapper {
+            // Line break: when one row does not fit, make it 2 rows
+            @media all and (max-width: ($margin + $text-width*2 + $num-width + $icon-width*4)) {
+                // Let the wrapper flex vertically, so we get 2 rows
+                flex-direction: column; // fix the widths of the inner level wrappers, else they take
+                // children's natural size
+                width: $text-width; // can't have the children grow, since this means vertical growth
+                div {
+                    flex-grow: 0; // but let them grow horizontally, 100% to fill the wrapper
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .table-column-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+    }
+    .table-column-group {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+    .table-column {
+        flex-grow: 1;
+    }
+    .table-column {
+        padding: 8px;
+    }
+    .table-column-text,
+    .table-column-num {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        hyphens: auto;
+    }
+    .table-column-text {
+        width: $text-width;
+    }
+    .table-column-num {
+        width: $num-width;
+    } // Fix the minimum width of the leaf level cells
+    .table-column-icon {
+        width: $icon-width;
+        padding: 8px 12px;
+        flex-grow: 0;
+        background-color: transparent;
+    }
+}
+
+.table-responsive,
+.table {
+    margin: 0;
+    padding: 0;
+    td {
+        vertical-align: middle;
+    }
+    .btn-column {
+        padding-left: 0;
+        padding-right: 0;
+        white-space: nowrap;
+        text-align: right;
+        .btn {
+            background-color: transparent;
+        }
+    }
+}
+
+.bars-btn {
+    min-width: auto;
+    padding: 6px 12px;
+    @media(max-width: 767px) {
+        margin-bottom: 10px;
+    }
+}
+
+mat-checkbox /deep/ label.mat-checkbox-layout {
+    margin-bottom: 0;
+}

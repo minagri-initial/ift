@@ -1,85 +1,69 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title, Meta } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+//Import matSliderModule is required on a non lazy loaded module to get slide animation
+//@see https://github.com/angular/material2/issues/4595
 import { MatSliderModule } from '@angular/material/slider';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material';
-import { MatRadioModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material';
 
 import { environment } from '../environments/environment';
-import { API_URL, API_SEGMENT, SWAGGER_URL, SWAGGER_SEGMENT } from './app.config';
 
 import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routes';
 import { FooterComponent, NavbarComponent } from './layout';
 import { HomeComponent } from './+home';
-import { DosesReferenceComponent } from './+doses-reference';
-import { TraitementIftComponent, TraitementIftRouteComponent, TraitementIftModalComponent, TraitementIftService } from './+traitement-ift';
 import { MentionsLegalesComponent } from './+mentions-legales';
 
-import { SHARED_COMPONENTS, SHARED_SERVICES} from './shared';
-import { VerifierTraitementIftComponent } from './+verifier-traitement-ift/verifier-traitement-ift.component';
-import { VerifierTraitementIftService } from './+verifier-traitement-ift/verifier-traitement-ift.service';
-import { BilanIftComponent, BilanIftService } from './+bilan-ift';
+import { SelectModule, FormGroupModule } from '@initial/angular-library';
+
+import { SHARED_COMPONENTS, SHARED_SERVICES } from './shared';
 import { EspacePartenaireComponent } from './+espace-partenaire/espace-partenaire.component';
-import { IftDBService } from './shared/db/ift-db.service';
+
+import { SHARED_ENTRY_COMPONENTS } from './shared/index';
+import { NetworkErrorInterceptorService } from './shared/http/network-error-interceptor.service';
+
+import { AvisModule } from './shared/avis/avis.module';
+import { LayoutModule } from './layout/layout.module';
+import { CampagneService } from './shared/campagne/campagne.service';
+
 
 @NgModule({
     declarations: [
         AppComponent,
-        FooterComponent,
-        NavbarComponent,
         HomeComponent,
-        DosesReferenceComponent,
-        TraitementIftComponent,
-        TraitementIftRouteComponent,
-        TraitementIftModalComponent,
-        BilanIftComponent,
-        VerifierTraitementIftComponent,
         MentionsLegalesComponent,
         EspacePartenaireComponent,
         ...SHARED_COMPONENTS
     ],
     entryComponents: [
-        TraitementIftModalComponent
+        ...SHARED_ENTRY_COMPONENTS
     ],
     imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+        BrowserAnimationsModule,
         HttpModule,
         HttpClientModule,
+        ServiceWorkerModule.register('/ift/ngsw-worker.js', { enabled: environment.production }),
         routing,
-        MatSliderModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatRadioModule,
-        MatButtonModule,
-        CollapseModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        TypeaheadModule.forRoot(),
-        ModalModule.forRoot(),
-        BsDatepickerModule.forRoot()
+        LayoutModule,
+        AvisModule,
+        MatSnackBarModule,
+        MatSliderModule
     ],
     providers: [
+        Title,
+        Meta,
         appRoutingProviders,
-        { provide: API_URL, useValue: environment.backendUrl },
-        { provide: SWAGGER_URL, useValue: environment.swaggerUrl},
+        { provide: HTTP_INTERCEPTORS, useClass: NetworkErrorInterceptorService, multi: true },
+        CampagneService,
         ...SHARED_SERVICES,
-        TraitementIftService,
-        BilanIftService,
-        IftDBService,
-        VerifierTraitementIftService
     ],
     bootstrap: [AppComponent]
 })

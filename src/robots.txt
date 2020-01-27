@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /verifier-bilan-ift/
+Disallow: /assets/
+Sitemap: https://alim.agriculture.gouv.fr/ift/sitemap.xml

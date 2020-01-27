@@ -1,9 +1,0 @@
-<span tabindex="0" role="slider" aria-valuemin="0" [attr.aria-valuemax]="max" [attr.aria-valuetext]="nbEtoilesSelectionnees + ' étoiles'"
-[attr.aria-valuenow]="nbEtoilesSelectionnees" [attr.aria-labelledby]="id" [attr.title]="title">
-
-<i *ngFor="let r of fakeArray; let i = index" (click)="rate(i + 1)" (mousedown)="$event.preventDefault()"
-  class="fa fa-3x {{ i < nbEtoilesSelectionnees ? 'fa-star' : 'fa-star-o' }} {{ max === nbEtoilesSelectionnees ? 'highlight' : '' }}">
-  <span class="sr-only">(*)</span>
-</i>
-
-</span>

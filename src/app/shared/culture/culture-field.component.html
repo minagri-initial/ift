@@ -1,6 +1,27 @@
 <div class="form-group">
-    <label id="culture">Culture<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
-    <app-select [(ngModel)]="value" name="culture" (onTermChanged)="termChanged($event)"
-    [list]="cultures" optionField="libelle" [required]="required"
-    aria-labelledby="culture" placeholder="Exemple : Pomme de terre"></app-select>
+    <label id="culture" class="green">
+        <span class="hidden-xs">
+            <i class="icon icon-leaf" aria-hidden="true"></i>&nbsp;&nbsp;</span>Culture
+        <span *ngIf="isRequired()"> *
+            <span class="sr-only"> Obligatoire</span>
+        </span>
+    </label>
+    <div class="form-select">
+        <initial-form-group labelText="Culture" [inputErrors]="culture.errors" [touched]="culture.touched" [errorDefs]="{required: 'La culture est obligatoire'}">
+            <initial-select [formControl]="culture" name="culture" [items]="cultures" [typeahead]="searchCultures" bindLabel="libelle"
+                [readonly]="culture.disabled" aria-labelledby="culture" placeholder="Exemple : Pomme de terre" [loadingText]="msg.SELECT_LOADING"
+                [notFoundText]="msg.SELECT_NOT_FOUND" class="select-lg"></initial-select>
+        </initial-form-group>
+    </div>
+    <button class="btn btn-default info" type="button" (click)="showInfo()" title="{{ info1 + ' ' + info2 }}">
+        <i class="icon icon-question-circle" aria-hidden="true"></i>
+    </button>
 </div>
+
+<app-modal [headerTitle]="'Culture'">
+    <div modal-body>
+        <p>{{ info1 }}
+            <br />{{ info2 }}
+        </p>
+    </div>
+</app-modal>

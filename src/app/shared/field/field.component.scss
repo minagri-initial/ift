@@ -1,39 +1,9 @@
-:host, .form-group {
+:host {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
     flex-wrap: wrap;
     width: 100%;
-
-    label {
-        flex-grow: 2;
-        font-size: 1.5em;
-        font-weight: 400;
-        margin-bottom: 15px;
-    }
-
-    input, app-select, mat-slider {
-        flex-grow: 1;
-        width: 100%;
-        max-width: 470px;
-        margin-bottom: 10px;
-    }
-
-    .input-numeric, mat-slider {
-        max-width: 324px;
-    }
-
-    .input-unite {
-        margin-left: 15px;
-        max-width: 130px;
-    }
-
-    .input-group {
-        margin-bottom: 10px;
-        
-        input {
-            margin-bottom: 0px;
-        }
-    }
+    position: relative;
 }

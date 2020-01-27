@@ -1,63 +1,65 @@
 footer {
-
     background-color: #4F5050;
-    padding-bottom: 10px;
     color: #fff;
-    font-size: 1em;
-
     h1 {
-        font-family: Helvetica,Arial,sans-serif;
-        font-size: 1em;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1.3rem;
         margin: 26px 0 10px;
         font-weight: 700;
         text-transform: uppercase;
         color: #fff;
     }
-
     ul {
         padding: 0;
         list-style: none;
         line-height: 1.78em;
-
-        &.follow-us{
+        &.follow-us {
             display: inline-flex;
+            flex-wrap: wrap;
         }
-        
         a {
             color: #fff;
             text-decoration: none;
             cursor: pointer;
             display: inline-block;
             vertical-align: middle;
-
+            font-size: 1.3rem;
             &:hover {
                 font-weight: 400;
             }
         }
-
-        .fa {
+        .icon {
             opacity: .3;
             margin-right: 6px;
             font-size: 2.5em;
-
             &:hover {
                 opacity: 1;
             }
         }
     }
-
     .img-ecophyto {
-        width: 100px;
+        height: 50px;
     }
-    
     .realise-par {
         border-top: 1px solid #fff;
         padding-top: 1em;
         margin-top: 1em;
-
         p {
-            font-size: inherit;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+    }
+    .container-fluid {
+        background-color: #fff;
+        .logos {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            div {
+                display: inline-block;
+                &:not(:last-child) {
+                    margin-right: 30px;
+                }
+            }
         }
     }
 }
-

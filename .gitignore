@@ -12,7 +12,6 @@
 /packaging/pom.xml.next
 /packaging/.idea
 /packaging/arpent-resultats.iml
-package-lock.json
 
 # dependencies
 /node_modules

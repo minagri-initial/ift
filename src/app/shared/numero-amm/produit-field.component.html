@@ -1,7 +1,28 @@
-<div class="form-group numero-amm-select" >
-    <label id="produit">Produit<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
-    <app-select [(ngModel)]="value" name="produit" (onTermChanged)="termChanged($event)"
-        [list]="produits" optionField="libelle" [required]="required"
-        aria-labelledby="produit" placeholder="Exemple : NOVODOR FC">
-    </app-select>
+<div class="form-group numero-amm-select">
+    <label id="produit" class="green">
+        <span class="hidden-xs">
+            <i class="icon icon-barcode" aria-hidden="true"></i>&nbsp;&nbsp;</span>Produit
+        <span *ngIf="isRequired()"> *
+            <span class="sr-only"> Obligatoire</span>
+        </span>
+    </label>
+    <div class="form-select">
+        <initial-form-group labelText="Produit" [inputErrors]="produit.errors" [touched]="produit.touched" [errorDefs]="{required: 'Le produit est obligatoire'}">
+            <initial-select [formControl]="produit" name="produit" [items]="produits" [typeahead]="searchProduits" bindLabel="libelle"
+                aria-labelledby="produit" placeholder="Exemple : NOVODOR FC" [loadingText]="msg.SELECT_LOADING" [notFoundText]="msg.SELECT_NOT_FOUND"
+                class="select-lg"></initial-select>
+        </initial-form-group>
+    </div>
+    <button class="btn btn-default info" type="button" (click)="showInfo()" title="{{ info1 + ' ' + info2 }}">
+        <i class="icon icon-question-circle" aria-hidden="true"></i>
+    </button>
 </div>
+
+<app-modal [headerTitle]="'Produit'">
+    <div modal-body>
+        <p>Vous ne trouvez pas le produit par son nom ?</p>
+        <p>{{ info1 }}</p>
+        <p>{{ info2 }}</p>
+        <p>{{ info3 }}</p>
+    </div>
+</app-modal>

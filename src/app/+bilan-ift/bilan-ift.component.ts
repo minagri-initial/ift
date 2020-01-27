@@ -1,20 +1,19 @@
 import { Component, OnInit, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
-import 'rxjs/add/operator/first';
-
-
-import * as _ from 'lodash';
-import { BilanIftService } from './bilan-ift.service';
-import { Segment, TraitementIftComponent, TraitementIft } from '../+traitement-ift';
-import { GroupeCulture, Culture } from '../shared/culture/culture.model';
-import { Bilan, BilanParcelle, Parcelle, TraitementParcelle, BilanTraitementParcelle } from './bilan.model';
-import { TraitementIftModalComponent } from '../+traitement-ift/traitement-ift-modal.component';
-import { IftDBService } from '../shared/db/ift-db.service';
 import { Observable } from 'rxjs/Observable';
-import { Campagne, CampagneService } from '../shared/campagne';
+import { merge, findIndex } from 'lodash';
 
-declare var moment: any;
+import { BilanIftService } from '../shared/bilan-ift';
+import { Bilan, BilanParcelleCultivee, ParcelleCultivee, BilanParcelle, Parcelle } from '../shared/bilan-ift';
+import { TraitementIftModalComponent, ParcelleModalComponent } from '../shared/bilan-ift';
+
+import { Segment, TraitementIftComponent, TraitementIft } from '../shared/traitement-ift';
+import { GroupeCulture, Culture } from '../shared/culture/culture.model';
+import { IftDBService } from '../shared/db/ift-db.service';
+import { Campagne, CampagneService } from '../shared/campagne';
+import { ModalComponent } from '../shared/modal/modal.component';
+import { TitreModalComponent } from '../shared/modal/titre-modal.component';
 
 @Component({
     selector: 'app-bilan-ift',
@@ -23,15 +22,11 @@ declare var moment: any;
 })
 export class BilanIftComponent implements OnInit {
 
-    traitementModalRef: BsModalRef;
-
     campagnes: Campagne[];
-
     bilan: Bilan;
+    selectedBilan: Bilan;
 
-    click: boolean[] = [];
-
-    parcelles: string[] = [];
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -57,12 +52,14 @@ export class BilanIftComponent implements OnInit {
                     const campagne = campagnes.find(c => c.idMetier === campagneIdMetier);
 
                     this.bilan = new Bilan(campagne);
+                    this.selectedBilan = new Bilan(campagne);
 
                     this.iftDBService.getParcelles(campagne)
-                        .then((parcelles: Parcelle[]) => {
-                            this.bilan.bilanParcelles = parcelles as BilanParcelle[];
+                        .then((parcelles: ParcelleCultivee[]) => {
+                            this.bilan.bilanParcellesCultivees = [];
+                            parcelles.forEach(parcelle => this.bilan.bilanParcellesCultivees.push(new BilanParcelleCultivee(parcelle)));
 
-                            this.refreshBilanParcelle();
+                            this.getBilan(parcelles, false);
                         });
 
                 }
@@ -70,23 +67,47 @@ export class BilanIftComponent implements OnInit {
         });
     }
 
-    public refreshBilanParcelle() {
+    public refreshBilanParcelle(bilanParcelles: Array<BilanParcelleCultivee>) {
+        const parcelles = [];
+        bilanParcelles.forEach(bilanParcelle => parcelles.push(bilanParcelle.parcelleCultivee));
 
-        const parcelles = this.bilan.bilanParcelles;
-        this.bilanIftService.getBilan(parcelles).subscribe(
-            (response: Bilan) => {
-                _.merge(this.bilan, response);
-
-                this.bilan.bilanParcelles.forEach(parcelle => {
-
-                    if (!this.parcelles.includes(parcelle.nom)) {
-                        // TODO add fulltext search
-                        this.parcelles.push(parcelle.nom);
-                    }
-                });
-            }
-        );
+        this.getBilan(parcelles, false);
     }
+
+    public refreshSelectedBilanParcelle(bilanParcelles: Array<BilanParcelleCultivee>) {
+        const parcelles = [];
+        bilanParcelles.forEach(bilanParcelle => {
+            if (bilanParcelle.selected === true) {
+                parcelles.push(bilanParcelle.parcelleCultivee);
+            }
+        });
+
+        this.getBilan(parcelles, true);
+    }
+
+    public getBilan(parcelles: ParcelleCultivee[], selectedOnly: boolean) {
+        if (parcelles && parcelles.length > 0) {
+
+            parcelles.forEach(parcelle => parcelle.traitements.sort(function (a, b) {
+                return new Date(a.dateTraitement).getTime() - new Date(b.dateTraitement).getTime();
+            }));
+            this.bilanIftService.getBilan(parcelles).subscribe(
+                (response: Bilan) => {
+                    if (selectedOnly === false) {
+                        merge(this.bilan, response);
+                        this.bilan = { ...this.bilan }; // For change detection
+                    }
+                    this.selectedBilan = response;
+                }
+            );
+        } else {
+            if (selectedOnly === false) {
+                this.bilan = new Bilan(this.bilan.campagne);
+            }
+            this.selectedBilan = new Bilan(this.bilan.campagne);
+        }
+    }
+
     public nextCampagne() {
         this.router.navigate(['/bilan-ift', this.campagnes[this.campagneIndex + 1].idMetier]);
     }
@@ -96,116 +117,10 @@ export class BilanIftComponent implements OnInit {
     }
 
     public get campagneIndex() {
-        return _.findIndex(this.campagnes, this.bilan.campagne);
+        return findIndex(this.campagnes, this.bilan.campagne);
     }
 
-    public copyTraitementParcelle(indexBilan: number, indexTraitement: number) {
-        this.traitementModalRef = this.modalService.show(TraitementIftModalComponent, { class: 'modal-lg' });
-        const bilanParcelle = this.bilan.bilanParcelles[indexBilan];
-        this.traitementModalRef.content.nomParcelle = bilanParcelle.nom;
-        this.traitementModalRef.content.traitement = _.cloneDeep(bilanParcelle.traitements[indexTraitement]);
-        this.traitementModalRef.content.parcelles = this.parcelles;
-
-        const validate: Observable<{ nomParcelle: string, traitementParcelle: TraitementParcelle }>
-            = this.traitementModalRef.content.validate;
-
-        validate.first().subscribe((res) => {
-            this.createTraitementParcelle(res);
-            this.refreshBilanParcelle();
-        });
-    }
-
-    public deleteTraitementParcelle(indexBilan: number, indexTraitement: number) {
-        this.removeTraitementParcelle(indexBilan, indexTraitement);
-        this.refreshBilanParcelle();
-    }
-
-    private removeTraitementParcelle(indexBilan: number, indexTraitement: number) {
-        const bilanParcelle = this.bilan.bilanParcelles[indexBilan];
-        bilanParcelle.traitements.splice(indexTraitement, 1);
-
-        if (bilanParcelle.traitements.length === 0) {
-            // delete bilan parcelle
-            this.bilan.bilanParcelles.splice(indexBilan, 1);
-            this.iftDBService.deleteParcelle(bilanParcelle);
-        } else {
-            this.iftDBService.saveParcelle(bilanParcelle);
-        }
-    }
-
-    public editTraitementParcelle(indexBilan: number, indexTraitement: number) {
-        this.traitementModalRef = this.modalService.show(TraitementIftModalComponent, { class: 'modal-lg' });
-        const bilanParcelle = this.bilan.bilanParcelles[indexBilan];
-        this.traitementModalRef.content.nomParcelle = bilanParcelle.nom;
-        this.traitementModalRef.content.traitement = bilanParcelle.traitements[indexTraitement];
-        this.traitementModalRef.content.parcelles = this.parcelles;
-
-        const validate: Observable<{ nomParcelle: string, traitementParcelle: TraitementParcelle }>
-            = this.traitementModalRef.content.validate;
-
-        validate.first().subscribe((res) => {
-            this.updateTraitementParcelle(indexBilan, indexTraitement, res);
-            this.refreshBilanParcelle();
-        });
-    }
-
-    public addTraitementParcelle() {
-        this.traitementModalRef = this.modalService.show(TraitementIftModalComponent, { class: 'modal-lg' });
-        this.traitementModalRef.content.traitement = new TraitementParcelle(this.bilan.campagne);
-        this.traitementModalRef.content.parcelles = this.parcelles;
-
-        const validate: Observable<{ nomParcelle: string, traitementParcelle: TraitementParcelle }>
-            = this.traitementModalRef.content.validate;
-
-        validate.first().subscribe((res) => {
-            this.createTraitementParcelle(res);
-            this.refreshBilanParcelle();
-        });
-    }
-
-    private createTraitementParcelle(data: { nomParcelle, traitementParcelle }) {
-        const nomParcelle = data.nomParcelle;
-        const traitementParcelle = data.traitementParcelle;
-        const culture = traitementParcelle.iftTraitement.culture;
-
-        // Find parcelle by name and culture
-        let parcelle: Parcelle = this.bilan.bilanParcelles.find(p => {
-            return p.nom === nomParcelle
-                && p.culture.idMetier === culture.idMetier;
-        });
-
-        if (!parcelle) {
-            parcelle = new Parcelle(nomParcelle, culture);
-            parcelle.traitements.push(traitementParcelle);
-
-            this.bilan.bilanParcelles.push(parcelle as BilanParcelle);
-        } else {
-            parcelle.traitements.push(traitementParcelle);
-        }
-
-        this.iftDBService.saveParcelle(parcelle);
-    }
-
-    private updateTraitementParcelle(indexBilan: number, indexTraitement: number, data: { nomParcelle, traitementParcelle }) {
-        const bilanParcelle = this.bilan.bilanParcelles[indexBilan];
-        const newNomParcelle = data.nomParcelle;
-        const newTraitementParcelle = data.traitementParcelle;
-        const newCulture: Culture = newTraitementParcelle.iftTraitement.culture;
-
-        // nomParcelle or culture has been changed
-        if (newNomParcelle !== bilanParcelle.nom || newCulture.idMetier !== bilanParcelle.culture.idMetier) {
-            // Remove traitementParcelle and create a new one
-            this.removeTraitementParcelle(indexBilan, indexTraitement);
-            this.createTraitementParcelle(data);
-        } else {
-            bilanParcelle.traitements[indexTraitement] = newTraitementParcelle;
-            this.iftDBService.saveParcelle(bilanParcelle);
-        }
-
-    }
-
-    public getDateTraitement(date: string) {
-        moment.locale('fr');
-        return moment(date).format('DD/MM/YYYY');
+    showInfo() {
+        this.modalComponent.showInfo();
     }
 }

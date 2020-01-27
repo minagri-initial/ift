@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h1 *ngIf="!duplication" class="modal-title pull-left">Traitement de la parcelle</h1>
+    <h1 *ngIf="duplication" class="modal-title pull-left">Dupliquer mon traitement</h1>
+    <div class="close">
+        <button type="button" class="btn" (click)="bsModalRef.hide()" aria-label="Fermer la fenêtre modale">
+            <i class="icon icon-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="modal-body">
+    <form class="ift-form" [formGroup]="form">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <div class="form-group">
+                    <label id="parcelle" class="green">Parcelle *
+                        <span class="sr-only"> Obligatoire</span>
+                    </label>
+                    <div class="form-select">
+                        <initial-form-group labelText="Parcelle" [inputErrors]="parcelleCultivee.errors" [touched]="parcelleCultivee.touched" [errorDefs]="{required: 'La parcelle est obligatoire'}">
+                            <initial-select [formControl]="parcelleCultivee" name="parcelleCultivee" [items]="parcelles" bindLabel="libelle" aria-labelledby="parcelle"
+                                placeholder="Sélectionnez une parcelle" [filter]="false" class="select-lg"></initial-select>
+                        </initial-form-group>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="date" class="green">Date du traitement *
+                        <span class="sr-only"> Obligatoire</span>
+                    </label>
+                    <div class="form-select">
+                        <initial-form-group labelText="Date du traitement" [inputErrors]="date.errors" [touched]="date.touched && dateTouched" [errorDefs]="{required: 'La date du traitement est obligatoire'}">
+                            <input formControlName="date" type="text" aria-labelledby="date" class="form-control input-lg datepicker" bsDatepicker [bsConfig]="datePickerConfig"
+                                placeholder="JJ/MM/AAAA" autocomplete="off" (onHidden)="onDateHidden($event)">
+                        </initial-form-group>
+                        <button class="btn btn-default info" type="button" (click)="showDateTraitementInfo()" title="Si vous vous apprêtez à renseigner un traitement au champ, renseignez la date de ce traitement. Si vous vous apprêtez à renseigner un traitement de semences, renseignez la date du semis.">
+                            <i class="icon icon-question-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-traitement-ift *ngIf="dataInitialised" [hidden]="!parcelleCultivee.value" [parent]="form" name="traitementParcelle"></app-traitement-ift>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" (click)="submit()">Valider</button>
+</div>
+
+<app-modal [headerTitle]="'Date du traitement'">
+    <div modal-body>
+        <p>Si vous vous apprêtez à renseigner un traitement au champ, renseignez la date de ce traitement. Si vous vous apprêtez
+            à renseigner un traitement de semences, renseignez la date du semis.</p>
+    </div>
+</app-modal>

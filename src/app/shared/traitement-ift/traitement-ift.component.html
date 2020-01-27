@@ -1,0 +1,179 @@
+<div class="row" *ngIf="parent">
+    <div class="col-md-10 col-md-offset-1 ift-block">
+        <app-culture-field [parent]="parent" name="culture" [numerosAmm]="_numerosAmm">
+        </app-culture-field>
+
+        <app-type-traitement-field [parent]="parent" name="traitement" (onSelected)="onTraitementSelected()">
+        </app-type-traitement-field>
+
+        <div [ngClass]="{ 'hidden' : !typeTraitement.value || isTraitementAvantSemis()}">
+
+            <div [ngClass]="{ 'hidden': !numeroAmmByProduct}">
+                <app-produit-field [parent]="parent" name="produit">
+                </app-produit-field>
+                <div class="text-right numero-amm-select-toggle" *ngIf="numeroAmmByProduct">
+                    <button type="button" (click)="toggleNumeroAmmByProduct($event)">
+                        <label>Votre produit n'est pas dans la liste ?</label>
+                    </button>
+                </div>
+            </div>
+
+            <div [ngClass]="{ 'hidden': numeroAmmByProduct}">
+                <app-numero-amm-field [parent]="parent" name="numeroAmm">
+                </app-numero-amm-field>
+                <div class="text-right numero-amm-select-toggle" *ngIf="!numeroAmmByProduct">
+                    <button type="button" (click)="toggleNumeroAmmByProduct($event)">
+                        <label>Rechercher un produit</label>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-field" *ngIf="numerosAmm">
+                <div class="form-group">
+                    <label id="numeroAmm" class="green">Numéro AMM *
+                        <span class="sr-only"> Obligatoire</span>
+                    </label>
+                    <div class="form-select">
+                        <initial-form-group labelText="Numéro AMM" [inputErrors]="numeroAmm.errors" [touched]="numeroAmm.touched" [errorDefs]="{required: 'Le numéro AMM est obligatoire'}">
+                            <initial-select [formControl]="numeroAmm" name="numeroAmm" [items]="numerosAmm" bindLabel="idMetier" [filter]="false" aria-labelledby="numeroAmm"
+                                placeholder="Numéro AMM" class="select-lg"></initial-select>
+                        </initial-form-group>
+                    </div>
+                    <button class="btn btn-default info" type="button" (click)="showSeveralNumerosAmmInfo()" title="{{ infoSeveralNumerosAmm }}">
+                        <i class="icon icon-question-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <app-cible-field [parent]="parent" name="cible" [numerosAmm]="_numerosAmm">
+            </app-cible-field>
+        </div>
+    </div>
+</div>
+
+<div class="row" [ngClass]="{ 'hidden': !(culture.value && typeTraitement.value) && !isTraitementAvantSemis()}">
+    <div class="col-md-10 col-md-offset-1 ift-block">
+
+        <div class="form-group" [ngClass]="{ 'hidden': isTraitementAvantSemis() || !doseReference || !doseReference.dose}">
+            <label id="dose-appliquee" class="green">Dose appliquée</label>
+
+            <div class="validation-input-numeric">
+                <initial-form-group labelText="Dose appliquée" [inputErrors]="dose.errors" [touched]="dose.dirty" [errorDefs]="{numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+                    <div style="display: flex;">
+                        <div class="form-select">
+                            <input [formControl]="dose" type="text" name="dose" aria-labelledby="dose-appliquee" placeholder="Dose appliquée" class="form-control input-lg input-numeric"
+                                appNumberValidator appReplaceComma />
+                            <button class="btn btn-default info" type="button" (click)="showInfoDoseAppliquee()" title="{{ infoDoseAppliquee }}">
+                                <i class="icon icon-question-circle" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="form-select input-unite">
+                            <label id="unite-appliquee" class="sr-only">Unité appliquée</label>
+                            <initial-select [formControl]="unite" name="uniteAppliquee" [items]="unites" bindLabel="libelle" [filter]="false" aria-labelledby="unite-appliquee"
+                                placeholder="Unité" class="select-lg"></initial-select>
+                        </div>
+                    </div>
+                </initial-form-group>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'hidden': isTraitementAvantSemis() || !doseReference || !doseReference.dose}">
+            <label id="dose-reference" class="green">Dose de référence</label>
+            <div class="validation-input-numeric">
+                <div>
+                    <div class="form-select">
+                        <input [value]="doseReference ? doseReference.dose : ''" name="dose-reference" aria-labelledby="dose-reference" class="form-control input-lg input-numeric"
+                            disabled/>
+                    </div>
+                    <div class="form-select input-unite">
+                        <label id="unite-reference" class="sr-only">Unité référence</label>
+                        <input [value]="doseReference && doseReference.unite ? doseReference.unite.libelle : ''" name="unite-reference" aria-labelledby="unite-reference"
+                            class="form-control input-lg" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'hidden': !volumeDeBouillieNeeded() || isTraitementAvantSemis()}">
+            <label id="volume-bouillie" class="green">Volume de bouillie</label>
+            <div class="validation-input-numeric">
+                <initial-form-group labelText="Volume de bouillie" [inputErrors]="volumeDeBouillie.errors" [touched]="volumeDeBouillie.dirty"
+                    [errorDefs]="{numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+                    <div class="form-select" style="display: flex;">
+                        <input [formControl]="volumeDeBouillie" type="text" class="form-control input-lg input-numeric" name="volumeDeBouillie" aria-labelledby="volume-bouillie"
+                            placeholder="Volume de bouillie" appNumberValidator appReplaceComma />
+                        <label id="unite-volume-de-bouillie" class="sr-only">Unité du volume de bouillie</label>
+                        <input value="L/HA" name="unite-volume-de-bouillie" aria-labelledby="unite-volume-de-bouillie" class="form-control input-lg input-unite"
+                            disabled>
+                    </div>
+                </initial-form-group>
+            </div>
+        </div>
+
+        <app-surface-field [parent]="parent" name="facteurDeCorrection"></app-surface-field>
+
+        <div class="form-group">
+            <label id="commentaire" class="green">Commentaire</label>
+            <div class="form-select">
+                <initial-form-group labelText="Commentaire" [inputErrors]="commentaire.errors" [touched]="commentaire.touched" [errorDefs]="{required: 'Le commentaire est obligatoire'}">
+                    <input [formControl]="commentaire" name="commentaire" aria-labelledby="commentaire" class="form-control input-lg" placeholder="Commentaire">
+                </initial-form-group>
+                <button class="btn btn-default info" type="button" (click)="showCommentaire()" title="{{ infoCommentaire }}">
+                    <i class="icon icon-question-circle" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [ngClass]="{ 'hidden': !(culture.value && typeTraitement.value) && !isTraitementAvantSemis()}">
+    <div class="col-md-10 col-md-offset-1 ift-block" *ngIf="traitementIftResult">
+        <h2>IFT du traitement</h2>
+
+        <div class="row">
+            <div [ngClass]="{ 'col-md-4': withSignature, 'col-md-6': !withSignature }" class="text-center">
+                <div class="value-traitement-ift">{{ +traitementIftResult.ift.toFixed(2) }}</div>
+                <div class="value-segment visible-xs visible-sm" *ngIf="traitementIftResult.segment">Sur segment {{ traitementIftResult.segment.libelle }}</div>
+                <p class="avertissement text-left visible-xs visible-sm" *ngIf="traitementIftResult.avertissement">{{ traitementIftResult.avertissement.libelle }}</p>
+            </div>
+            <div [ngClass]="{ 'col-md-4': withSignature, 'col-md-6': !withSignature }" class="text-center">
+                <app-gauge [percentage]="getPercentage(traitementIftResult.ift)"></app-gauge>
+            </div>
+            <div *ngIf="withSignature" class="col-md-4 text-center">
+                <div>
+                    <button (click)="downloadSignedIft()" class="btn plain">
+                        <i *ngIf="downloading" class="icon icon-spinner icon-spin"></i>
+                        <span *ngIf="!downloading">Télécharger le PDF</span>
+                    </button>
+                </div>
+                <div>
+                    <button (click)="generateSignatureElectronique()" class="btn outline margin-top-20">
+                        Signer électroniquement
+                    </button>
+                </div>
+                <div class="qr-code">
+                    <img *ngIf="qrcode" [src]="qrcode">
+                </div>
+                <div>
+                    <button (click)="resetForm()" class="btn outline margin-top-20">
+                        Calculer un nouvel IFT
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="value-segment hidden-xs hidden-sm" *ngIf="traitementIftResult.segment">Sur segment {{ traitementIftResult.segment.libelle }}</div>
+            </div>
+            <div class="col-md-12">
+                <p class="avertissement text-center hidden-xs hidden-sm" *ngIf="traitementIftResult.avertissement">{{ traitementIftResult.avertissement.libelle }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal [headerTitle]="modalIsDoseAppliquee ? 'Dose appliquée' : modalIsSeveralNumerosAmm ? 'Numéro AMM' : 'Commentaire'">
+    <div modal-body>
+        <p *ngIf="modalIsDoseAppliquee">{{ infoDoseAppliquee }}</p>
+        <p *ngIf="modalIsSeveralNumerosAmm">{{ infoSeveralNumerosAmm }}</p>
+        <p *ngIf="modalIsCommentaire">{{ infoCommentaire }}</p>
+    </div>
+</app-modal>

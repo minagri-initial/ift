@@ -1,0 +1,207 @@
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 no-padding-sm">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-xs-12">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3 [innerHtml]="nbParcellesCultivees"></h3>
+                        <p>Parcelles cultivées</p>
+                    </div>
+                    <div class="small-box-icon">
+                        <i class="icon icon-flowerpot"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-xs-12">
+                <div class="small-box bg-pink">
+                    <div class="inner">
+                        <h3>
+                            <span *ngIf="bilan.bilanParSegment">{{ bilan.bilanParSegment.surface + ' HA' }}</span>
+                            <span *ngIf="!bilan.bilanParSegment && bilan.bilanParcellesCultivees.length > 0">
+                                <i class="icon icon-spinner icon-spin"></i>
+                            </span>
+                            <span *ngIf="!bilan.bilanParSegment && bilan.bilanParcellesCultivees.length === 0">0 HA</span>
+                        </h3>
+                        <p>Surface</p>
+                    </div>
+                    <div class="small-box-icon">
+                        <i class="icon-tetrisone"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-xs-12">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 [innerHtml]="getTraitementsTotal()"></h3>
+                        <p>Traitements</p>
+                    </div>
+                    <div class="small-box-icon">
+                        <i class="icon icon-flask"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-xs-12">
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3>
+                            <span *ngIf="bilan.bilanParSegment">{{ bilan.bilanParSegment.total.toFixed(2) }}</span>
+                            <span *ngIf="!bilan.bilanParSegment && bilan.bilanParcellesCultivees.length > 0">
+                                <i class="icon icon-spinner icon-spin"></i>
+                            </span>
+                            <span *ngIf="!bilan.bilanParSegment && bilan.bilanParcellesCultivees.length === 0">0</span>
+                        </h3>
+                        <p>IFT total</p>
+                    </div>
+                    <div class="small-box-icon">
+                        <i class="icon icon-globe"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="bilan.bilanParcellesCultivees && bilan.bilanParcellesCultivees.length > 0">
+    <div class="col-md-10 col-md-offset-1 ift-block">
+        <h2>Synthèse</h2>
+
+        <tabset type="pills">
+
+            <tab customClass="chart-tab" active="true">
+                <ng-template tabHeading>
+                    <i class="icon icon-barchart" aria-hidden="true"></i>
+                </ng-template>
+
+                <div *ngIf="parcelleChartData && parcelleChartData.length > 0" class="chart-figure">
+                    <figure>
+                        <figcaption>Parcelle / segment</figcaption>
+                        <div class="chart-container">
+                            <ngx-charts-bar-vertical-stacked class="chart" [view]="null" [results]="parcelleChartData" xAxis="true" yAxis="true" gridLines="true"
+                                [legend]="true" [legendTitle]="'Légende'">
+                            </ngx-charts-bar-vertical-stacked>
+                        </div>
+                    </figure>
+                </div>
+
+                <div *ngIf="cultureChartData && cultureChartData.length > 0" class="chart-figure">
+                    <figure>
+                        <figcaption>Culture / segment</figcaption>
+                        <div class="chart-container">
+                            <ngx-charts-bar-vertical-stacked class="chart" [view]="null" [results]="cultureChartData" xAxis="true" yAxis="true" gridLines="true"
+                                [legend]="true" [legendTitle]="'Légende'">
+                            </ngx-charts-bar-vertical-stacked>
+                        </div>
+                    </figure>
+                </div>
+            </tab>
+
+            <tab customClass="table-tab">
+                <ng-template tabHeading>
+                    <i class="icon icon-table" aria-hidden="true"></i>
+                </ng-template>
+
+                <div class="chart-figure">
+                    <div class="table-caption">Parcelle / segment</div>
+                    <div class="table-responsive" *ngIf="bilanByParcelle">
+                        <table class="table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th></th>
+                                    <th>Surface</th>
+                                    <th>Semences</th>
+                                    <th>Biocontrôle</th>
+                                    <th>Herbicide</th>
+                                    <th>Insecticide acaricide</th>
+                                    <th>Fongicide bactéricide</th>
+                                    <th>Autres</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let parcelle of parcelles">
+                                    <th>{{ parcelle }}</th>
+                                    <td class="text-center">{{ bilanByParcelle[parcelle].surface }} HA</td>
+                                    <td *ngFor="let segment of segments" class="text-center">
+                                        <app-bilan-table-cell [total]="bilanByParcelle[parcelle]" [segment]="segment"></app-bilan-table-cell>
+                                    </td>
+                                    <td class="text-center">
+                                        <app-bilan-table-cell [total]="bilanByParcelle[parcelle]" [segment]="segmentTotal"></app-bilan-table-cell>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>IFT des parcelles</th>
+                                    <td class="text-center">
+                                        <span *ngIf="bilan.bilanParSegment">{{ bilan.bilanParSegment.surface + ' HA' }}</span>
+                                        <span *ngIf="!bilan.bilanParSegment">
+                                            <i class="icon icon-spinner icon-spin"></i>
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let segment of segments" class="text-center">
+                                        <app-bilan-table-cell [total]="bilan.bilanParSegment" [segment]="segment"></app-bilan-table-cell>
+                                    </td>
+                                    <td class="text-center">
+                                        <app-bilan-table-cell [total]="bilan.bilanParSegment" [segment]="segmentTotal"></app-bilan-table-cell>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-figure">
+                    <div class="table-caption">Culture / segment</div>
+                    <div class="table-responsive" *ngIf="bilanByCulture">
+                        <table class="table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th></th>
+                                    <th>Surface</th>
+                                    <th>Semences</th>
+                                    <th>Biocontrôle</th>
+                                    <th>Herbicide</th>
+                                    <th>Insecticide acaricide</th>
+                                    <th>Fongicide bactéricide</th>
+                                    <th>Autres</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let culture of cultures">
+                                    <th>{{ culture }}</th>
+                                    <td class="text-center">{{ bilanByCulture[culture].surface }} HA</td>
+                                    <td *ngFor="let segment of segments" class="text-center">
+                                        <app-bilan-table-cell [total]="bilanByCulture[culture]" [segment]="segment"></app-bilan-table-cell>
+                                    </td>
+                                    <td class="text-center">
+                                        <app-bilan-table-cell [total]="bilanByCulture[culture]" [segment]="segmentTotal"></app-bilan-table-cell>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>IFT des parcelles</th>
+                                    <td class="text-center">
+                                        <span *ngIf="bilan.bilanParSegment">{{ bilan.bilanParSegment.surface + ' HA' }}</span>
+                                        <span *ngIf="!bilan.bilanParSegment">
+                                            <i class="icon icon-spinner icon-spin"></i>
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let segment of segments" class="text-center">
+                                        <app-bilan-table-cell [total]="bilan.bilanParSegment" [segment]="segment"></app-bilan-table-cell>
+                                    </td>
+                                    <td class="text-center">
+                                        <app-bilan-table-cell [total]="bilan.bilanParSegment" [segment]="segmentTotal"></app-bilan-table-cell>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+
+        </tabset>
+
+    </div>
+</div>

@@ -1,6 +1,26 @@
 <div class="form-group">
-    <label id="cible">Cible</label>
-    <app-select [(ngModel)]="value" name="cible" (onTermChanged)="termChanged($event)"
-        [list]="cibles" optionField="libelle"
-        aria-labelledby="cible" placeholder="Exemple : Doryphore"></app-select>
+    <label id="cible" class="green">
+        <span class="hidden-xs">
+            <i class="icon icon-bullseye" aria-hidden="true"></i>&nbsp;&nbsp;</span>Cible
+        <span *ngIf="isRequired()"> *
+            <span class="sr-only"> Obligatoire</span>
+        </span>
+    </label>
+    <div class="form-select">
+        <initial-form-group labelText="Cible" [inputErrors]="cible.errors" [touched]="cible.touched" [errorDefs]="{required: 'La cible est obligatoire'}">
+            <initial-select [formControl]="cible" name="cible" [items]="cibles" [typeahead]="searchCibles" bindLabel="libelle" aria-labelledby="cible"
+                placeholder="Exemple : Coléoptères phytophages" [loadingText]="msg.SELECT_LOADING" [notFoundText]="msg.SELECT_NOT_FOUND"
+                class="select-lg"></initial-select>
+        </initial-form-group>
+    </div>
+    <button class="btn btn-default info" type="button" (click)="showInfo()" title="{{ info }}">
+        <i class="icon icon-question-circle" aria-hidden="true"></i>
+    </button>
 </div>
+
+<app-modal [headerTitle]="'Cible'">
+    <div modal-body>
+        <p>{{ info }}</p>
+        <p *ngIf="info2">{{ info2 }}</p>
+    </div>
+</app-modal>

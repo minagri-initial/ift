@@ -1,7 +1,6 @@
-import { Component, HostListener, OnInit, Inject } from '@angular/core';
+import { Component, HostListener, OnInit, AfterViewInit, Inject, HostBinding } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Campagne, CampagneService } from '../shared/campagne';
-import { SWAGGER_URL } from '../app.config';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -9,7 +8,9 @@ import { environment } from '../../environments/environment';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
+
+    activeCampagneIdMetier = '';
 
     currentUrl: string;
     isCollapsed = true;
@@ -18,9 +19,10 @@ export class NavbarComponent implements OnInit {
 
     showIntro = true;
 
-    environmentName = '';
-    environmentId = '';
-    productionUrl = '';
+    environment = environment;
+
+    @HostBinding('style.height')
+    height = '47px';
 
     @HostListener('window:scroll', ['$event'])
     onWindowScroll($event: any): void {
@@ -31,14 +33,16 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    constructor( @Inject(SWAGGER_URL) public swaggerUrl: string,
-        private router: Router) {
-        this.environmentName = environment.name;
-        this.environmentId = environment.id;
-        this.productionUrl = environment.productionUrl;
+    constructor( private router: Router,
+    private campagneService: CampagneService) {
     }
 
     ngOnInit() {
+        this.campagneService.activeCampagne.subscribe((campagne) => {
+            if (campagne) {
+                this.activeCampagneIdMetier = campagne.idMetier;
+            }
+        });
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this.currentUrl = event.url;
@@ -48,11 +52,28 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    hideIntro() {
-        this.showIntro = false;
+    ngAfterViewInit() {
+        setTimeout(_ => {
+            this._setSize();
+        });
     }
 
+    hideIntro() {
+        this.showIntro = false;
+        this.height = '47px';
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this._setSize();
+    }
+
+    private _setSize(){
+        const bandeauHeight = document.getElementById('bandeau') ? document.getElementById('bandeau').clientHeight : 0;
+        this.height = (47 + bandeauHeight) + 'px';
+    }
+    
     environnementIsProduction() {
-        return this.environmentId === 'prod';
+        return this.environment.id === 'prod';
     }
 }

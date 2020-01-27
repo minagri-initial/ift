@@ -1,4 +1,6 @@
-<button class="donnez-mon-avis" (click)="showAvis($event)">Donnez votre avis&nbsp;&nbsp;<i class="fa fa-star" aria-hidden="true"></i></button>
+<button class="donnez-mon-avis" (click)="showAvis($event)">Donnez votre avis&nbsp;&nbsp;
+  <i class="icon icon-star" aria-hidden="true"></i>
+</button>
 
 <div *ngIf="avisIsVisible" class="modal show" role="dialog" autofocus tabindex="0">
   <div class="modal-dialog">
@@ -8,7 +10,7 @@
         <div class="modal-header">
           <div class="close">
             <button type="button" class="btn" (click)="hideAvis()" aria-label="Fermer la fenêtre modale">
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i class="icon icon-times" aria-hidden="true"></i>
             </button>
           </div>
           <h1 class="modal-title">Votre avis nous aide à progresser</h1>
@@ -16,18 +18,18 @@
 
         <div class="modal-body">
           <div class="row">
-            <div class="form-group col-sm-12">
+            <div class="col-sm-12">
               <span class="bold" id="avis-slider">Comment avez-vous trouvé ce service ? </span>
               <app-star-slider [id]="'avis-slider'" [title]="'Comment avez-vous trouvé ce service ?'" (change)="setNote($event)"></app-star-slider>
             </div>
 
-            <div class="form-group col-sm-12">
+            <div class="col-sm-12">
               <label for="comment">Comment pourrions-nous l'améliorer ? </label>
               <textarea class="form-control" rows="5" id="comment" maxlength="1500" name="comment" [(ngModel)]="avis.commentaire"></textarea>
               <span class="help-block">Max 1500 caractères</span>
             </div>
 
-            <div class="form-group col-sm-12">
+            <div class="col-sm-12">
               <label for="contact">Si vous souhaitez être recontacté.e, laissez-nous vos coordonnées : </label>
               <textarea class="form-control" rows="2" id="contact" maxlength="1500" name="contact" [(ngModel)]="avis.contact"></textarea>
               <span class="help-block">Max 1500 caractères</span>

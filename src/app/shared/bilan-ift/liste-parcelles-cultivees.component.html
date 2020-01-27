@@ -1,0 +1,167 @@
+<div class="row" *ngIf="!bilanParcellesCultivees || bilanParcellesCultivees.length === 0">
+    <div class="col-md-10 col-md-offset-1 ift-block">
+        <div>Aucune parcelle enregistrée pour cette campagne.
+            <span *ngIf="allowUpdate"> Ajoutez une nouvelle parcelle pour débuter le bilan IFT.</span>
+        </div>
+
+        <div *ngIf="allowUpdate">
+            <button class="btn outline" type="button" (click)="addParcelle()" style="margin-top: 20px">
+                Ajouter une parcelle
+            </button>
+        </div>
+    </div>
+</div>
+
+<div [hidden]="!(bilanParcellesCultivees && bilanParcellesCultivees.length > 0)" class="row">
+    <div class="col-md-10 col-md-offset-1 ift-block">
+        <h2>Mes traitements</h2>
+        <div [hidden]="!loading" class="text-center" style="margin-top: 1em; margin-bottom: 1em;">
+            <i class="icon icon-spinner icon-spin" style="font-size: 40px"></i>
+        </div>
+        <div [hidden]="loading">
+            <div class="action-buttons text-right">
+                <button *ngIf="allowUpdate" type="button" (click)="addParcelle()" class="btn outline">Ajouter une parcelle</button>
+                <button *ngIf="allowUpdate" type="button" (click)="addTraitementParcelle()" class="btn outline">Ajouter un traitement</button>
+                <button *ngIf="allowDownload" (click)="downloadBilanPdf()" class="btn plain">
+                    <i *ngIf="downloading" class="icon icon-spinner icon-spin"></i>
+                    <span *ngIf="!downloading">Sauvegarder le bilan</span>
+                </button>
+                <button *ngIf="!allowUpdate && !allowDownload" (click)="updateBilan()" class="btn plain">
+                    <span>Modifier et éditer un nouveau bilan {{ campagne.libelle }}</span>
+                </button>
+                <button class="btn plain bars-btn" mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <i class="icon icon-bars" aria-hidden="true">
+                        <span class="sr-only">Menu</span>
+                    </i>
+                </button>
+            </div>
+
+            <div class="table-row table-header">
+                <div *ngIf="allowUpdate" class="hidden-xs table-column table-column-icon"></div>
+                <div class="table-column table-column-icon"></div>
+                <div class="table-column-wrapper">
+                    <div class="table-column table-column-text">Parcelle</div>
+                    <div class="table-column table-column-num">Surface</div>
+                </div>
+                <div class="table-column-wrapper">
+                    <div class="table-column table-column-text">Culture</div>
+                    <div class="table-column-group">
+                        <div *ngIf="allowUpdate" class="table-column table-column-icon"></div>
+                        <div *ngIf="allowUpdate" class="table-column table-column-icon"></div>
+                        <div *ngIf="allowUpdate" class="table-column table-column-icon"></div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template ngFor let-bilanParcelleCultivee [ngForOf]="bilanParcellesCultivees" let-indexBilan="index">
+                <div class="table-row">
+                    <div *ngIf="allowUpdate" class="hidden-xs table-column table-column-icon">
+                        <mat-checkbox [(ngModel)]="bilanParcelleCultivee.selected" [name]="'selected' + indexBilan" (ngModelChange)="refreshBilan(indexBilan)"></mat-checkbox>
+                    </div>
+                    <div class="table-column table-column-icon" (click)="click[indexBilan] = !click[indexBilan]">
+                        <i *ngIf="click[indexBilan]" class="icon icon-chevron-down" aria-hidden="true"></i>
+                        <i *ngIf="!click[indexBilan]" class="icon icon-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="table-column-wrapper" (click)="click[indexBilan] = !click[indexBilan]">
+                        <div class="table-column table-column-text">{{ bilanParcelleCultivee.parcelleCultivee.parcelle.nom }}</div>
+                        <div class="table-column table-column-num">{{ bilanParcelleCultivee.parcelleCultivee.parcelle.surface }} HA</div>
+                    </div>
+                    <div class="table-column-wrapper" (click)="click[indexBilan] = !click[indexBilan]">
+                        <div class="table-column table-column-text">{{ bilanParcelleCultivee.parcelleCultivee.culture.libelle }}</div>
+                        <div class="table-column-group">
+                            <button *ngIf="allowUpdate" class="btn table-column table-column-icon" type="button" (click)="editParcelle(indexBilan)" aria-label="Modifier"
+                                title="Modifier">
+                                <i class="icon icon-pencil"></i>
+                            </button>
+                            <button *ngIf="allowUpdate" class="btn table-column table-column-icon" type="button" (click)="copyParcelle(indexBilan)" aria-label="Copier"
+                                title="Copier">
+                                <i class="icon icon-clone"></i>
+                            </button>
+                            <button *ngIf="allowUpdate" class="btn table-column table-column-icon" type="button" (click)="removeParcelle(indexBilan)"
+                                aria-label="Supprimer" title="Supprimer">
+                                <i class="icon icon-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive" *ngIf="click[indexBilan] && bilanParcelleCultivee.parcelleCultivee.traitements.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Produit</th>
+                                <th class="hidden-xs">Cible</th>
+                                <th class="hidden-xs">%</th>
+                                <th class="hidden-xs">Dose</th>
+                                <th class="hidden-xs">Segment</th>
+                                <th>IFT</th>
+                                <th *ngIf="allowUpdate"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let traitement of bilanParcelleCultivee.parcelleCultivee.traitements; let indexTraitement = index;">
+                                <td>{{ getDateTraitement(traitement.dateTraitement) }}</td>
+                                <td>{{ traitement.produitLibelle ? traitement.produitLibelle : (traitement.numeroAmm ? traitement.numeroAmm.idMetier
+                                    : '-')}}
+                                </td>
+                                <td class="hidden-xs">{{ traitement.cible ? traitement.cible.libelle : '-' }}
+                                </td>
+                                <td class="hidden-xs">{{ traitement.facteurDeCorrection }}%</td>
+                                <td class="hidden-xs">{{ traitement.dose }} {{ traitement.dose && traitement.unite ? traitement.unite.libelle :
+                                    '-' }}</td>
+                                <td class="hidden-xs">
+                                    <span *ngIf="traitement.segment">{{ traitement.segment.libelle }}</span>
+                                    <span *ngIf="!traitement.segment">
+                                        <i class="icon icon-spinner icon-spin"></i>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span *ngIf="traitement.ift">{{ traitement.ift.toFixed(2) }}</span>
+                                    <span *ngIf="!traitement.ift">
+                                        <i class="icon icon-spinner icon-spin"></i>
+                                    </span>
+                                </td>
+                                <td *ngIf="allowUpdate" class="btn-column">
+                                    <button class="btn" type="button" (click)="editTraitementParcelle(indexBilan, indexTraitement)" aria-label="Modifier" title="Modifier">
+                                        <i class="icon icon-pencil"></i>
+                                    </button>
+                                    <button class="btn" type="button" (click)="copyTraitementParcelle(indexBilan, indexTraitement)" aria-label="Copier" title="Copier">
+                                        <i class="icon icon-clone"></i>
+                                    </button>
+                                    <button class="btn" type="button" (click)="deleteTraitementParcelle(indexBilan, indexTraitement)" aria-label="Supprimer"
+                                        title="Supprimer">
+                                        <i class="icon icon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+
+            <div class="action-buttons text-right" style="margin-top: 20px;">
+                <button *ngIf="allowUpdate" type="button" (click)="addParcelle()" class="btn outline">Ajouter une parcelle</button>
+                <button *ngIf="allowUpdate" type="button" (click)="addTraitementParcelle()" class="btn outline">Ajouter un traitement</button>
+                <button *ngIf="allowDownload" (click)="downloadBilanPdf()" class="btn plain">
+                    <i *ngIf="downloading" class="icon icon-spinner icon-spin"></i>
+                    <span *ngIf="!downloading">Sauvegarder le bilan</span>
+                </button>
+                <button *ngIf="!allowUpdate && !allowDownload" (click)="updateBilan()" class="btn plain">
+                    <span>Modifier et éditer un nouveau bilan {{ campagne.libelle }}</span>
+                </button>
+                <button class="btn plain bars-btn" mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <i class="icon icon-bars" aria-hidden="true">
+                        <span class="sr-only">Menu</span>
+                    </i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-menu #appMenu="matMenu" [overlapTrigger]="false" xPosition="before">
+    <button mat-menu-item (click)="doShareUrl()">Partager le bilan</button>
+    <button mat-menu-item (click)="downloadAsCSV()">Télécharger au format CSV</button>
+    <button *ngIf="allowUpdate" mat-menu-item (click)="newBilan()">Nouveau bilan</button>
+</mat-menu>

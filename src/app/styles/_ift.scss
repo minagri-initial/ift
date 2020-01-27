@@ -1,46 +1,39 @@
 .container-ift {
     padding-top: 60px;
     padding-bottom: 110px;
-
-    .ift-form{
-
+    .ift-form {
         display: flex;
         flex-direction: column;
+    }
+    .ift-block {
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-bottom: 5px solid $secondary_color;
+    }
+}
 
-        .ift-block {
-            background-color: #fff;
-            margin-bottom: 20px;
-            padding: 40px;
+.btn-ift {
+    font-size: 1.8rem;
+    padding: 15px 50px;
+    color: #fff;
+    background-color: $primary_color;
+    border-color: $primary_color;
+    text-transform: initial;
+}
 
-        }
-
-        .btn-ift {
-            margin-top: 30px;
-            font-size: 1.5em;
-            padding: 15px 50px;
-            width: 255px;
-        }
-
-        @media (max-width:480px) {
-            .btn-ift {
-                padding: 15px 30px;
-            }
-        }
+@media (max-width:480px) {
+    .btn-ift {
+        padding: 15px 30px;
     }
 }
 
 .campagne-title {
-    
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
-    
     h2 {
         font-size: 1.5em;
     }
-
-    button {
-        margin-bottom: 20px;
-    }
-
 }

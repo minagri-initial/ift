@@ -1,20 +1,21 @@
 .chart-gauge {
-  width: 280px;
+    width: 280px;
+    margin: auto;
 }
 
 .chart-filled {
-  fill: #DEA82C;
+    fill: #DEA82C;
 }
 
 .chart-empty {
-  fill: #dedede;
+    fill: #dedede;
 }
 
 .needle,
 .needle-center {
-  fill: #464A4F;
+    fill: #464A4F;
 }
 
 svg {
-  font: 10px sans-serif;
+    font: 10px sans-serif;
 }

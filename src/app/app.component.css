@@ -1,5 +1,5 @@
 .wrapper-footer {
-    min-height: -moz-calc(100vh - 100px - 1.5em);
-    min-height: -webkit-calc(100vh - 100px - 1.5em);
-    min-height: calc(100vh - 100px - 1.5em);
+    min-height: -moz-calc(100vh - 295px);
+    min-height: -webkit-calc(100vh - 295px);
+    min-height: calc(100vh - 295px);
 }

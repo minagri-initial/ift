@@ -1,78 +1,113 @@
 import {
-    Component, Input, OnChanges, SimpleChanges,
-    ViewChild, Optional, Inject, AfterViewInit
+    Component, Input, ViewChild, OnInit, OnChanges, SimpleChanges,
+    AfterContentInit, EventEmitter, OnDestroy
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/debounceTime';
+
 import { Culture } from './culture.model';
 import { CultureService } from './culture.service';
-import { Campagne } from '../campagne/campagne.model';
+import { ModalComponent } from '../modal/modal.component';
+import { hasRequiredField } from '../field/field.validator';
+
+import { Messages } from '../messages';
 import { NumeroAmm } from '../numero-amm/numero-amm.model';
-import { Cible } from '../cible/cible.model';
-import { BaseFieldComponent } from '../field/base-field.component';
-import { NG_VALUE_ACCESSOR, NgModel, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
     selector: 'app-culture-field',
     templateUrl: './culture-field.component.html',
-    styleUrls: ['../field/field.component.scss'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: CultureFieldComponent, multi: true }
-    ]
+    styleUrls: ['../field/field.component.scss']
 })
-export class CultureFieldComponent extends BaseFieldComponent<Culture> implements OnChanges, AfterViewInit {
+export class CultureFieldComponent implements OnInit, OnChanges, AfterContentInit, OnDestroy {
 
-    cultures: BehaviorSubject<Culture[]> = new BehaviorSubject([]);
-    term: string = null;
+    @Input() parent: FormGroup;
+    @Input() numerosAmm: NumeroAmm[];
 
-    @ViewChild(NgModel) model: NgModel;
+    searchCultures = new EventEmitter<string>();
+    cultures: Culture[];
+    subscription: Subscription;
+    term: string;
+    msg = Messages;
 
-    @Input()
-    campagne: Campagne;
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
+    info1 = 'Votre culture n\'est pas présente ? Regardez les noms commençant par « autres ».';
+    info2 = `Vous pouvez également consulter la liste des cultures sur lesquelles sont définies
+        les doses de référence avant de faire votre recherche.`;
 
-    @Input()
-    numeroAmm: NumeroAmm;
+    constructor(private cultureService: CultureService) { }
 
-    @Input()
-    cible: Cible;
-
-    @Input()
-    required = false;
-
-    constructor(
-        @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-        @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-        private cultureService: CultureService
-    ) {
-        super(validators, asyncValidators);
+    get culture() {
+        return this.parent.get('culture');
     }
 
-    ngAfterViewInit() {
-        this.model.valueChanges.subscribe(newValue => {
-            const newTerm = newValue ? newValue.libelle : null;
-            this.termChanged(newTerm);
-        });
+    public isRequired() {
+        return hasRequiredField(this.culture);
+    }
+
+    get campagne() {
+        return this.parent.get('campagne');
+    }
+
+    get cible() {
+        return this.parent.get('cible');
+    }
+
+    ngOnInit() {
+        this.refreshCultures();
+
+        this.searchCultures
+            .distinctUntilChanged()
+            .debounceTime(200)
+            .subscribe(term => {
+                this.term = term;
+                this.getCultures(term);
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.refreshList();
+        this.refreshCultures();
     }
 
-    termChanged(term) {
+    ngAfterContentInit() {
+        if (this.campagne) {
+            this.campagne.valueChanges
+                .subscribe(() => this.refreshCultures());
+        }
 
-        if (this.term !== term) {
-            this.term = term;
-            this.refreshList();
+        if (this.cible) {
+            this.cible.valueChanges
+                .subscribe(() => this.refreshCultures());
         }
     }
 
-    refreshList() {
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
-        this.cultureService.query(this.campagne, this.numeroAmm, this.cible, this.term, 7)
-            .subscribe(cultures => {
-                this.cultures.next(cultures);
+    refreshCultures() {
+        this.getCultures(this.term);
+    }
+
+    getCultures(filter?: string) {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.subscription = this.cultureService.query(
+            this.campagne ? this.campagne.value : null, this.numerosAmm, this.cible ? this.cible.value : null, filter, 7)
+            .subscribe((res: Culture[]) => {
+                this.cultures = res;
+            }, err => {
+                this.cultures = [];
             });
+    }
+
+    showInfo() {
+        this.modalComponent.showInfo();
     }
 
 }

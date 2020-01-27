@@ -1,28 +1,29 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { API_URL } from '../../app.config';
 import { Culture } from './culture.model';
 import { NumeroAmm } from '../numero-amm/numero-amm.model';
 import { Campagne } from '../campagne/campagne.model';
 import { Cible } from '../cible/cible.model';
 import { CustomEncoder } from '../http/custom-codec.class';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CultureService {
 
-    constructor(
-        @Inject(API_URL) private _apiUrl: string,
-        private _http: HttpClient
-      ) { }
+    private _apiUrl = environment.apiUrl;
 
-    query(campagne?: Campagne, numeroAmm?: NumeroAmm, cible?: Cible, filter?: string, size?: number) {
+    constructor(private _http: HttpClient) { }
+
+    query(campagne?: Campagne, numerosAmm?: NumeroAmm[], cible?: Cible, filter?: string, size?: number) {
         let queryParams = new HttpParams({ encoder: new CustomEncoder()});
         if (campagne) {
             queryParams = queryParams.set('campagneIdMetier', campagne.idMetier);
         }
-        if (numeroAmm) {
-            queryParams = queryParams.set('numeroAmmIdMetier', numeroAmm.idMetier);
+        if (numerosAmm) {
+            numerosAmm.forEach(numeroAmm => {
+                queryParams = queryParams.append('numeroAmmIdMetier', numeroAmm.idMetier);
+            });
         }
         if (cible) {
             queryParams = queryParams.set('cibleIdMetier', cible.idMetier);

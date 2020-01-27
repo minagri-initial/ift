@@ -1,28 +1,46 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
-import { API_URL } from '../../app.config';
+import 'rxjs/add/operator/map';
+
 import { Campagne } from './campagne.model';
 
-import * as _ from 'lodash';
+import { sortBy } from 'lodash';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CampagneService {
 
-    constructor(
-        @Inject(API_URL) private _apiUrl: string,
-        private _http: HttpClient
-    ) { }
+    private _apiUrl = environment.apiUrl;
+	private _activeCampagne: BehaviorSubject<Campagne> = new BehaviorSubject(undefined);
+	
+    constructor(private _http: HttpClient) {
+		this.getActiveCampagne();
+    }
+
+    get activeCampagne(): Observable<Campagne> {
+        return this._activeCampagne.asObservable();
+    }
 
     list() {
         return this._http.get(this._apiUrl + '/campagnes')
             .map(campagnes => {
-                return _.sortBy(campagnes, 'idMetier') as Campagne[];
+                return sortBy(campagnes, 'idMetier') as Campagne[];
             });
     }
 
     get(idMetier: string) {
         return this._http.get(this._apiUrl + '/campagnes/' + idMetier)
             .map(response => response as Campagne);
+    }
+
+    private getActiveCampagne() {
+        this._http.get(this._apiUrl + '/campagnes/courante')
+            .map(response => response as Campagne)
+            .subscribe((result: Campagne) => {
+                this._activeCampagne.next(result);
+            });
     }
 }

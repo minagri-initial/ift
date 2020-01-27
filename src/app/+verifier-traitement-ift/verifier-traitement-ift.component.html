@@ -1,30 +1,33 @@
+<!-- Section: intro -->
+<section #intro class="intro">
+    <div class="slogan">
+        <h1>Vérifier un IFT</h1>
+    </div>
+</section>
+<!-- /Section: intro -->
+
 <section class="main-section bg-gray">
     <div class="container container-ift">
-        
-        <form class="ift-form" #iftForm="ngForm" (ngSubmit)="onSubmit(iftForm)">
-            
-            <div class="ift-title text-center">
-                <h1>Vérifier un IFT</h1>
-                <i class="fa fa-2x fa-angle-down"></i>
-            </div>
 
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 ift-block">
-                    
-                    <div class="form-group">
-                        <label id="signature-electronique">Signature électronique</label>
-                        <input [(ngModel)]="signature" type="text" name="signature-electronique" aria-labelledby="signature-eletronique" placeholder="Signature électronique"
-                                class="form-control input-lg"/>
-                    </div>
+        <div class="ift-form">
 
-                    <div style="text-align: center">
-                        <button type="submit" class="btn btn-skin btn-ift">
-                            Vérifier l'IFT</button>
-                    </div>
+            <div class="row campagne-block" *ngIf="!traitementIftResult && !error">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 info-block">
+                    <p class="small">
+                        <i class="icon icon-info-circle" aria-hidden="true"></i>&nbsp;&nbsp; Notre service signe électroniquement les IFT qu’il calcule, que le traitement soit
+                        saisi depuis cet atelier de calcul ou depuis n’importe quel logiciel agricole qui utilise notre API.
+                        <br /> Pour vérifier un IFT, vous devriez trouver sur les éditions de bilans d’IFT soit un lien, soit un
+                        QR code à scanner qui déclenchera cette fonctionnalité.</p>
                 </div>
             </div>
 
-            <div class="row" *ngIf="error">
+            <div class="row campagne-block" *ngIf="traitementIftResult && traitementIftResult.campagne">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 ift-block">
+                    <h2 style="margin-bottom: 0px;">Campagne {{ traitementIftResult.campagne.libelle }}</h2>
+                </div>
+            </div>
+
+            <div class="row campagne-block" *ngIf="error">
                 <div class="col-md-10 col-md-offset-1 ift-block error-block">
                     <div>{{ error }}</div>
                 </div>
@@ -32,19 +35,24 @@
 
             <div class="row" *ngIf="traitementIftResult">
                 <div class="col-md-10 col-md-offset-1 ift-block verification-block">
-                    <div *ngIf="traitementIftResult.campagne">
-                        <div>Campagne</div>
-                        <div>{{ traitementIftResult.campagne.libelle }}</div>
-                    </div>
-
                     <div *ngIf="traitementIftResult.culture">
                         <div>Culture</div>
                         <div>{{ traitementIftResult.culture.libelle }}</div>
                     </div>
 
+                    <div *ngIf="traitementIftResult.typeTraitement">
+                        <div>Traitement</div>
+                        <div>{{ traitementIftResult.typeTraitement.libelle }}</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.produitLibelle">
+                        <div>Produit</div>
+                        <div>{{ traitementIftResult.produitLibelle }}</div>
+                    </div>
+
                     <div *ngIf="traitementIftResult.numeroAmm">
                         <div>Numéro AMM</div>
-                        <div>{{ traitementIftResult.numeroAmm.libelle }}</div>
+                        <div>{{ traitementIftResult.numeroAmm.idMetier }}</div>
                     </div>
 
                     <div *ngIf="traitementIftResult.cible">
@@ -55,39 +63,53 @@
             </div>
 
             <div class="row" *ngIf="traitementIftResult">
-                    <div class="col-md-10 col-md-offset-1 ift-block verification-block">
-                        <div *ngIf="traitementIftResult.traitement">
-                            <div>Traitement</div>
-                            <div>{{ traitementIftResult.traitement.libelle }}</div>
-                        </div>
-    
-                        <div *ngIf="!isTraitementAvantSemis()">
-                            <div>Dose appliquée</div>
-                            <div>{{ traitementIftResult.dose }}<span *ngIf="traitementIftResult.unite">&nbsp;{{ traitementIftResult.unite.libelle }}</span></div>
-                        </div>
-    
-                        <div *ngIf="traitementIftResult.volumeDeBouillie">
-                            <div>Volume de bouillie</div>
-                            <div>{{ traitementIftResult.volumeDeBouillie }} hL/hA</div>
-                        </div>
+                <div class="col-md-10 col-md-offset-1 ift-block verification-block">
 
-                        <div>
-                            <div>Surface traitée</div>
-                            <div>{{ traitementIftResult.facteurDeCorrection }} %</div>
+                    <div *ngIf="traitementIftResult.dose">
+                        <div>Dose appliquée</div>
+                        <div>{{ traitementIftResult.dose }}
+                            <span *ngIf="traitementIftResult.unite">&nbsp;{{ traitementIftResult.unite.libelle }}</span>
                         </div>
                     </div>
+
+                    <div *ngIf="traitementIftResult.doseReference">
+                        <div>Dose de référence</div>
+                        <div>{{ traitementIftResult.doseReference }}
+                            <span *ngIf="traitementIftResult.uniteDoseReference">&nbsp;{{ traitementIftResult.uniteDoseReference.libelle }}</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.volumeDeBouillie">
+                        <div>Volume de bouillie</div>
+                        <div>{{ traitementIftResult.volumeDeBouillie }} L/HA</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.facteurDeCorrection">
+                        <div>Surface traitée</div>
+                        <div>{{ traitementIftResult.facteurDeCorrection }} %</div>
+                    </div>
+
+                    <div *ngIf="traitementIftResult.commentaire">
+                        <div>Commentaire</div>
+                        <div>{{ traitementIftResult.commentaire }}</div>
+                    </div>
                 </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 ift-block" *ngIf="traitementIftResult">
                     <h3>IFT du traitement</h3>
-                    <div class="value-traitement-ift">{{ traitementIftResult.ift }}</div>
+                    <div class="result-traitement-ift">
+                        <app-gauge [percentage]="getPercentage(traitementIftResult.ift)"></app-gauge>
+                        <div class="value-traitement-ift">{{ +traitementIftResult.ift.toFixed(2) }}</div>
+                    </div>
+
                     <div class="value-segment" *ngIf="traitementIftResult.segment">Sur segment {{ traitementIftResult.segment.libelle }}</div>
-                    <p *ngIf="traitementIftResult.avertissement">{{ traitementIftResult.avertissement.libelle }}</p>
-                    <div class="text-right date-signature">Certifié le {{ getDateCreationSignature() }}</div>
+                    <p class="avertissement" *ngIf="traitementIftResult.avertissement">{{ traitementIftResult.avertissement.libelle }}</p>
+                    <div class="text-right date-signature">Certifié le {{ traitementIftResult.dateCreation | date: 'dd/MM/yy à HH:mm'}}</div>
                 </div>
             </div>
-                
-        </form>
+
+        </div>
     </div>
 </section>

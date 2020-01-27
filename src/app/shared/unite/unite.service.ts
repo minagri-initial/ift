@@ -1,16 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { API_URL } from '../../app.config';
 import { Unite } from './unite.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UniteService {
 
-    constructor(
-        @Inject(API_URL) private _apiUrl: string,
-        private _http: Http
-      ) { }
+    private _apiUrl = environment.apiUrl;
+
+    constructor(private _http: Http) { }
 
     list() {
         return this._http.get(this._apiUrl + '/unites')
