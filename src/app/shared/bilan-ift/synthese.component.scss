@@ -1,0 +1,116 @@
+@import '../../styles/vars';
+.table-responsive,
+.table {
+    margin: 0;
+    padding: 0 10px;
+    td {
+        vertical-align: middle;
+    }
+    .btn-column {
+        padding-left: 0;
+        padding-right: 0;
+        white-space: nowrap;
+        text-align: right;
+        .btn {
+            background-color: transparent;
+        }
+    }
+}
+
+figure {
+    .chart-container {
+        display: flex;
+        justify-content: center;
+        .chart {
+            flex-grow: 1;
+            min-height: 300px;
+        }
+        /deep/ .chart-legend {
+            @media (max-width: 767px) {
+                display: none;
+            }
+        }
+    }
+}
+
+figcaption,
+.table-caption {
+    font-weight: 400;
+    text-align: left;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin: 10px 40px 30px 40px;
+}
+
+tfoot {
+    background-color: #EEE;
+}
+
+.small-box {
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    padding: 10px;
+    text-align: right;
+    &.bg-aqua {
+        background-color: #00c0ef !important;
+        color: #fff !important;
+    }
+    &.bg-pink {
+        background-color: #d81b60 !important;
+        color: #fff !important;
+    }
+    &.bg-green {
+        background-color: #00a65a !important;
+        color: #fff !important;
+    }
+    &.bg-purple {
+        background-color: #605ca8 !important;
+        color: #fff !important;
+    }
+    h3 {
+        font-size: 3em;
+        font-weight: 700;
+        margin: 0 0 10px;
+        white-space: nowrap;
+        padding: 0;
+    }
+    p {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        padding-top: 20px;
+    }
+    .small-box-icon {
+        transition: all .3s linear;
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        z-index: 0;
+        font-size: 9.0rem;
+        color: rgba(0, 0, 0, .15);
+    }
+}
+
+.no-padding-sm {
+    @media (min-width: 768px) {
+        padding: 0;
+    }
+}
+
+.chart-figure,
+.table-figure {
+    background-color: #F5F5F5;
+    margin: 20px 0;
+    padding: 20px 0;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container /deep/ .chart-legend .legend-labels {
+    background: transparent;
+    .legend-label-text {
+        color: black;
+    }
+}

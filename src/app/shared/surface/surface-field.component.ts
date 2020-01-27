@@ -1,54 +1,89 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, ViewChild, Optional, Inject } from '@angular/core';
+import { Component, Input, AfterContentInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatSliderChange } from '@angular/material/slider';
-import { BaseFieldComponent } from '../field/base-field.component';
-import { NG_VALUE_ACCESSOR, NgModel, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { Traitement } from '../traitement/index';
+import { TypeTraitement } from '../type-traitement/index';
 
 @Component({
     selector: 'app-surface-field',
     templateUrl: './surface-field.component.html',
-    styleUrls: ['./surface-field.component.scss', '../../shared/field/field.component.scss'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: SurfaceFieldComponent, multi: true }
-    ]
+    styleUrls: ['./surface-field.component.scss', '../../shared/field/field.component.scss']
 })
-export class SurfaceFieldComponent extends BaseFieldComponent<number> {
+export class SurfaceFieldComponent implements AfterContentInit {
 
-    surfaceTraiteeByPercent = true;
+    @Input() parent: FormGroup;
 
-    @ViewChild(NgModel) model: NgModel;
-    @Input() traitement: Traitement;
+    sliderValue = 100;
 
-    surfaceTraitee;
-    surfaceTotale;
+    constructor() { }
 
-    constructor(
-        @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-        @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>
-    ) {
-        super(validators, asyncValidators);
+    get facteurDeCorrection() {
+        return this.parent.get('facteurDeCorrection');
+    }
+
+    get surfaceTraitee() {
+        return this.parent.get('surfaceTraitee');
+    }
+
+    get surfaceTotale() {
+        return this.parent.get('surfaceTotale');
+    }
+
+    get traitement() {
+        return this.parent.get('typeTraitement');
+    }
+
+    isTraitementAvantSemis() {
+        return this.traitement.value && this.traitement.value.avantSemis;
+    }
+
+    ngAfterContentInit() {
+        if (this.surfaceTraitee) {
+            this.surfaceTraitee.valueChanges
+                .subscribe(() => this.dataChanged());
+        }
+
+        if (this.surfaceTotale) {
+            this.surfaceTotale.valueChanges
+                .subscribe(() => this.dataChanged());
+        }
+
+        if (this.facteurDeCorrection) {
+            this.sliderValue = this.facteurDeCorrection.value;
+            this.facteurDeCorrection.valueChanges
+                .subscribe(() => this.sliderValue = this.facteurDeCorrection.value);
+        }
     }
 
     public onSliderChange(event: any) {
-        let surface = event;
-        if (event.value) {
-            surface = event.value;
-        }
-        this.value = surface;
+        this.facteurDeCorrection.patchValue(event.value);
+    }
+
+    public isFacteurDeCorrectionEnabled() {
+        return this.facteurDeCorrection.enabled;
     }
 
     public toggleSurfaceTraiteeByPercent(event: Event) {
         event.preventDefault();
         event.stopPropagation();
 
-        this.surfaceTraitee = null;
-        this.surfaceTotale = null;
-        this.surfaceTraiteeByPercent = !this.surfaceTraiteeByPercent;
+        this.surfaceTraitee.patchValue(null);
+        if (!this.surfaceTotale.disabled) {
+            this.surfaceTotale.patchValue(null);
+        }
+
+        if (!this.isFacteurDeCorrectionEnabled()) {
+            this.facteurDeCorrection.enable();
+        } else {
+            this.facteurDeCorrection.disable();
+        }
     }
 
-    public dataChanged(event: Event) {
-        if (this.surfaceTraitee && this.surfaceTotale) {
-            this.value = this.surfaceTraitee * 100 / this.surfaceTotale;
+    public dataChanged() {
+        if (this.surfaceTotale.value === '0') {
+            this.facteurDeCorrection.patchValue(100);
+        } else if (this.surfaceTraitee.value && !isNaN(this.surfaceTraitee.value) &&
+            this.surfaceTotale.value && !isNaN(this.surfaceTotale.value)) {
+            this.facteurDeCorrection.patchValue(+(this.surfaceTraitee.value * 100 / this.surfaceTotale.value).toFixed(2));
         }
     }
 }

@@ -1,0 +1,54 @@
+@import '../../styles/vars';
+.value-traitement-ift {
+    text-align: center;
+    font-size: 9em;
+    font-weight: 600;
+}
+
+.result-traitement-ift {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.value-segment {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.view-signature-electronique {
+    margin-bottom: 20px;
+    button {
+        color: $primary_color;
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+        label {
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+        &:hover,
+        &:focus,
+        label:hover,
+        label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}
+
+.avertissement {
+    color: $primary_color;
+}
+
+.qr-code {
+    img {
+        max-width: 250px;
+    }
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}

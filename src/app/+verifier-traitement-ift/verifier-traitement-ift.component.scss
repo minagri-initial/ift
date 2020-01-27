@@ -1,37 +1,29 @@
 @import '../styles/vars';
-
-.form-group, .data {
+.form-group,
+.data {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
     flex-wrap: wrap;
-
-    .form-field {
-        flex-grow: 1
-    }
-
     label {
         flex-grow: 2;
         font-size: 1.5em;
         font-weight: 400;
         margin-bottom: 15px;
     }
-
     input {
         flex-grow: 1;
         width: 100%;
         max-width: 470px;
         margin-bottom: 10px;
     }
-
 }
 
 .verification-block div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     div {
         margin: auto;
         margin-left: 0;
@@ -64,4 +56,15 @@
     color: $primary_color;
     font-size: 1.2em;
     font-weight: 400;
+}
+
+.avertissement {
+    color: $primary_color;
+}
+
+.result-traitement-ift {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }

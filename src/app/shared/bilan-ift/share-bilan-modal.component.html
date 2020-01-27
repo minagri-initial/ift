@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h1 class="modal-title pull-left">Partager le bilan</h1>
+    <div class="close">
+        <button type="button" class="btn" (click)="bsModalRef.hide()" aria-label="Fermer la fenêtre modale">
+            <i class="icon icon-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="input-group input-group-lg">
+        <input #inputUrl class="form-control" value="{{ url }}" readonly>
+        <div class="input-group-addon" title="Copier dans le presse papier" (click)="copyToClipboard()"><i class="icon icon-clone"></i></div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" (click)="bsModalRef.hide()">Ok</button>
+</div>

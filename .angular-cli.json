@@ -9,7 +9,10 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "manifest.json",
+        "robots.txt",
+        "sitemap.xml"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,15 +21,12 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "serviceWorker": true,
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/font-awesome/css/font-awesome.min.css",
         "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-        "styles.scss"
-      ],
-      "scripts": [
-        "../node_modules/moment/min/moment.min.js",
-        "../node_modules/moment/min/moment-with-locales.min.js"
+        "styles.scss",
+        "assets/css/ift-fonts.css"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

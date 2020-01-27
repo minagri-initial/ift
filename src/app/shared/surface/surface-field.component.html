@@ -1,31 +1,63 @@
 <div class="form-group">
-    <label id="surface-traitee">{{ traitement && traitement.avantSemis ? 'Proportion de semences traitées' : 'Surface traitée' }}</label>
-    <mat-slider min="0" max="100" [value]="value" (change)="onSliderChange($event)" aria-labelledby="surface-traitee-percent" [disabled]="!surfaceTraiteeByPercent"></mat-slider>
-    <div class="input-group input-group-lg input-unite">
-        <input [(ngModel)]="value" name="surface" aria-labelledby="surface-traitee-percent"
-        class="form-control" describedby="surface-addon" [disabled]="!surfaceTraiteeByPercent">
-        <div class="input-group-addon" id="surface-addon">%</div>
+    <label id="surface-traitee" class="green">{{ isTraitementAvantSemis() ? 'Proportion de semences traitées' : 'Surface traitée' }}</label>
+    <div class="form-select" style="margin-bottom: 0px;">
+        <initial-form-group [labelText]="isTraitementAvantSemis() ? 'Proportion de semences traitées' : 'Surface traitée'" [inputErrors]="facteurDeCorrection.errors"
+            [touched]="facteurDeCorrection.dirty" [errorDefs]="{numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+            <div class="validation-input-numeric">
+                <div>
+                    <mat-slider min="0" max="100" [(ngModel)]="sliderValue" (change)="onSliderChange($event)" aria-labelledby="surface-traitee-percent"
+                        [disabled]="!isFacteurDeCorrectionEnabled()"></mat-slider>
+                    <div class="input-group input-group-lg input-unite">
+                        <input [formControl]="facteurDeCorrection" name="facteurDeCorrection" aria-labelledby="surface-traitee-percent" class="form-control"
+                            describedby="surface-addon" appNumberValidator appReplaceComma>
+                        <div class="input-group-addon" id="surface-addon">%</div>
+                    </div>
+                </div>
+            </div>
+        </initial-form-group>
     </div>
 </div>
-<div class="text-right surface-traitee-select-toggle" *ngIf="surfaceTraiteeByPercent">
+<div class="text-right surface-traitee-select-toggle" *ngIf="isFacteurDeCorrectionEnabled()">
     <button type="button" (click)="toggleSurfaceTraiteeByPercent($event)">
         <label>Calculer le pourcentage</label>
     </button>
 </div>
 
-<div class="form-group" *ngIf="!surfaceTraiteeByPercent">
-    <label id="surface-traitee">{{ traitement && traitement.avantSemis ? 'Quantité de semences traitées semées' : 'Surface traitée' }}</label>
-    <input [(ngModel)]="surfaceTraitee" (ngModelChange)="dataChanged($event)" type="text" class="form-control input-lg input-numeric" name="surface-traitee" aria-labelledby="surface-traitee" [placeholder]="traitement && traitement.avantSemis ? 'Semences traitées' : 'Surface traitée'" />
-    <input value='Unité' name="unite-surface-traitee" aria-labelledby="unite-surface-traitee"
-    class="form-control input-lg input-unite" disabled>
+<div class="form-group" *ngIf="!isFacteurDeCorrectionEnabled()">
+    <label class="green" id="surface-traitee">{{ isTraitementAvantSemis() ? 'Quantité de semences traitées semées' : 'Surface traitée' }}</label>
+    <div class="form-select">
+        <initial-form-group [labelText]="isTraitementAvantSemis() ? 'Quantité de semences traitées semées' : 'Surface traitée'" [inputErrors]="surfaceTraitee.errors"
+            [touched]="surfaceTraitee.dirty" [errorDefs]="{numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+            <div class="validation-input-numeric">
+                <div>
+                    <input [formControl]="surfaceTraitee" type="text" class="form-control input-lg input-numeric" name="surface-traitee" aria-labelledby="surface-traitee"
+                        [placeholder]="isTraitementAvantSemis() ? 'Semences traitées' : 'Surface traitée'" appNumberValidator
+                        appReplaceComma />
+                    <input value='Unité' name="unite-surface-traitee" aria-labelledby="unite-surface-traitee" class="form-control input-lg input-unite"
+                        disabled>
+                </div>
+            </div>
+        </initial-form-group>
+    </div>
 </div>
-<div class="form-group" *ngIf="!surfaceTraiteeByPercent">
-    <label id="surface-totale">{{ traitement && traitement.avantSemis ? 'Quantité totale de semences semées' : 'Surface totale' }}</label>        
-    <input [(ngModel)]="surfaceTotale" (ngModelChange)="dataChanged($event)" type="text" class="form-control input-lg input-numeric" name="surface-totale" aria-labelledby="surface-totale" [placeholder]="traitement && traitement.avantSemis ? 'Semences semées' : 'Surface totale'" />
-    <input value='Unité' name="unite-surface-totale" aria-labelledby="unite-surface-totale"
-    class="form-control input-lg input-unite" disabled>
+<div class="form-group" *ngIf="!isFacteurDeCorrectionEnabled()">
+    <label id="surface-totale" class="green">{{ isTraitementAvantSemis() ? 'Quantité totale de semences semées' : 'Surface totale' }}</label>
+    <div class="form-select">
+        <initial-form-group [labelText]="isTraitementAvantSemis()? 'Quantité totale de semences semées' : 'Surface totale'" [inputErrors]="surfaceTotale.errors"
+            [touched]="surfaceTotale.dirty" [errorDefs]="{numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+            <div class="validation-input-numeric">
+                <div>
+                    <input [formControl]="surfaceTotale" type="text" class="form-control input-lg input-numeric" name="surface-totale" aria-labelledby="surface-totale"
+                        [placeholder]="isTraitementAvantSemis() ? 'Semences semées' : 'Surface totale'" appNumberValidator appReplaceComma
+                    />
+                    <input value='Unité' name="unite-surface-totale" aria-labelledby="unite-surface-totale" class="form-control input-lg input-unite"
+                        disabled>
+                </div>
+            </div>
+        </initial-form-group>
+    </div>
 </div>
-<div class="text-right surface-traitee-select-toggle" *ngIf="!surfaceTraiteeByPercent">
+<div class="text-right surface-traitee-select-toggle" *ngIf="!isFacteurDeCorrectionEnabled()">
     <button type="button" (click)="toggleSurfaceTraiteeByPercent($event)">
         <label>Sélectionner le pourcentage</label>
     </button>

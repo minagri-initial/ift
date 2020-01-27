@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h1 class="modal-title pull-left">Attention</h1>
+    <div class="close">
+        <button type="button" class="btn" (click)="bsModalRef.hide()" aria-label="Fermer la fenêtre modale">
+            <i class="icon icon-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="modal-body">
+    <div *ngIf="!loading">
+        <i class="icon icon-exclamation-triangle" aria-hidden="true"></i>
+        Cette action est irréversible !
+        <br/> Nous allons remplacer les données actuellement stockées dans votre navigateur pour le bilan {{ campagneLibelle }}
+        par les données de ce bilan. Si vous ne voulez pas perdre les données actuellement stockées, veillez à les télécharger
+        sous forme de bilan afin de les sauvegarder avant de poursuivre.
+    </div>
+    <div *ngIf="loading" class="text-center" style="margin-top: 1em; margin-bottom: 1em;">
+        <i class="icon icon-spinner icon-spin" style="font-size: 40px"></i>
+    </div>
+</div>
+<div *ngIf="!loading" class="modal-footer">
+    <button class="btn btn-default" (click)="bsModalRef.hide()">Annuler</button>
+    <button class="btn btn-warning" (click)="confirm()">Modifier et éditer un nouveau bilan {{ campagneLibelle }}</button>
+</div>

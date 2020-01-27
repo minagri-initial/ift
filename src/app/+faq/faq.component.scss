@@ -1,0 +1,60 @@
+.container {
+    margin-bottom: 110px;
+}
+
+.faq {
+    max-width: 800px;
+    margin: auto;
+    a {
+        text-decoration: underline;
+    }
+}
+
+h1 {
+    font-size: 1.3em;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 60px;
+    margin-bottom: 20px; // color: $primary_background;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    text-transform: initial; // color: $primary_background;
+}
+
+ul {
+    font-size: 1.4rem;
+}
+
+.mat-expansion-panel {
+    background-color: transparent;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+}
+
+mat-expansion-panel-header {
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-bottom: 15px;
+    padding-top: 25px;
+}
+
+:host .mat-expansion-panel-body {
+    margin: 0;
+    color: #666;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+mat-expansion-panel mat-expansion-panel-header mat-panel-title {
+    font-size: 1.1em;
+    color: #666;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}

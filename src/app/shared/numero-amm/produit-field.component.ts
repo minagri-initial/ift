@@ -1,79 +1,126 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Optional, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {
+    Component, Input, Output, EventEmitter, OnInit, AfterContentInit,
+    OnDestroy, ViewChild, Optional, Inject
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/debounceTime';
+
 import { Produit } from './produit.model';
-import { NumeroAmm } from './numero-amm.model';
 import { ProduitService } from './produit.service';
-import { NumeroAmmService } from './numero-amm.service';
-import { Culture } from '../culture/culture.model';
-import { Campagne } from '../campagne/campagne.model';
-import { Cible } from '../cible/cible.model';
-import { BaseFieldComponent } from '../field/base-field.component';
-import { NG_VALUE_ACCESSOR, NgModel, NG_VALIDATORS, NG_ASYNC_VALIDATORS } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { select } from 'd3';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ModalComponent } from '../modal/modal.component';
+import { hasRequiredField } from '../field/field.validator';
+
+import { Messages } from '../messages';
 
 @Component({
     selector: 'app-produit-field',
     templateUrl: './produit-field.component.html',
-    styleUrls: ['./produit-field.component.scss', '../field/field.component.scss'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: ProduitFieldComponent, multi: true }
-    ]
+    styleUrls: ['./produit-field.component.scss', '../field/field.component.scss']
 })
-export class ProduitFieldComponent extends BaseFieldComponent<Produit | NumeroAmm> implements OnChanges, AfterViewInit {
+export class ProduitFieldComponent implements OnInit, AfterContentInit, OnDestroy {
 
-    produits: BehaviorSubject<Produit[]> = new BehaviorSubject([]);
-    term: string = null;
+    @Input() parent: FormGroup;
 
-    @ViewChild(NgModel) model: NgModel;
+    searchProduits = new EventEmitter<string>();
+    produits: Produit[];
+    term: string;
+    msg = Messages;
+    subscription: Subscription;
 
-    @Input()
-    campagne: Campagne;
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
+    info1 = `Vérifiez tout d'abord si le produit pour lequel vous cherchez à calculer
+     l'IFT est bien un produit phytopharmaceutique. La base Ephy de l'Anses peut vous aider
+      en ce sens. Il est rappelé que les adjuvants n'entrent pas en compte dans le calcul
+       de l'IFT.`;
+    info2 = `Essayez également de rechercher le produit par son numéro d'AMM en cliquant
+     sur « Votre produit n'est pas dans la liste ?». Le numéro d'AMM est une information
+      figurant sur l'emballage ou la fiche du produit.`;
+    info3 = `Si vous ne retrouvez toujours pas le produit, il est toujours possible de poursuivre
+    la saisie des informations relatives au calcul de l'IFT du traitement, en précisant notamment dans
+    le champ « commentaire » le nom et/ou le numéro d'AMM du produit utilisé. Le produit étant absent
+    du référentiel de calcul, l'IFT du traitement sera à 1, le cas échéant, corrigé par le pourcentage
+    de surface traitée.`;
 
-    @Input()
-    culture: Culture;
+    constructor(private produitService: ProduitService) { }
 
-    @Input()
-    cible: Cible;
-
-    @Input()
-    required = false;
-
-    constructor(
-        @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-        @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-        private produitService: ProduitService
-    ) {
-        super(validators, asyncValidators);
+    get produit() {
+        return this.parent.get('produit');
     }
 
-    ngAfterViewInit() {
-        this.model.valueChanges.subscribe(newValue => {
-            const newTerm = newValue ? newValue.libelle : null;
-            this.termChanged(newTerm);
-        });
+    public isRequired() {
+        return hasRequiredField(this.produit);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-
-        this.refreshList();
+    get campagne() {
+        return this.parent.get('campagne');
     }
 
-    termChanged(term) {
+    get culture() {
+        return this.parent.get('culture');
+    }
 
-        if (this.term !== term) {
-            this.term = term;
-            this.refreshList();
+    get cible() {
+        return this.parent.get('cible');
+    }
+
+    ngOnInit() {
+        this.refreshProduits();
+
+        this.searchProduits
+            .distinctUntilChanged()
+            .debounceTime(200)
+            .subscribe(term => {
+                this.term = term;
+                return this.getProduits(term);
+            });
+    }
+
+    ngAfterContentInit() {
+        if (this.campagne) {
+            this.campagne.valueChanges
+                .subscribe(() => this.refreshProduits());
+        }
+
+        if (this.culture) {
+            this.culture.valueChanges
+                .subscribe(() => this.refreshProduits());
+        }
+
+        if (this.cible) {
+            this.cible.valueChanges
+                .subscribe(() => this.refreshProduits());
         }
     }
 
-    public refreshList() {
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
-        this.produitService.query(this.campagne, this.culture, this.cible, this.term, 7)
-            .subscribe(produits => {
-                this.produits.next(produits);
+    refreshProduits() {
+        this.getProduits(this.term);
+    }
+
+    getProduits(filter?: string) {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.subscription = this.produitService.query(
+            this.campagne ? this.campagne.value : null, this.culture ? this.culture.value : null,
+            this.cible ? this.cible.value : null, filter, 7)
+            .subscribe((res: Produit[]) => {
+                this.produits = res;
+            }, err => {
+                this.produits = [];
             });
+    }
+
+    showInfo() {
+        this.modalComponent.showInfo();
     }
 
 }

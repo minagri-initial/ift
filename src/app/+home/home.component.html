@@ -2,189 +2,186 @@
 <section #intro class="intro">
 
   <div class="slogan">
-    <h2>Indicateur de Fréquence de Traitements phytosanitaires</h2>
-  </div>
-  <div class="page-scroll">
-    <button (click)="scroll(ift)" class="btn btn-circle">
-        <i class="fa fa-angle-double-down animated"></i>
-    </button>
+    <h1>Atelier de calcul
+      <span>de l'Indicateur de Fréquence de Traitements phytopharmaceutiques</span>
+    </h1>
   </div>
 </section>
 <!-- /Section: intro -->
 
-<!-- Section: ift -->
-<section #ift class="home-section text-center">
+<div class="container-fluid tools" [ngClass]="{ 'open': areToolsOpen }">
+  <div class="row">
+    <div class="col-sm-12">
+      <ul>
+        <li>
+          <button class="btn" aria-label="Tous" [ngClass]="{ 'active': allTools }" (click)="showAllTools()">
+            <span class="button-label">Tous</span>
+            <span class="visible-xs">
+              <i class="icon icon-ellipsis-h icon-2x" aria-hidden="true"></i>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="btn" aria-label="Je cultive" [ngClass]="{ 'active': toolsCultivee }" (click)="showToolsCultive()">
+            <span class="button-label">Je cultive</span>
+            <span class="visible-xs">
+              <i class="icon icon-pagelines icon-2x" aria-hidden="true"></i>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="btn" aria-label="J'accompagne" [ngClass]="{ 'active': toolsAccompagne }" (click)="showToolsAccompagne()">
+            <span class="button-label">J'accompagne</span>
+            <span class="visible-xs">
+              <i class="icon icon-users icon-2x" aria-hidden="true"></i>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="btn" aria-label="Je contrôle" [ngClass]="{ 'active': toolsControle }" (click)="showToolsControle()">
+            <span class="button-label">Je contrôle</span>
+            <span class="visible-xs">
+              <i class="icon icon-check icon-2x" aria-hidden="true"></i>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="btn" aria-label="Je développe" [ngClass]="{ 'active': toolsDeveloppe }" (click)="showToolsDeveloppe()">
+            <span class="button-label">Je développe</span>
+            <span class="visible-xs">
+              <i class="icon icon-code icon-2x" aria-hidden="true"></i>
+            </span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-  <div class="heading-about">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <div class="section-heading">
-              <h2>Calculez votre IFT</h2>
-              <i class="fa fa-2x fa-angle-down"></i>
-            </div>
-        </div>
+<div class="container">
+  <div class="row choose-tools hidden-xs">
+    <div class="col-sm-12">
+      <img alt="" class="img-arrow" src="assets/img/arrow.jpeg" height="65px">
+      <h3>J’adopte les outils adaptés à mon métier</h3>
+    </div>
+  </div>
+
+  <div class="row services">
+    <div class="col-sm-4 col-md-3" [ngClass]="{'col-md-offset-1-half': toolsCultivee}" *ngIf="showDosesReference()">
+      <div class="service-box light-green">
+        <div class="up"></div>
+        <a [routerLink]="['/doses-reference', activeCampagneIdMetier]" (click)="scroll(intro)" class="service-icon">
+          <i class="icon icon-flask" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>Doses de référence</h2>
+            <p>Rechercher la ou les doses de référence IFT qui correspondent à votre culture, à votre produit ou à votre cible.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" *ngIf="showIftTraitement()">
+      <div class="service-box pink">
+        <div class="up"></div>
+        <a [routerLink]="['traitement-ift', activeCampagneIdMetier]" (click)="scroll(intro)" class="service-icon">
+          <i class="icon icon-calculator" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>IFT d'un traitement</h2>
+            <p>Calculer l’IFT de votre traitement phytopharmaceutique.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" [ngClass]="{'col-md-offset-3': toolsControle}" *ngIf="showBilanIFT()">
+      <div class="service-box light-blue">
+        <div class="up"></div>
+        <a [routerLink]="['bilan-ift', activeCampagneIdMetier]" (click)="scroll(intro)" class="service-icon">
+          <i class="icon icon-barchart" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>Bilan IFT</h2>
+            <p>Réaliser le bilan d’IFT de votre exploitation agricole ou d’un ensemble de parcelles agricoles.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" *ngIf="showVerifierIFT()">
+      <div class="service-box green">
+        <div class="up"></div>
+        <a [routerLink]="['/verifier-traitement-ift']" (click)="scroll(intro)" class="service-icon">
+          <i class="icon icon-fingerprint" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>IFT certifié</h2>
+            <p>Afficher les informations contenues dans la signature électronique d’un IFT calculé par nos services.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" [ngClass]="{'col-md-offset-1-half': allTools}" *ngIf="showDownloadData()">
+      <div class="service-box purple">
+        <div class="up"></div>
+        <a [routerLink]="['/fichiers-csv']" class="service-icon">
+          <i class="icon icon-download" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>Export du référentiel</h2>
+            <p>Télécharger les fichiers CSV des cultures, des cibles, des produits et des doses de référence.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" [ngClass]="{'col-md-offset-3': toolsDeveloppe}" *ngIf="showConsulterAPI()">
+      <div class="service-box grey">
+        <div class="up"></div>
+        <a [routerLink]="['/espace-partenaire']" class="service-icon">
+          <i class="icon icon-code" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>Open API</h2>
+            <p>Afficher la documentation interactive pour débuter avec les API REST IFT.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-md-3" *ngIf="showAccederCodeSource()">
+      <div class="service-box dark">
+        <div class="up"></div>
+        <a href="https://github.com/minagri-initial" target="_blank" rel="noopener" class="service-icon" title="Accéder au code source - ouvre dans une nouvelle fenêtre">
+          <i class="icon icon-github-alt" aria-hidden="true"></i>
+          <div class="service-desc">
+            <h2>Code source</h2>
+            <p>Consulter le code source de cette application qui est disponible sur notre dépôt Github.</p>
+          </div>
+        </a>
       </div>
     </div>
   </div>
+</div>
+
+<div class="container-fluid welcome-container">
   <div class="container">
-
     <div class="row">
-      <div class="col-lg-2 col-lg-offset-5">
-        <hr class="marginbot-50">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-          <div class="service-box">
-            <a [routerLink]="['/doses-reference']" (click)="scroll(intro)" class="btn btn-default service-icon">
-                <i class="fa fa-search" aria-hidden="true"></i><!-- Recherche des doses de référence -->
-            </a>
-            <div class="service-desc">
-              <h5>Doses de référence</h5>
-              <p>Consulter les doses de référence d'une culture, d'un produit ou d'une cible utilisées pour le calcul de l'IFT.</p>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4">
-          <div class="service-box">
-            <a [routerLink]="['traitement-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
-                <i class="fa fa-line-chart" aria-hidden="true"></i><!--IFT de traitement-->
-            </a>
-            <div class="service-desc">
-              <h5>IFT de traitement</h5>
-              <p>Calculer l'IFT de votre traitement.</p>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4">
-          <div class="service-box">
-            <a [routerLink]="['bilan-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
-                <i class="fa fa-table" aria-hidden="true"></i><!--Import csv-->
-            </a>
-            <div class="service-desc">
-              <h5>Bilan IFT</h5>
-              <p>Calculer le bilan d'IFT sur une ou un ensemble de parcelles à partir d'un import de fichiers.</p>
-            </div>
-          </div>
-      </div>
-    </div>
-
-    
-
-  </div>
-</section>
-<!-- /Section: ift -->
-
-<!-- Section: partners -->
-<section id="verify" class="home-section text-center bg-gray">
-    
-    <div class="heading-contact">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="section-heading">
-                    <h2>Vérifier un IFT</h2>
-                    <i class="fa fa-2x fa-angle-down"></i>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-2 col-lg-offset-5">
-            <hr class="marginbot-50">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="service-box">
-                    <a [routerLink]="['/verifier-traitement-ift']" (click)="scroll(intro)" class="btn btn-default service-icon">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                    </a>
-                    <div class="service-desc">
-                    <h5>Vérifier une signature</h5>
-                    <p>Afficher les informations associées à un IFT certifié à partir de sa signature électronique.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</section>
-<!-- /Section: partners -->
-    
-<!-- Section: partners -->
-<section id="partners" class="home-section text-center">
-
-  <div class="heading-contact">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <div class="section-heading">
-              <h2>Découvrir notre API</h2>
-              <i class="fa fa-2x fa-angle-down"></i>
-
-            </div>
-        </div>
+      <div class="col-sm-12">
+        <h3>Bienvenue sur l'Atelier de calcul de l'IFT</h3>
+        <p>
+          <strong>Anonyme</strong> &
+          <strong>gratuit</strong>, il vous permet de calculer votre IFT ou votre bilan phytosanitaire certifié par le Ministère
+          de l’Agriculture et de l’Alimentation.</p>
+        <p>Pour l’utiliser,
+          <strong>pas besoin de vous enregistrer</strong>, vous sélectionnez l’outil correspondant à votre besoin et vous vous laissez
+          guider par les écrans.</p>
+        <p>L’Atelier de calcul est aussi ouvert aux éditeurs de logiciels agricoles afin qu’ils puissent vous proposer nos services
+          <strong>directement depuis vos outils numériques habituels</strong> et sans double saisie. N’hésitez pas à vous renseigner
+          auprès de votre fournisseur.</p>
+        <p>Pour toute
+          <strong>information complémentaire</strong> sur l’Indicateur de Fréquence de Traitements phytopharmaceutiques, vous pouvez
+          consulter l'article dédié sur notre site institutionnel :
+          <a href="http://agriculture.gouv.fr/indicateur-de-frequence-de-traitements-phytosanitaires-ift" title="Indicateur de fréquence de traitements - ouvre dans une nouvelle fenêtre"
+            target="_blank" rel="noopener">Indicateur de fréquence de traitements</a>.
+        </p>
       </div>
     </div>
   </div>
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-lg-2 col-lg-offset-5">
-        <hr class="marginbot-50">
-      </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 col-md-offset-2">
-            <div class="service-box">
-                <a [href]="swaggerUrl" target="_blank" class="btn btn-default service-icon" title="Consulter les API - ouvre dans une nouvelle fenêtre">
-                    <i class="fa fa-cogs" aria-hidden="true"></i>
-                </a>
-                <div class="service-desc">
-                <h5>Consulter les API</h5>
-                <p>Afficher la documentation interactive pour débuter avec les API REST IFT.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="service-box">
-                <a href="https://github.com/Agrilab" target="_blank" class="btn btn-default service-icon" title="Accéder au code source - ouvre dans une nouvelle fenêtre">
-                    <i class="fa fa-github-alt" aria-hidden="true"></i>
-                </a>
-                <div class="service-desc">
-                <h5>Accéder au code source</h5>
-                <p>Le code source de cette application est disponible sur le dépôt Github d'Agrilab.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  </div>
-
-</section>
-<!-- /Section: partners -->
-
-<section id="footer" class="home-section section-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="page-scroll marginbot-30">
-                    <button (click)="scroll(intro)" class="btn btn-circle">
-                        <i class="fa fa-angle-double-up animated"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</div>

@@ -1,0 +1,8 @@
+.existing-parcelle input,
+.existing-parcelle::ng-deep input {
+    border-color: #a94442;
+}
+
+.existing-parcelle label {
+    flex-grow: 3;
+}

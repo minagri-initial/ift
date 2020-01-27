@@ -1,0 +1,190 @@
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+    label:not(.mat-radio-label):not(.mat-checkbox-layout) {
+        flex-grow: 1;
+        font-size: 1.8rem;
+        font-weight: 200;
+        margin-bottom: 10px;
+        height: 46px;
+        line-height: 46px;
+        padding-left: 20px;
+        @media (min-width: 1200px) {
+            max-width: 250px;
+        }
+        @media (min-width: 992px) and (max-width: 1199px) {
+            max-width: 220px;
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            max-width: 200px;
+        }
+        @media (max-width: 767px) {
+            width: 100%;
+            font-size: 1.4rem;
+        }
+        &.green {
+            background: $secondary_color;
+            color: white;
+        }
+    }
+    .form-select {
+        flex-grow: 2;
+        border-radius: 0 !important;
+        border: 0;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .form-control {
+        border-radius: 0 !important;
+        margin-bottom: 0;
+        border: 1px solid $secondary_color;
+        box-shadow: none;
+        outline: none;
+        flex-grow: 2;
+        height: 46px;
+        @media (max-width: 767px) {
+            font-size: 1.4rem;
+        }
+        &:focus {
+            border-color: $secondary_color;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(25,132,111,.45);
+        }
+        &.ng-invalid.ng-touched {
+            border-color: #a94442;
+            border-radius: 0;
+        }
+        &:read-only,
+        &[disabled] {
+            border: 0;
+        }
+    }
+    mat-slider {
+        flex-grow: 2;
+        margin-bottom: 10px;
+    }
+    .input-unite {
+        margin-left: 15px;
+        max-width: 130px;
+    }
+    .validation-input-numeric {
+        flex-grow: 2;
+    }
+    .validation-input-numeric>div {
+        width: 100%;
+        display: flex;
+    }
+    .dropdown-menu {
+        min-width: 0;
+    }
+    small {
+        margin-left: 5px;
+        margin-bottom: 8px;
+        font-size: 1em;
+        font-weight: 400;
+    }
+
+    .ng-invalid.ng-touched .form-control{
+        border-color: #a94442;
+        border-radius: 0;
+
+        &:focus {
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(25,132,111,.45) !important;
+        }
+    }
+}
+
+.modal .form-group label:not(.mat-radio-label):not(.mat-checkbox-layout) {
+    @media (min-width: 992px) {
+        max-width: 200px;
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+        max-width: 155px;
+    }
+}
+
+.input-group-lg>.input-group-addon {
+    background: $secondary_color;
+    color: white;
+    border: 0;
+    border-radius: 0;
+}
+
+.filtre-form-group {
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.form-group .btn-default.info {
+    border: none;
+    font-size: 1.5em;
+    transition: background .3s ease-in-out;
+    color: $secondary_color;
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+    margin-bottom: 10px;
+}
+
+.form-group div.form-select .btn-default.info {
+    margin-bottom: 0px;
+}
+
+@media (max-width: 767px) {
+    .form-group.form-select .btn-default.info {
+        position: absolute;
+        top: -10px;
+        right: 0;
+    }
+}
+
+.btn-default.info:focus,
+.btn-default.info:active,
+.btn-default.info:hover {
+    color: #000;
+    background-color: transparent;
+}
+
+.btn-default.info-doses:hover,
+.btn-default.info-doses:focus {
+    color: #000;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.numero-amm-select-toggle,
+.surface-traitee-select-toggle {
+    margin-bottom: 20px;
+    button {
+        transition: all .2s ease-in-out;
+        background-color: transparent;
+        border: none;
+        label {
+            font-size: 1.4rem;
+            color: $primary_color;
+        }
+        &:hover,
+        &:focus,
+        label:hover,
+        label:focus {
+            text-decoration: none;
+            color: $primary_color_accent;
+            cursor: pointer;
+        }
+    }
+}
+
+initial-form-group {
+    .form-group {
+        margin-bottom: 0;
+    }
+    label {
+        display: none;
+    }
+    .control-input {
+        width: 100%;
+    }
+}

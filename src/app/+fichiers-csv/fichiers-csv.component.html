@@ -1,0 +1,83 @@
+<!-- Section: intro -->
+<section #intro class="intro">
+    <div class="slogan">
+        <h1>Télécharger les données</h1>
+    </div>
+</section>
+<!-- /Section: intro -->
+
+<section class="main-section bg-gray">
+    <div class="container container-ift">
+        <div class="row campagne-block">
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2 style="display: inline-block; margin: 9px 0;">Cultures</h2>
+                <div class="pull-right">
+                    <a [href]="apiUrl + '/cultures/csv'" class="btn btn-skin btn-ift">
+                        Exporter
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2 style="display: inline-block; margin: 9px 0;">Cibles</h2>
+                <div class="pull-right">
+                    <a [href]="apiUrl + '/cibles/csv'" class="btn btn-skin btn-ift">
+                        Exporter
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Produits</h2>
+                <form class="ift-form" [formGroup]="formProduits">
+                    <div class="form-group">
+                        <label id="campagne-form-produits" class="green">Campagne</label>
+                        <div class="form-select">
+                            <initial-form-group labelText="Campagne" [inputErrors]="campagneFormProduits.errors" [touched]="campagneFormProduits.touched"
+                                [errorDefs]="{required: 'La campagne est obligatoire'}">
+                                <initial-select [formControl]="campagneFormProduits" name="campagneFormProduits" [items]="campagnes" bindLabel="libelle"
+                                    [filter]="false" aria-labelledby="campagne-form-produits" placeholder="Campagne" class="select-lg"></initial-select>
+                            </initial-form-group>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-right">
+                    <a [href]="produitsUrl" *ngIf="formProduits.valid" class="btn btn-skin btn-ift">
+                        Exporter
+                    </a>
+                    <button *ngIf="!formProduits.valid" disabled class="btn btn-skin btn-ift">Exporter</button>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1 ift-block">
+                <h2>Doses de référence</h2>
+                <form class="ift-form" [formGroup]="formDosesReference">
+                    <div class="form-group">
+                        <label id="campagne-form-doses-reference" class="green">Campagne</label>
+                        <div class="form-select">
+                            <initial-form-group labelText="Campagne" [inputErrors]="campagneFormDosesReference.errors" [touched]="campagneFormDosesReference.touched"
+                                [errorDefs]="{required: 'La campagne est obligatoire'}">
+                                <initial-select [formControl]="campagneFormDosesReference" name="campagneFormDosesReference" [items]="campagnes" bindLabel="libelle"
+                                    [filter]="false" aria-labelledby="campagne-form-doses-reference" placeholder="Campagne" class="select-lg"></initial-select>
+                            </initial-form-group>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="groupe-cultures-form-doses-reference" class="green">Groupe de cultures</label>
+                        <div class="form-select">
+                            <initial-form-group labelText="Groupe de cultures" [inputErrors]="groupeCulturesFormDosesReference.errors" [touched]="groupeCulturesFormDosesReference.touched"
+                                [errorDefs]="{required: 'Le groupe de cultures est obligatoire'}">
+                                <initial-select [formControl]="groupeCulturesFormDosesReference" name="groupeCulturesFormDosesReference" [items]="groupesCultures"
+                                    bindLabel="libelle" [filter]="false" aria-labelledby="groupe-cultures-form-doses-reference"
+                                    placeholder="Groupe de cultures" class="select-lg"></initial-select>
+                            </initial-form-group>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-right">
+                    <a [href]="dosesReferenceUrl" *ngIf="formDosesReference.valid" class="btn btn-skin btn-ift">
+                        Exporter
+                    </a>
+                    <button *ngIf="!formDosesReference.valid" disabled class="btn btn-skin btn-ift">Exporter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

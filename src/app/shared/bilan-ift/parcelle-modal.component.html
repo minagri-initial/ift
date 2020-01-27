@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h1 *ngIf="!duplication" class="modal-title pull-left">Parcelle</h1>
+    <h1 *ngIf="duplication" class="modal-title pull-left">Dupliquer ma parcelle {{ parcelleTitle }}</h1>
+    <div class="close">
+        <button type="button" class="btn" (click)="bsModalRef.hide()" aria-label="Fermer la fenêtre modale">
+            <i class="icon icon-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 ift-block">
+            <form class="ift-form" [formGroup]="form">
+                <div class="form-group" [ngClass]="{'existing-parcelle' : existing}">
+                    <label id="parcelle" class="green">Nom *
+                        <span class="sr-only"> Obligatoire</span>
+                    </label>
+                    <div class="form-select">
+                        <small class="text-danger" *ngIf="existing">
+                            Il existe déjà une parcelle avec ce nom et cette culture.
+                        </small>
+                        <initial-form-group labelText="Nom" [inputErrors]="nom.errors" [touched]="nom.touched" [errorDefs]="{required: 'Le nom de la parcelle est obligatoire'}">
+                            <input [formControl]="nom" name="nom" aria-labelledby="parcelle" class="form-control input-lg" placeholder="Nom de la parcelle">
+                        </initial-form-group>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="surface-totale" class="green">Surface totale *
+                        <span class="sr-only"> Obligatoire</span>
+                    </label>
+                    <div class="validation-input-numeric">
+                        <initial-form-group labelText="Surface totale" [inputErrors]="surface.errors" [touched]="surface.dirty" [errorDefs]="{required: 'La surface est obligatoire', numberValidator: 'Ce champ doit contenir uniquement des chiffres et un point'}">
+                            <div class="form-select" style="display: flex;">
+                                <input formControlName="surface" type="text" name="surfaceTotale" aria-labelledby="surface-totale" placeholder="Surface totale"
+                                    class="form-control input-lg input-numeric" appNumberValidator appReplaceComma />
+                                <label id="unite-surface" class="sr-only">Unité de la surface</label>
+                                <input value="HA" name="unite-surface" aria-labelledby="unite-surface" class="form-control input-lg input-unite" disabled>
+                            </div>
+                        </initial-form-group>
+                    </div>
+                </div>
+
+                <app-culture-field [ngClass]="{'existing-parcelle' : existing}" [parent]="form" name="cultureParcelle">
+                </app-culture-field>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" (click)="submit()">Valider</button>
+</div>

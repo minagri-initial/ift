@@ -1,16 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_URL } from '../../app.config';
 import { Avis } from './avis.model';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AvisService {
 
-  constructor(
-    @Inject(API_URL) private _apiUrl: string,
-    private _http: HttpClient
-  ) { }
+  private _apiUrl = environment.apiUrl;
+
+  constructor(private _http: HttpClient) { }
 
   addAvis(avis: Avis) {
       const params = { headers: new HttpHeaders().set('Content-Type', 'application/json') };

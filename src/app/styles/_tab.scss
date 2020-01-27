@@ -1,0 +1,19 @@
+.nav-pills {
+    display: flex;
+    justify-content: center;
+    
+    .nav-item {
+        &.chart-tab, &.table-tab {
+            float: none;
+            text-align: center;
+
+            &.active > a{
+                background-color: $primary_color;
+
+                &:hover {
+                    background-color: $primary_color_accent;
+                }
+            }
+        }
+    }
+}

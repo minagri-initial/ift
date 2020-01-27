@@ -1,0 +1,933 @@
+<section class="main-section bg-gray">
+    <div class="container">
+        <div class="faq" id="faq">
+            <h1>Foire aux questions</h1>
+
+            <!-- DOSES DE REFERENCE -->
+
+            <mat-expansion-panel (click)="updateQuestionPage('dose-reference')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="dose-reference">Qu'est-ce qu'une dose de référence IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La dose de référence est la valeur à laquelle est rapportée la dose appliquée sur la parcelle pour déterminer l'IFT du traitement.
+                        Elle est définie à partir des doses homologuées d'usage.
+                        <br/> Attention, il ne s'agit pas d'une préconisation d'emploi. Si vous recherchez une telle information,
+                        vous pouvez consulter le site Ephy de l'Anses, regarder les informations fournies avec le produit
+                        ou demander conseil auprès d'un spécialiste.
+                        <br /> Afin de tenir compte des évolutions des homologations d'usage, la liste des doses de référence pour
+                        le calcul de l'IFT est définie et propre à chaque campagne culturale. Veillez donc à bien sélectionner
+                        la campagne culturale d'intérêt avant de faire votre requête.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('trouve-pas-culture-cible-traitement')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="trouve-pas-culture-cible-traitement">Je ne retrouve pas la culture ou la cible visée par mon traitement. </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Lancez
+                        <a [routerLink]="['/doses-reference']">la recherche des doses de référence</a> sans renseigner la culture ou la cible puis balayer la liste
+                        des résultats : vous trouverez peut-être la réponse à votre requête.
+                        <br /> Certaines cultures ne sont pas décrites par variété ou espèce mais par groupe de cultures (graminées
+                        fourragères, graminées ornementales, prairies, jachères, fines herbes, épices, arbres et arbustes,
+                        cultures florales et plantes vertes, ou bien un groupe de cultures commençant par « autres »).
+                        <br /> Vous pouvez également
+                        <a href="https://alim.agriculture.gouv.fr/ift/fichiers-csv" target="_blank" rel="noopener" title="consulter la liste des cultures et des cibles sur lesquelles sont définies les doses de référence - ouvre dans une nouvelle fenêtre">consulter la liste des cultures et des cibles sur lesquelles sont définies les doses de référence</a>
+                        avant de faire votre recherche.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('produit-plusieurs-cibles-comment-choisir-dose-reference')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="produit-plusieurs-cibles-comment-choisir-dose-reference">J'ai utilisé un produit pour traiter plusieurs cibles simultanément. Quelle dose de référence choisir ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Retenez la dose correspondant à la cible qui a été déterminante dans le choix de la dose appliquée. </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('connais-pas-culture-cible-traitement')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="connais-pas-culture-cible-traitement">Je ne connais pas la cible du traitement pour lequel je recherche une dose de référence. </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Laissez le champ cible vide et cocher la case « A la culture uniquement ». Vous obtiendrez les doses de référence à utiliser
+                        pour le calcul de l'IFT dans le cas où la cible de traitement n'est pas connue ou n'est pas renseignée
+                        dans le cahier d'enregistrement des pratiques phytopharmaceutiques.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('trouve-pas-produit')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="trouve-pas-produit">Je ne retrouve pas le produit utilisé.</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Essayez de rechercher le produit par son numéro d'AMM (ou son numéro de permis de commerce parallèle) en cliquant sur « Votre
+                        produit n'est pas dans la liste ? ». Le numéro d'AMM est une information figurant sur l'emballage
+                        ou la fiche du produit.
+                        <br />Lorsque vous avez retrouvé le produit par son numéro d'AMM mais que son nom ne figure pas dans la
+                        liste, il est recommandé lors du calcul de l'IFT d'un traitement ou d'un bilan d'IFT de préciser
+                        le nom du produit utilisé dans le champ « Commentaire ».
+                        <br /> Si vous ne retrouvez pas le produit utilisé ni par son nom, ni par son numéro d'AMM, alors ce produit
+                        n'a pas de doses de référence pour la campagne culturale d'intérêt. Si ce produit entre bien dans
+                        le champ de calcul de l'IFT, alors l'IFT de traitement sera fixé à 1 (le cas échéant corrigé par
+                        le pourcentage de surface traitée). Lorsque vous êtes en train de calculer l'IFT d'un traitement
+                        ou de faire un bilan d'IFT, laissez le champ « Produit » vide et précisez dans le champ « Commentaire »
+                        le nom et/ou le numéro d'AMM du produit utilisé.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('trouve-pas-dose-reference-correspondant-traitement')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="trouve-pas-dose-reference-correspondant-traitement">Je ne retrouve pas de dose de référence correspondant au traitement réalisé.</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Plusieurs cas sont possibles :
+                    </p>
+                    <ul>
+                        <li>le produit utilisé ou le traitement réalisé n'entre pas dans le champ de calcul de l'IFT. C'est par
+                            exemple le cas des adjuvants ou bien des produits exclusivement utilisés pour les traitements
+                            réalisés sur les produits récoltés ;</li>
+                        <li>il s'agit d'un traitement sur semences, bulbes ou plants, pour lequel l'IFT se calcule sans utiliser
+                            de doses de référence ;</li>
+                        <li>il s'agit d'un produit ou usage autorisé ultérieurement à l'édition de la liste des doses de référence
+                            pour la campagne d'intérêt ou d'un produit ou usage non autorisé ou retiré depuis plus de 2 ans.
+                            Dans ce cas, l'IFT du traitement est par défaut à 1 (corrigé le cas échéant par le pourcentage
+                            de surface traitée).
+                        </li>
+                    </ul>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('plusieurs-doses-meme-produit-culture-cible')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="plusieurs-doses-meme-produit-culture-cible">Il y a plusieurs doses pour un même produit, culture et cible. Laquelle choisir ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Il arrive que plusieurs doses de référence soient attribuées à un même nom de produit pour une même culture et cible et une
+                        même campagne culturale. Cela correspond à la situation où un même nom de produit a été affecté,
+                        au cours du temps, à différents produits (c'est à dire différents numéros d'AMM). Le numéro d'AMM
+                        (ou le numéro de permis de commerce parallèle) est affiché sous le nom du produit. Sélectionnez la
+                        dose de référence qui correspond au numéro d'AMM du produit utilisé. Cette information figure sur
+                        l'emballage ou la fiche du produit.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-mention-sans-dose')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-mention-sans-dose">Que signifie la mention « SANS DOSE » ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Il s'agit de produits autorisés ou qui ont été autorisés d'application sur la culture et/ou la cible d'intérêt, mais pour
+                        lesquels il n'est pas possible de définir une dose de référence, soit qu'il n'y a pas de dose homologuée,
+                        soit que cette dernière n'a pu être retrouvée. Dans ce cas, par convention de calcul, l'IFT du traitement
+                        est à 1 (corrigé le cas échéant par le pourcentage de surface traitée).
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-unites-unite-ha-ou-unite-hl')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-unites-unite-ha-ou-unite-hl">Que signifient les unités « UNITE/Ha » ou « UNITE/HL » ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Cette terminologie est utilisée pour les produits qui s'appliquent sous la forme de diffuseurs, pièges, comprimés, bâtonnets,
+                        etc... La dose de référence correspond alors au nombre d'unités utilisées, par exemple au nombre
+                        de diffuseurs utilisés par hectare ou bien le nombre de comprimés dilués dans un HL.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('difference-doses-reference-cible-et-doses-reference-culture')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="difference-doses-reference-cible-et-doses-reference-culture">Quelle est la différence entre les doses de référence à la cible et les doses de référence à la culture ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Il existe deux types de doses de référence : les doses de référence à la cible et les doses de référence à la culture.
+                        <br /> Les doses de référence à la cible sont définies pour chaque produit, culture et cible pouvant être
+                        visée par le traitement. Elles correspondent à la plus grande dose homologuée.
+                        <br /> Les doses de référence à la culture sont définies pour chaque produit et culture. Elles correspondent
+                        à la plus petite des doses de référence à la cible définies pour le produit et la culture correspondants.
+                        <br /> Les doses de référence à la cible permettent de calculer un IFT plus proche de la réalité. Mais
+                        elles requièrent un niveau d'information supplémentaire, à savoir la cible visée par le traitement,
+                        qu'il convient donc de renseigner dans le cahier d'enregistrement des pratiques.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <!-- IFT D'UN TRAITEMENT/BILAN IFT -->
+
+            <mat-expansion-panel (click)="updateQuestionPage('melange-cultures-sur-parcelle')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="melange-cultures-sur-parcelle">J'ai un mélange de cultures sur ma parcelle.</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        En présence d'un mélange de cultures sur la parcelle, vous ne pouvez utiliser que des produits autorisés sur chacune des
+                        cultures présentes sur la parcelle et à des doses à peu près similaires, donc avec des doses de référence
+                        IFT équivalentes. Pour le calcul de l'IFT, vous pouvez donc sélectionner l'une des cultures du mélange,
+                        par exemple, la culture prédominante dans le mélange ou bien celle qui est déterminante dans le choix
+                        de vos pratiques phytopharmaceutiques et faire les calculs sur cette base.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('calcul-ift-traitement-semence-lorsque-semis-melange')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="calcul-ift-traitement-semence-lorsque-semis-melange">J'ai réalisé un traitement de semences ou utilisé des semences traitées. Comment calcule-t-on l'IFT traitement
+                        de semence lorsque le semis est fait en mélange ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'IFT traitement de semence s'estime sur la globalité du semis. Prenons l'exemple d'un mélange de deux types de semences.
+                        Si les deux types de semences sont traités, l'ensemble des semences du mélange étant traité, alors
+                        l'IFT traitement de semence compte pour 1. Si seul un des deux types de semences est traité, alors
+                        l'IFT traitement de semence correspond à la part de ce type de semences dans le mélange : par exemple,
+                        0,25 si ce type de semences représente un quart du mélange, 0,5 s'il en représente la moitié. Dans
+                        ce cas, il convient d'indiquer dans l'interface de saisie la proportion de semences effectivement
+                        traitées.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-et-determination-proportion-semence-traitees')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-et-determination-proportion-semence-traitees">J'ai réalisé un traitement de semences ou utilisé des semences traitées. Que signifie et comment déterminer
+                        la proportion de semences traitées ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'IFT du traitement semences peut être corrigé par la proportion de semences semées qui ont été effectivement traitées. Par
+                        exemple, dans le cas où un mélange de semences est réalisé avant le semis et que seules certaines
+                        semences du mélange ont été préalablement traitées, alors on tient compte uniquement de la part représentée
+                        par ces semences dans le mélange. Dans le cas où certaines parties de la parcelle, plus vulnérables,
+                        sont semées avec des semences traitées et d'autres parties, moins vulnérables, avec des semences
+                        non traitées, il est possible de tenir compte de la proportion de surface de parcelle semée avec
+                        des semences traitées.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('proportion-semences-traitees-signification-unite')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="proportion-semences-traitees-signification-unite">Je souhaite calculer la proportion de semences traitées. Que signifie la mention « unité » ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La proportion de semences traitées correspond au ratio entre les semences traitées et les semences semées. L'unité peut correspondre
+                        à différentes dimensions (poids, nombre de grains, densité de semis, voire même en surface semée).
+                        Elle est laissée au choix de l'utilisateur.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('semence-utilisees-pour-couvert-seme-traitees-compte-dans-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="semence-utilisees-pour-couvert-seme-traitees-compte-dans-calcul-ift">Les semences utilisées pour le couvert semé en inter-rang en vigne ont été traitées. Cela compte-t-il
+                        dans le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Tout traitement apporté sur la parcelle est comptabilisé dans l'IFT. Même s'il ne s'agit pas de la vigne elle-même mais du
+                        couvert semé en inter-rang, le traitement de semences doit être pris en compte dans le calcul de
+                        l'IFT de la parcelle.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('semences-prairie-traitees-compte-dans-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="semences-prairie-traitees-compte-dans-calcul-ift">Les semences utilisées en prairie ont été traitées. Cela compte-t-il dans le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>Tout traitement apporté sur la parcelle, y compris via les semences, est comptabilisé dans l'IFT.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('traitement-plants-bulbes')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="traitement-plants-bulbes">Comment je renseigne un traitement sur plants ou sur bulbes ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>Si vous êtes un producteur de plants, l'IFT se renseigne comme s'il s'agissait d'un traitement au champ.
+                        Si vous êtes utilisateur de plants traités, alors l'IFT se renseigne comme un traitement de semences.
+                        <br /> Les traitements sur bulbes se renseignent de la même manière que les traitements de semences.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('traitement-champ-trouve-pas-produit-dans-liste')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="traitement-champ-trouve-pas-produit-dans-liste">J'ai réalisé un traitement au champ avec un produit que je ne retrouve pas dans la liste.
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Vérifiez tout d'abord si le produit sur lequel vous cherchez à calculer l'IFT est bien un produit phytopharmaceutique.
+                        <a href="https://ephy.anses.fr/" target="_blank" rel="noopener" title="La base Ephy de l'Anses - ouvre dans une nouvelle fenêtre">La base Ephy de l'Anses</a> peut vous aider en ce sens. Il est rappelé que les adjuvants n'entrent
+                        pas en compte dans le calcul de l'IFT.
+                        <br /> Essayez également de rechercher le produit par son numéro d'AMM en cliquant sur « Votre produit
+                        n'est pas dans la liste ?». Le numéro d'AMM est une information figurant sur l'emballage ou la fiche
+                        du produit. Lorsque vous avez retrouvé le produit par son numéro d'AMM mais que son nom ne figure
+                        pas dans la liste, il est recommandé lors du calcul de l'IFT d'un traitement ou d'un bilan d'IFT
+                        de préciser le nom du produit utilisé dans le champ « Commentaire ».
+                        <br /> Il y a deux principales explications si vous ne trouvez toujours pas le produit utilisé : soit ce
+                        dernier a été autorisé ultérieurement à l'édition de la liste des doses de référence pour la campagne
+                        d'intérêt, soit il s'agit d'un produit non autorisé pour l'usage réalisé ou bien retiré depuis plus
+                        de 2 ans.
+                        <br /> Dans ces cas, il est toujours possible de poursuivre la saisie des informations relatives au calcul
+                        de l'IFT du traitement, en laissant le champ « Produit » vide et en précisant notamment dans le champ
+                        « commentaire » le nom et/ou le numéro d'AMM du produit utilisé. L'IFT du traitement sera à 1, le
+                        cas échéant, corrigé par le pourcentage de surface traitée.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('applique-simultanement-deux-produits-differents-comment-les-prendre-en-compte-pour-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="applique-simultanement-deux-produits-differents-comment-les-prendre-en-compte-pour-calcul-ift">J'ai appliqué simultanément deux produits différents. Comment les prendre en compte pour le calcul de
+                        l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Dans le cadre de l'IFT, un traitement se définit comme l'application d'un produit lors d'un passage. Un mélange de deux produits
+                        appliqués lors du même passage est considéré comme deux traitements distincts. Il convient donc de
+                        les renseigner comme deux traitements.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('nom-produit-signification-amm')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="nom-produit-signification-amm">J'ai renseigné le nom d'un produit et l'interface me demande de saisir le numéro d'AMM. Qu'est-ce que
+                        cela signifie ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Cette situation peut arriver lorsqu'un même nom a été attribué, au cours du temps, à différents produits (différents numéros
+                        d'AMM ou de permis de commerce parallèle). Pour pallier cette difficulté, il convient de renseigner
+                        le produit par son numéro d'AMM. Cette information figure sur l'emballage ou la fiche du produit
+                        ou peut être retrouvé sur internet, sur le site Ephy de l'Anses par exemple.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('prendre-en-compte-adjuvants-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="prendre-en-compte-adjuvants-calcul-ift">Faut-il tenir compte des adjuvants pour le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Non, les adjuvants ne sont pas pris en compte dans le calcul de l'IFT.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('prendre-en-compte-produits-biocontrole')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="prendre-en-compte-produits-biocontrole">Comment prendre en compte les produits de biocontrôle ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Les produits de biocontrôle disposant d'une AMM sont pris en compte dans le calcul de l'IFT de la même manière que les autres
+                        produits phytopharmaceutiques. Seuls les produits de biocontrôle ne correspondant pas à des produits
+                        phytopharmaceutiques (ceux composés de macro-organismes par exemple) n'entrent pas dans le champ
+                        de calcul de l'IFT.
+                        <br /> Il convient donc de bien renseigner les traitements réalisés avec les produits phytopharmaceutiques
+                        de biocontrôle.
+                        <br />Le résultat d'IFT est présenté de manière différenciée pour les produits de biocontrôle sous la forme
+                        d'un segment d'IFT dit de biocontrôle.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('produits-autorises-agriculture-biologique-entrent-ils-compte-dans-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="produits-autorises-agriculture-biologique-entrent-ils-compte-dans-calcul-ift">Les produits autorisés en agriculture biologique entrent-ils en compte dans le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'IFT porte sur l'ensemble des produits phytopharmaceutiques, y compris ceux autorisés en agriculture biologique.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('distinction-entre-produits-autorises-agriculture-biologique-et-autres-produits')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="distinction-entre-produits-autorises-agriculture-biologique-et-autres-produits">Y a-t-il une distinction faite entre les produits autorisés en agriculture biologique et les autres produits ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Non, l'IFT ne distingue pas les produits autorisés en agriculture biologique des autres produits phytopharmaceutiques. Seuls
+                        <a [routerLink]="['/faq/quels-produits-biocontrole-calcul-ift']">les produits de biocontrôle</a> font l'objet d'un calcul d'IFT distinct des autres produits.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('quels-produits-biocontrole-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="quels-produits-biocontrole-calcul-ift">Quels sont les produits considérés comme de biocontrôle pour le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La liste des produits considérés comme de biocontrôle pour le calcul de l'IFT est établie à partir de la liste des produits
+                        de biocontrôle publiée au titre des articles L.253-5 et L.253-7 du Code Rural et de la Pêche Maritime
+                        et est actualisée pour chaque campagne culturale.
+                        <br /> Il est possible de retrouver la liste des produits considérés comme de biocontrôle pour le calcul
+                        de l'IFT en allant sur le service « Doses de référence » et en recherchant toutes les doses correspondant
+                        à des produits de biocontrôle.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('prendre-en-compte-traitements-obligatoires-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="prendre-en-compte-traitements-obligatoires-calcul-ift">Faut-il tenir compte des traitements obligatoires dans le calcul de l'IFT ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'IFT porte sur l'ensemble des traitements réalisés sur la parcelle, y compris les traitements obligatoires. Il est possible
+                        de préciser dans le champ « commentaire » qu'il s'agit d'un traitement obligatoire.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('produit-plusieurs-cibles-quelle-cible-choisir')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="produit-plusieurs-cibles-quelle-cible-choisir">J'ai utilisé un produit pour traiter plusieurs cibles simultanément. Quelle cible choisir ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Sélectionnez la cible qui a été déterminante dans le choix de la dose appliquée. Vous pouvez préciser dans la case « commentaire »
+                        que vous avez traités plusieurs cibles.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('trouve-pas-cible-traitement')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="trouve-pas-cible-traitement">Je ne trouve pas la cible correspondant au traitement réalisé.</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'interface n'affiche que les cibles qui ont une dose de référence pour le produit utilisé. Si vous ne retrouvez pas la cible
+                        correspondant au traitement, laissez le champ « cible » vide. L'IFT du traitement sera calculé en
+                        utilisant la dose de référence « à la culture », c'est à dire pour le produit et la culture sans
+                        tenir compte de la cible visée par le traitement.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('dose-appliquee-autre-unite-que-dose-reference')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="dose-appliquee-autre-unite-que-dose-reference">Que se passe-t-il si j'exprime la dose appliquée dans une autre unité que la dose de référence ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Plusieurs cas sont possibles :
+                        <br /> Si vous exprimez la dose appliquée par hectare alors que la dose de référence est exprimée par hectolitre
+                        de bouillie, ou vice versa, il vous sera demandé de préciser le volume de bouillie appliqué pour
+                        calculer l'IFT du traitement. Par défaut, un volume de bouillie de 1000 L/Ha est utilisé pour convertir
+                        les unités.
+                        <br /> Dans les autres cas, il ne sera pas possible d'exprimer les doses dans la même unité, et par défaut,
+                        un IFT de 1 sera attribué au traitement (le cas échéant corrigé par le pourcentage de surface traitée).
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('modifier-dose-reference')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="modifier-dose-reference">Puis-je modifier la dose de référence ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Non, il n'est pas possible de modifier la dose de référence pour le calcul de l'IFT car cette valeur doit rester la même
+                        pour tous les utilisateurs. Afin de tenir compte de l'évolution des produits disponibles sur le marché
+                        et des autorisations d'usages, une nouvelle liste de doses de référence est éditée au démarrage de
+                        chaque campagne culturale. Cette liste est à utiliser pour tous les calculs d'IFT portant sur cette
+                        campagne culturale.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('comment-ift-traitement-calcule')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="comment-ift-traitement-calcule">Comment l'IFT du traitement est calculé ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Cela dépend du type de traitement réalisé.
+                        <br /> S'il s'agit d'un traitement de semences, l'IFT du traitement est fixé à 1. Si l'ensemble des semences,
+                        semées ou plantées sur la parcelle n'ont pas été traités, alors l'IFT du traitement est corrigé par
+                        la proportion de semences effectivement traitées (ou par la proportion de surface de parcelles semée
+                        avec des semences traitées).
+                        <br /> S'il s'agit d'un traitement au champ, l'IFT du traitement se calcule par le ratio entre la dose
+                        appliquée sur la parcelle et la dose de référence. Si l'ensemble de la parcelle n'a pas été traitée,
+                        alors l'IFT du traitement est corrigé par le pourcentage de surface traitée. En l'absence de doses
+                        de référence (produits sans dose, produits ou usages absents du référentiel), l'IFT du traitement
+                        est pas défaut à 1, le cas échéant corrigé par le pourcentage de surfaces traitées.
+                        <br /> Concernant les bulbes et plants, si l'exploitant est producteur de bulbes ou plants, alors il calcule
+                        l'IFT selon la même méthode que celle décrite pour les traitements au champ. Si l'exploitant est
+                        utilisateur de bulbes ou plants traités, alors il calcule l'IFT selon la même méthode que celle décrite
+                        pour les traitements de semences.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-aucune-dose-reference-correspond-selection')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-aucune-dose-reference-correspond-selection">Le résultat du traitement indique « Aucune dose de référence ne correspond à la sélection. Par convention,
+                        l’IFT de votre traitement est égal à 1 (le cas échéant corrigé par le pourcentage de surface traitée).».
+                        Qu'est ce que cela signifie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Ce message s'affiche lorsqu'il n'est pas possible de retrouver une dose de référence correspondant au produit utilisé et/ou
+                        à la culture traitée.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-ift-calcule-dose-reference-culture')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-ift-calcule-dose-reference-culture">Le résultat du traitement indique que l'IFT du traitement est calculé en utilisant la dose de référence
+                        « à la culture ». Qu'est ce que cela signifie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La dose de référence « à la culture » est définie pour chaque produit et culture. Elle correspond à la plus petite des doses
+                        de référence définies « à la cible », c'est-à-dire pour chaque produit, culture et cible.
+                        <br /> La dose de référence « à la culture » est utilisée dans le calcul de l'IFT du traitement lorsque
+                        la cible visée par le traitement n'est pas renseignée ou qu'elle ne possède pas de dose de référence
+                        propre.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-dose-appliquee-dose-reference-pas-unites-compatibles')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-dose-appliquee-dose-reference-pas-unites-compatibles">Le résultat du traitement indique que la dose appliquée et la dose de référence ne sont pas exprimés
+                        dans des unités compatibles. Qu'est ce que cela signifie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La dose appliquée et la dose de référence ne sont pas exprimées dans la même unité, et ne peuvent pas être converties dans
+                        la même dimension. Par exemple, la dose appliquée est exprimée en nombre d'unités (diffuseurs) par
+                        hectare alors que la dose de référence est exprimée en kg par ha. Il n'est donc pas possible de calculer
+                        le ratio entre la dose appliquée et la dose de référence. Dans ce cas, par défaut un IFT de 1 (le
+                        cas échéant corrigé par le pourcentage de surface traitée) est attribué au traitement.
+                        <br /> Vérifiez les unités de la dose appliquée et de la dose de référence et essayez de les exprimer dans
+                        la même dimension.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('resultat-ift-traitement-tres-eleve-ou-tres-faible')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="resultat-ift-traitement-tres-eleve-ou-tres-faible">Le résultat d'IFT du traitement me paraît très élevé ou très faible.</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Par défaut, l'unité de la dose appliquée s'affiche à l'identique de celle de la dose de référence. Vérifiez que la dose appliquée
+                        correspond bien à l'unité affichée et corrigez si nécessaire (soit en modifiant la valeur, soit en
+                        choisissant la bonne unité d'expression de la dose appliquée).
+                        <br /> Vérifiez également l'ensemble de vos calculs pour définir la dose appliquée par hectare, le volume
+                        de bouillie appliquée (le cas échéant) et le pourcentage de surface traitée.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-segment-resultat-ift-traitement')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-segment-resultat-ift-traitement">A quoi sert le segment d'IFT affiché avec le résultat d'IFT du traitement ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Le segment d'IFT indique dans quel segment l'IFT du traitement est affecté, à savoir biocontrôle, traitement de semences,
+                        herbicides, insecticides-acaricides (hors biocontrôle hors traitement de semence), fongicides-bactéricides
+                        (hors biocontrôle hors traitement de semence) ou autres (hors biocontrôle hors traitement de semence).
+                        C'est une information utile pour le calcul de l'IFT sur la parcelle ou sur un ensemble de parcelles.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <!-- BILAN IFT -->
+
+            <mat-expansion-panel (click)="updateQuestionPage('tenir-compte-degats-gel-reimplanter-nouvelle-culture')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="tenir-compte-degats-gel-reimplanter-nouvelle-culture">J'ai subi des dégâts de gel sur ma parcelle et je dois réimplanter une nouvelle culture. Comment en tenir
+                        compte dans le calcul de l'IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'IFT se détermine en tenant compte de l'ensemble des traitements réalisés sur la parcelle pendant la période d'intérêt,
+                        par exemple entre la récolte du précédent jusqu'à la récolte de la culture principale suivante. Il
+                        convient donc de tenir compte des traitements déjà effectués sur une parcelle détruite par le gel,
+                        même si la culture doit changer.
+                        <br />Pour réaliser un bilan d'IFT, lorsque la culture réalisée sur la parcelle change au cours de la campagne
+                        culturale, il convient de sélectionner « Ajouter une parcelle », d'y attribuer le même nom et la
+                        même surface qu'avant le changement de culture, et d'y affecter la nouvelle culture. Vous pourrez
+                        ensuite saisir les traitements réalisés sur cette nouvelle culture et faire les calculs appropriés.
+                        Les bilans d'IFT détailleront un calcul d'IFT sur la parcelle tenant compte de l'ensemble des traitements
+                        réalisés au cours de la campagne campagne, quelle que soit la culture présente, ainsi qu'un calcul
+                        d'IFT détaillé par culture.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('calcul-ift-plusieurs-cultures-meme-parcelle')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="calcul-ift-plusieurs-cultures-meme-parcelle">Comment gérer le calcul des IFT lorsqu'il y a plusieurs cultures à la suite sur une même parcelle (cultures
+                        dérobées récoltées pour l'élevage, plusieurs cultures légumières à la suite, etc.) ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        De manière générale, l'IFT se détermine en tenant compte de l'ensemble des traitements réalisés sur la parcelle pendant la
+                        période d'intérêt. Pendant cette période d'intérêt (une campagne culturale par exemple), les traitements
+                        effectués sur les cultures dérobées sont comptabilisés de la même manière que la culture principale
+                        dans le calcul de l'IFT. Pour les cultures légumières, on tient compte de l'ensemble des cycles de
+                        production réalisés pendant cette période d'intérêt.
+                        <br />Pour réaliser un bilan d'IFT, lorsque la culture réalisée sur la parcelle change au cours de la campagne
+                        culturale, il convient de sélectionner « Ajouter une parcelle », d'y attribuer le même nom et la
+                        même surface qu'avant le changement de culture, et d'y affecter la nouvelle culture. Vous pourrez
+                        ensuite saisir les traitements réalisés sur cette nouvelle culture et faire les calculs appropriés.
+                        Les bilans d'IFT détailleront un calcul d'IFT sur la parcelle tenant compte de l'ensemble des traitements
+                        réalisés au cours de la campagne campagne, quelle que soit la culture présente, ainsi qu'un calcul
+                        d'IFT détaillé par culture.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('parcelles-cultures-prendre-en-compte-calcul-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="parcelles-cultures-prendre-en-compte-calcul-ift">Quelles parcelles et cultures doivent être prises en compte dans le calcul de l'IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Selon le contexte et les objectifs poursuivis, l'IFT peut se calculer sur l'ensemble des cultures et parcelles de l'exploitation,
+                        y compris les prairies, ou se calculer uniquement sur certaines parcelles voire cultures. Si le calcul
+                        d'IFT est réalisé dans le cadre d'une démarche contractuelle, par exemple dans le cadre d'une MAEC,
+                        il convient de se référer à la notice du contrat pour savoir précisément quelles parcelles et quels
+                        types de cultures sont à prendre en compte dans les calculs.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('simplifier-saisie-plusieurs-traitements-meme-parcelle')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="simplifier-saisie-plusieurs-traitements-meme-parcelle">J'ai réalisé plusieurs traitements sur la même parcelle. Comment simplifier la saisie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Si vous avez réalisé plusieurs traitements sur la même parcelle, utilisez la fonction « duplication » afin d'éviter à avoir
+                        à re-saisir l'ensemble des information relatives à la parcelle. Seules les informations relatives
+                        au traitement (date, produit, cible, dose) seront à modifier.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('simplifier-saisie-meme-traitement-plusieurs-parcelles')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="simplifier-saisie-meme-traitement-plusieurs-parcelles">J'ai réalisé un même traitement sur plusieurs parcelles. Comment simplifier la saisie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Si vous avez réalisé un même traitement sur plusieurs parcelles, utilisez la fonction « duplication » afin d'éviter à avoir
+                        à re-saisir l'ensemble des information relatives au traitement. Seules les informations relatives
+                        à la parcelle seront à modifier.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('simplifier-saisie-plusieurs-parcelles-conduites-meme-maniere')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="simplifier-saisie-plusieurs-parcelles-conduites-meme-maniere">J'ai plusieurs parcelles conduites exactement de la même manière. Comment simplifier la saisie ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Si vous avez plusieurs parcelles d'une même culture sur lesquelles vous avez appliqués exactement les mêmes traitements au
+                        cours de la campagne culturale, il est possible pour le calcul de l'IFT de les considérer comme une
+                        et unique parcelle d'une surface égale à la somme des surfaces de chacune des parcelles.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('conserver-informations-saisies')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="conserver-informations-saisies">Comment conserver les informations saisies ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        L'interface mise à disposition par le ministère fonctionnant sans compte utilisateur, elle ne permet pas de stocker les informations
+                        que vous avez saisies. Cependant, ces informations restent enregistrées au sein de votre navigateur.
+                        Vous pourrez donc les retrouver ultérieurement, à la condition d'utiliser le même appareil et le
+                        même navigateur. Il est également possible d'éditer et télécharger les rapports pdf présentant les
+                        bilans d'IFT et les informations qui ont servi à les établir ainsi que de les télécharger au format
+                        csv qui peut ensuite s'ouvrir avec un tableur type Calc ou Excel.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('a-quoi-sert-signature-electronique')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="a-quoi-sert-signature-electronique">A quoi sert la signature électronique ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        La signature électronique atteste la méthode de calcul de l'IFT utilisée (elle ne vaut cependant pas engagement quant aux
+                        informations fournies par l'utilisateur pour réaliser ce calcul). Elle permet ainsi de simplifier
+                        les opérations de vérification ou de contrôle puisque seules les données saisies par l'utilisateur
+                        restent à vérifier.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('modifier-corriger-bilan-ift-edite-format-pdf')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="modifier-corriger-bilan-ift-edite-format-pdf">Est-il possible de modifier/corriger un bilan d'IFT édité sous la forme d'un PDF ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        En cliquant sur la signature électronique du rapport, il est possible d'accéder aux informations contenues dans le rapport
+                        sous un format modifiable. Attention, sachez que si vous activez la fonction modifiable, vous perdrez
+                        l'ensemble des informations stockées dans votre navigateur. Si vous procédez à des modifications
+                        ou des corrections, veillez à éditer un nouveau rapport PDF de bilan d'IFT, car ces dernières ne
+                        s'enregistreront pas dans le rapport initial.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-bilan-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-bilan-ift">Qu'est-ce qu'un bilan d'IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Un bilan d'IFT résume les IFT à plusieurs niveaux :
+                    </p>
+                    <ul>
+                        <li>les IFT pour chaque traitement réalisé au cours de la campagne culturale ;</li>
+                        <li>les IFT de chaque parcelle pour différents segments (herbicides, traitement de semences, biocontrôle,
+                            etc.) qui se calcule comme la somme des IFT traitements correspondant au segment réalisés sur
+                            la parcelle au cours de la campagne culturale ;</li>
+                        <li>l'IFT par culture pour différents segments qui se calcule comme la moyenne des IFT parcelles correspondantes
+                            à la culture pondérée par la surface de chaque parcelle ;</li>
+                        <li>l'IFT par groupes de parcelles qui se calcule comme la moyenne des IFT parcelles appartenant au groupe
+                            pondérée par la surface de chaque parcelle.</li>
+                    </ul>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('differents-segments-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="differents-segments-ift">Quels sont les différents segments d'IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Les segments d'IFT fournissent les IFT pour différentes catégories de produits.
+                        <br /> Dans le niveau le plus fin de détails, on distingue :
+                    </p>
+                    <ul>
+                        <li>l'IFT Traitement de semences : regroupe tous les traitements de semences, y compris ceux réalisés
+                            avec des produits de biocontrôle ;</li>
+                        <li>l'IFT Biocontrôle : regroupe tous les traitements au champ réalisés avec les produits de biocontrôle ;</li>
+                        <li>l'IFT Herbicides, Insecticides-acaricides, Fongicides-bactéricides, Autres : regroupe les traitemnts
+                            au champ réalisés avec des produits autres que biocontrôle.</li>
+                    </ul>
+                    <p>
+                        Ces IFT détaillés peuvent être regroupés dans des catégories plus larges, par exemple en IFT Herbicides, IFT Hors Herbicides,
+                        IFT Total. Il convient d'être vigilant sur la définition de l'IFT Hors Herbicides car selon les contextes,
+                        il intègre ou pas l'IFT Traitement de semences et/ou l'IFT Biocontrôle. C'est la raison pour laquelle
+                        l'interface ne présente pas le résultat d'IFT Hors Herbicides.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('calcul-ift-hors-herbicide')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="calcul-ift-hors-herbicide">J'aimerais calculer l'IFT Hors Herbicide. Pourquoi l'interface de calcul ne l'affiche pas ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Selon les contextes, l'IFT Hors Herbicides peut avoir des définitions différentes. Il peut refléter uniquement les traitements
+                        au champs réalisés avec des produits hors herbicides (sommes des IFT Traitement de semences, Insecticides-acaricides,
+                        Fongicides-bactéricides, Autres, Biocontrôle), des traitements au champs réalisés avec des produits
+                        hors herbicides qui ne sont pas de biocontrôle (sommes des IFT Traitement de semences, Insecticides-acaricides,
+                        Fongicides-bactéricides, Autres, Biocontrôle), somme des traitements au champs et des traitements
+                        de semences, réalisés avec tous type de produits ou bien uniquement les produits qui ne sont pas
+                        de biocontrôle.
+                        <br /> Aussi le calcul de l'IFT Hors Herbicides est laissé à la discrétion de l'utilisateur, qui pourra
+                        se référer à la notice de son contrat pour savoir ce qui doit être pris en compte dans le calcul
+                        de l'IFT Hors Herbicides.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('signification-groupes-cultures-legumieres-couvert-maec-cultures-fruitieres-couvert-maec')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="signification-groupes-cultures-legumieres-couvert-maec-cultures-fruitieres-couvert-maec">Que signifient les groupes « cultures légumières – couvert MAEC » et « cultures fruitières – couvert
+                        MAEC » ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Le groupe "cultures légumières - couvert MAEC" comprend les carottes, choux-fleur, autres choux, fraises, melons, poireaux,
+                        tomates et salades. Seules ces variétés peuvent faire l'objet d'une démarche contractuelle MAEC de
+                        réduction de l'utilisation des produits phytopharmaceutiques. Les autres espèces sont comprises dans
+                        le groupe "cultures Légumières". Le groupe "cultures fruitières - couvert MAEC" comprend les abricots,
+                        cerises, bananes, pêches, pommes et prunes. Les autres espèces sont comprises dans les groupes "cultures
+                        fruitières" ou « autres » pour les cultures tropicales.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('trouver-donnees-reference-interpreter-resultat-ift')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="trouver-donnees-reference-interpreter-resultat-ift">Où trouver des données de référence pour interpréter un résultat d'IFT ?</mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Les enquêtes sur les pratiques culturales sont une source intéressante d'informations sur les IFT réalisés à l'échelle régionale.
+                        Actuellement, des données sont disponibles pour les cultures suivantes : blé tendre, blé dur, orge,
+                        triticale, colza, tournesol, pois protéagineux, maïs, betteraves sucrières, pommes de terre, canne
+                        à sucre, vigne, pomme, pêche, prune, abricot, cerise, banane, carotte, chou-fleur ou assimilé, autre
+                        chou (sauf chou à choucroute), fraise, melon, poireau, salade et tomate. Selon le type de culture,
+                        les résultats sont présentés distinctement pour l'IFT Herbicides, l'IFT Hors Herbicides sans traitement
+                        de semence, l'IFT Hors Herbicides avec traitement de semences, l'IFT Acaricide-insecticides, l'IFT
+                        Fongicides-bactéricide, l'IFT Autres, l'IFT Biocontrôle, IFT Total. Ils sont téléchargeables sur
+                        le lien suivant :
+                        <a href="http://agreste.agriculture.gouv.fr/enquetes/pratiques-culturales/" target="_blank" rel="noopener" title="Pratiques culturales - ouvre dans une nouvelle fenêtre">http://agreste.agriculture.gouv.fr/enquetes/pratiques-culturales/</a>.
+                        <br /> Le portail de la protection intégrée des cultures,
+                        <a href="http://www.ecophytopic.fr/" target="_blank" rel="noopener" title="EcophytoPic - ouvre dans une nouvelle fenêtre">EcophytoPic</a>, est également source de références, en particulier pour les systèmes de culture
+                        des réseaux de ferme Dephy.
+                        <br /> Les instituts techniques sont également susceptibles de disposer de références.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('logiciel-suivi-exploitation-eviter-double-saisie')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="logiciel-suivi-exploitation-eviter-double-saisie">J'ai déjà un logiciel de suivi de mon exploitation. Comment éviter la double saisie ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Les services exposés sur cette application sont disponibles en mode « API » (interface de programmation applicative). Cela
+                        signifie qu'ils peuvent être déployés directement au sein de logiciels tiers. Pour savoir si ces
+                        fonctionnalités sont ou seront disponibles au sein de votre logiciel, contactez votre fournisseur.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('a-quoi-sert-fonctionnalite-partage-bilan')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="a-quoi-sert-fonctionnalite-partage-bilan">A quoi sert la fonctionnalité de partage de bilan ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Cette fonctionnalité vous permet de partager le bilan saisi avec une tierce personne, par exemple un organisme certificateur,
+                        un contrôleur, en lui transmettant directement la signature électronique du bilan. Cela évite d'avoir
+                        à transmettre par mail un rapport pdf qui peut être volumineux, ou de l'imprimer en format papier.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('calcul-ift-cadre-certification-haute-valeur-environnementale-hve')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="calcul-ift-cadre-certification-haute-valeur-environnementale-hve">Comment utiliser les services pour calculer l'IFT dans le cadre de la certification Haute Valeur Environnementale
+                        (HVE) ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        En 2018, les calculs d'IFT en HVE reposent encore sur l'ancienne méthodologie de calcul de l'IFT. Cela signifie que les calculs
+                        d'IFT de traitement ne se font qu'en utilisant les doses de référence à la culture (ne pas saisir
+                        la cible). Il sera nécessaire de faire deux bilans d'IFT distincts, l'un pour l'IFT Herbicides en
+                        sélectionnant l'ensemble des parcelles de l'exploitation, l'autre pour l'IFT Hors Herbicides en sélectionnant
+                        toutes les parcelles sauf celles conduites en maïs, tournesol et prairie. En HVE, l'IFT Hors Herbicides
+                        se définit comme la somme des IFT Insecticides-acaricides, Fongicides-bactéricides et Autres.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('faire-calcul-ift-pour-differents-ensembles-parcelles')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="faire-calcul-ift-pour-differents-ensembles-parcelles">J'aimerais faire des calculs d'IFT pour différents ensembles de parcelles. Comment procéder ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Commencez par faire le bilan d'IFT sur l'ensemble des parcelles. Il est ensuite possible de sélectionner, par l'intermédiaire
+                        de la case à cocher figurant à gauche des noms de parcelles, les parcelles pour lesquelles vous souhaitez
+                        un calcul distinct. Si vous téléchargez le bilan pdf, seules les parcelles sélectionnées et les calculs
+                        correspondant à cette sélection figureront dans le rapport. Vous pouvez réitérer la procédure autant
+                        de fois que nécessaire pour éditer des bilans sur différents ensembles de parcelles.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('acceder-service-verification-rapport-pdf-adobe-acrobat-reader-n-autorise-pas-connexions')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="acceder-service-verification-rapport-pdf-adobe-acrobat-reader-n-autorise-pas-connexions">Je n'arrive pas à accéder au service de vérification de mon rapport pdf : Adobe Acrobat m'informe qu'il
+                        n'autorise pas les connexions à alim.agriculture.gouv.fr.
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Veuillez consulter l'aide dans la documentation en ligne d'Acrobat Reader afin de modifier le niveau de sécurité lié aux
+                        liens vers les sites web présents dans les fichiers PDF et permettre l'accès au site de vérification
+                        des signatures électroniques.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel (click)="updateQuestionPage('dupliquer-traitement-en-changeant-culture-pas-possible')">
+                <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title id="dupliquer-traitement-en-changeant-culture-pas-possible">J'aimerais dupliquer un traitement tout en changeant la culture. Pourquoi n'est-ce pas possible ?
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <p>
+                        Le calcul de l'IFT du traitement dépend de la culture visée par le traitement. Changer la culture requière de réinitialiser
+                        l'ensemble du calcul de l'IFT, car la dose de référence, propre à chaque culture, n'est plus la même.
+                        C'est la raison pour laquelle il n'est pas possible de changer la culture lorsqu'on duplique un traitement.
+                    </p>
+                </ng-template>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</section>

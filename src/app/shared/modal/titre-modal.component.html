@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h1 class="modal-title pull-left">Télécharger le PDF</h1>
+    <div class="close">
+        <button type="button" class="btn" (click)="bsModalRef.hide()" aria-label="Fermer la fenêtre modale">
+            <i class="icon icon-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 ift-block">
+            <p>Personnalisez le titre de votre édition PDF.</p>
+            <div class="form-group">
+                <label id="titre" class="green">Titre
+                    <span class="sr-only">(80 caractères maximum)</span>
+                </label>
+                <div class="form-select">
+                    <input [(ngModel)]="titre" name="titre" aria-labelledby="titre" class="form-control input-lg" placeholder="Titre (80 caractères maximum)"
+                        maxlength="80">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" (click)="submit()">Télécharger</button>
+</div>

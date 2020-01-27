@@ -1,70 +1,115 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional, Inject, ViewChild } from '@angular/core';
-import { Culture } from '../culture/culture.model';
-import { Campagne } from '../campagne/campagne.model';
-import { NumeroAmm } from '../numero-amm';
+import {
+    Component, Input, EventEmitter, OnInit, OnChanges, SimpleChanges,
+    AfterContentInit, OnDestroy, ViewChild
+} from '@angular/core';
+import { FormGroup, AbstractControl } from '@angular/forms';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/debounceTime';
+import { Subscription } from 'rxjs/Subscription';
 import { Cible } from './cible.model';
 import { CibleService } from './cible.service';
-import { BaseFieldComponent } from '../field/base-field.component';
-import { NG_VALUE_ACCESSOR, NG_VALIDATORS, NG_ASYNC_VALIDATORS, NgModel } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ModalComponent } from '../modal/modal.component';
+import { hasRequiredField } from '../field/field.validator';
+
+import { Messages } from '../messages';
+import { NumeroAmm } from '../numero-amm/numero-amm.model';
 
 @Component({
     selector: 'app-cible-field',
     templateUrl: './cible-field.component.html',
-    styleUrls: ['../field/field.component.scss'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: CibleFieldComponent, multi: true }
-    ]
+    styleUrls: ['../field/field.component.scss']
 })
-export class CibleFieldComponent extends BaseFieldComponent<Culture> implements OnChanges, AfterViewInit {
+export class CibleFieldComponent implements OnInit, OnChanges, AfterContentInit, OnDestroy {
 
-    cibles: BehaviorSubject<Cible[]> = new BehaviorSubject([]);
-    term: string = null;
+    @Input() parent: FormGroup;
+    @Input() numerosAmm: NumeroAmm[];
 
-    @ViewChild(NgModel) model: NgModel;
+    searchCibles = new EventEmitter<string>();
+    cibles: Cible[];
+    term: string;
+    msg = Messages;
+    subscription: Subscription;
 
-    @Input()
-    campagne: Campagne;
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
-    @Input()
-    culture: Culture;
+    @Input() info = `Renseigner la cible visée par le traitement permet d\'utiliser
+     une dose de référence plus appropriée pour le calcul de l\'IFT.
+     Si plusieurs cibles ont été simultanément traitées, il conviendra de
+     retenir la cible qui a été déterminante dans le choix de la dose appliquée.`;
+    @Input() info2;
 
-    @Input()
-    numeroAmm: NumeroAmm;
+    constructor(private cibleService: CibleService) { }
 
-    constructor(
-        @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-        @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-        private cibleService: CibleService
-    ) {
-        super(validators, asyncValidators);
+    get cible() {
+        return this.parent.get('cible');
     }
 
-    ngAfterViewInit() {
-        this.model.valueChanges.subscribe(newValue => {
-            const newTerm = newValue ? newValue.libelle : null;
-            this.termChanged(newTerm);
-        });
+    public isRequired() {
+        return hasRequiredField(this.cible);
+    }
+
+    get campagne() {
+        return this.parent.get('campagne');
+    }
+
+    get culture() {
+        return this.parent.get('culture');
+    }
+
+    ngOnInit() {
+        this.refreshCibles();
+
+        this.searchCibles
+            .distinctUntilChanged()
+            .debounceTime(200)
+            .subscribe(term => {
+                this.term = term;
+                this.getCibles(term);
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.refreshList();
+        this.refreshCibles();
     }
 
-    termChanged(term) {
+    ngAfterContentInit() {
+        if (this.campagne) {
+            this.campagne.valueChanges
+                .subscribe(() => this.refreshCibles());
+        }
 
-        if (this.term !== term) {
-            this.term = term;
-            this.refreshList();
+        if (this.culture) {
+            this.culture.valueChanges
+                .subscribe(() => this.refreshCibles());
         }
     }
 
-    refreshList() {
-        this.cibleService.query(this.campagne, this.culture, this.numeroAmm, this.term, 7)
-            .subscribe(cibles => {
-                this.cibles.next(cibles);
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
+    refreshCibles() {
+        this.getCibles(this.term);
+    }
+
+    getCibles(filter?: string) {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.subscription = this.cibleService.query(
+            this.campagne ? this.campagne.value : null, this.culture ? this.culture.value : null, this.numerosAmm, filter, 7)
+            .subscribe((res: Cible[]) => {
+                this.cibles = res;
+            }, err => {
+                this.cibles = [];
             });
+    }
+
+    showInfo() {
+        this.modalComponent.showInfo();
     }
 
 }

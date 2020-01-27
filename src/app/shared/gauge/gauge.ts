@@ -99,8 +99,8 @@ export class Gauge {
     getChartColor() {
 
         return (<any>d3.scaleLinear()
-            .domain([0, 0.5, 1]))
-            .range(['#28a745', '#ffc107', '#dc3545']); // ['green', 'yellow', 'red']
+            .domain([0, 0.375, 0.5, 1]))
+            .range(['#28a745', '#ffc107', '#dc3545', '#88202a']); // ['green', 'yellow', 'red', 'dark red']
 
     }
 }

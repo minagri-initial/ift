@@ -1,13 +1,18 @@
 @import '../styles/vars';
 
+:host {
+    display: inline-block;
+}
+
 .navbar.navbar-custom {
     margin-bottom: 0;
+    
     >.container {
         .navbar-header {
             .navbar-toggle {
                 padding: 4px 6px;
                 font-size: 1em;
-                color: #fff;
+                color: #636363;
             }
             .navbar-left img {
                 width: 70px;
@@ -17,13 +22,21 @@
             .navbar-brand {
                 font-weight: 700;
                 height: 50px;
-                padding: 15px 5px;
+                padding: 10px 5px;
                 line-height: 20px;
                 margin: 0px 0px;
                 h1 {
                     margin: 0px 0px;
-                    color: #fff;
+                    color: #636363;
                     font-size: 1.4em;
+                }
+                @media(max-width: 767px) {
+                    max-width: calc(100% - 94px - 30px - 10px);
+                    p {
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
                 }
             }
         }
@@ -34,16 +47,14 @@
             a:hover,
             a:focus,
             &.active {
-                background-color: rgba(255, 255, 255, .2);
+                background-color: #E6E6E6;
             }
         }
         ul.nav.navbar-nav {
-            background-color: rgba(255, 255, 255, .5);
             li {
                 a {
                     font-size: 0.85em;
                     letter-spacing: 1px;
-                    color: #444;
                     text-transform: uppercase;
                     font-weight: 700;
                 }
@@ -71,14 +82,13 @@
         }
     }
     &.top-nav-collapse {
-        background: #4F5050;
+        background: white;
         >.container {
             ul.nav.navbar-nav {
-                background-color: rgba(0, 0, 0, 0);
                 li {
                     a {
                         transition: all .2s ease-in-out;
-                        color: #fff;
+                        color: #636363;
                     }
                     &.open>a {
                         background-color: rgba(255, 255, 255, .2);
@@ -86,34 +96,6 @@
                 }
             }
         }
-    }
-}
-
-@media(min-width:768px) {
-    .navbar.navbar-custom {
-        padding: 20px 0;
-        border-bottom: 0;
-        letter-spacing: 1px;
-        background: rgba(79, 80, 80, .5);
-        color: #ffffff;
-        transition: background .5s ease-in-out, padding .5s ease-in-out;
-        &.top-nav-collapse {
-            padding: 0;
-            >.container {
-                ul.nav.navbar-nav ul.dropdown-menu li a {
-                    color: #666;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width:480px) {
-    .navbar-custom .nav.navbar-nav {
-        background-color: rgba(255, 255, 255, .5);
-    }
-    .navbar.navbar-custom.navbar-fixed-top {
-        margin-bottom: 30px;
     }
 }
 
@@ -152,7 +134,7 @@
     text-align: center;
     font-size: 1.3rem;
     font-weight: 300;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .bandeau .bandeau-content span {
@@ -163,14 +145,19 @@
     font-weight: 700;
 }
 
-@media(min-width:768px) {
-    .navbar:not(.top-nav-collapse) .bandeau {
-        margin-top: -20px;
-        margin-bottom: 20px;
-    }
-}
-
 button.no-style {
     background-color: transparent;
     border: none;
+}
+
+p.small {
+    font-size: 0.6em;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 0;
+    color: #636363;
+}
+
+.no-style a strong {
+    color: $primary_color;
 }

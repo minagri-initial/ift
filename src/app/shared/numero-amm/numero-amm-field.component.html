@@ -1,6 +1,16 @@
 <div class="form-group numero-amm-select">
-    <label id="numeroAmm">Numéro AMM<span *ngIf="required" class="sr-only"> Obligatoire</span></label>
-    <app-select [(ngModel)]="value" name="numeroAmm" (onTermChanged)="termChanged($event)"
-        [list]="numerosAmm" optionField="idMetier" [required]="required"
-        aria-labelledby="numeroAmm" placeholder="Exemple : 9800280"></app-select>
+    <label id="numeroAmm" class="green">
+        <span class="hidden-xs">
+            <i class="icon icon-barcode" aria-hidden="true"></i>&nbsp;&nbsp;</span>Numéro AMM
+        <span *ngIf="isRequired()"> *
+            <span class="sr-only"> Obligatoire</span>
+        </span>
+    </label>
+    <div class="form-select">
+        <initial-form-group labelText="Numéro AMM" [inputErrors]="numeroAmm.errors" [touched]="numeroAmm.touched" [errorDefs]="{required: 'Le numéro AMM est obligatoire'}">
+            <initial-select [formControl]="numeroAmm" name="numeroAmm" [items]="numerosAmm" [typeahead]="searchNumerosAmm" bindLabel="idMetier"
+                aria-labelledby="numeroAmm" placeholder="Exemple : 9800280" [loadingText]="msg.SELECT_LOADING" [notFoundText]="msg.SELECT_NOT_FOUND"
+                class="select-lg"></initial-select>
+        </initial-form-group>
+    </div>
 </div>

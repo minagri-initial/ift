@@ -1,151 +1,68 @@
+<!-- Section: intro -->
+<section #intro class="intro">
+    <div class="slogan">
+        <h1>Mon bilan IFT</h1>
+    </div>
+</section>
+<!-- /Section: intro -->
+
 <section class="main-section bg-gray">
 
     <div class="container container-ift" *ngIf="bilan">
-        <div class="text-center">
-            <h1>Mon bilan IFT</h1>
-            <i class="fa fa-2x fa-angle-down"></i>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 campagne-title">
-
-                <div class="arrow">
-                    <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== 0" (click)="previousCampagne()">
-                        <i class="fa fa-angle-left animated" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <h2 class="text-center">Campagne {{ bilan.campagne ? bilan.campagne.libelle : '' }}</h2>
-                <div class="arrow">
-                    <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== campagnes.length - 1" (click)="nextCampagne()">
-                        <i class="fa fa-angle-right animated" aria-hidden="true"></i>
-                    </button>
-                </div>
+        <div class="row campagne-block">
+            <div class="col-md-10 col-md-offset-1 info-block">
+                <p class="small">
+                    <i class="icon icon-info-circle" aria-hidden="true"></i>&nbsp;&nbsp; Les données de vos traitements sont stockées uniquement sur votre navigateur. Si vous
+                    changez de navigateur internet, les informations saisies seront perdues. Chaque bilan peut être
+                    <strong>sauvegardé</strong>
+                    sous la forme d'un document PDF puis
+                    <strong>réimporté</strong> en cliquant sur le QR code du document sauvegardé.
+                </p>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-md-10 col-md-offset-1 ift-block">
-                <div class="grid">
-                    <div class="bold"></div>
-                    <div class="bold">Parcelle</div>
-                    <div class="bold">Culture</div>
-                    <div class="bold">IFT herbicide</div>
-                    <div class="bold">IFT hors herbicide</div>
+                <h2>Sélectionnez la période</h2>
+                <div class="campagne-title">
+                    <div class="arrow">
+                        <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== 0" (click)="previousCampagne()">
+                            <i class="icon icon-angle-left animated" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="text-center">Campagne {{ bilan.campagne ? bilan.campagne.libelle : '' }}</div>
+                    <div class="arrow">
+                        <button class="btn-arrow" type="button" *ngIf="campagnes && campagneIndex !== campagnes.length - 1" (click)="nextCampagne()">
+                            <i class="icon icon-angle-right animated" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
-
-
-                <ng-template ngFor let-bilanParcelle [ngForOf]="bilan.bilanParcelles" let-indexBilan="index">
-                    <div class="grid" (click)="click[indexBilan] = !click[indexBilan]">
-                        <div class="head">
-                            <i *ngIf="click[indexBilan]" class="fa fa-chevron-down" aria-hidden="true"></i>
-                            <i *ngIf="!click[indexBilan]" class="fa fa-chevron-right" aria-hidden="true"></i>
-                        </div>
-                        <div class="head">{{ bilanParcelle.nom }}</div>
-                        <div class="head">{{ bilanParcelle.culture.libelle }}</div>
-                        <div class="head">
-                            <span *ngIf="bilanParcelle.total">{{ bilanParcelle.total.herbicide.toFixed(2) }}</span>
-                            <span *ngIf="!bilanParcelle.total">
-                                <i class="fa fa-spinner fa-spin"></i>
-                            </span>
-                        </div>
-                        <div class="head">
-                            <span *ngIf="bilanParcelle.total">{{ bilanParcelle.total.horsHerbicide.toFixed(2) }}</span>
-                            <span *ngIf="!bilanParcelle.total">
-                                <i class="fa fa-spinner fa-spin"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" *ngIf="click[indexBilan]">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Numéro AMM</th>
-                                    <th>Cible</th>
-                                    <th>Proportion de la parcelle traitée</th>
-                                    <th>Dose appliquée</th>
-                                    <th>Segment</th>
-                                    <th>Ift herbicide</th>
-                                    <th>Ift hors herbicide</th>
-                                    <th>Modifier</th>
-                                    <th>Dupliquer</th>
-                                    <th>Supprimer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr *ngFor="let traitement of bilanParcelle.traitements; let indexTraitement = index;">
-                                    <td>{{ getDateTraitement(traitement.date) }}</td>
-                                    <td>{{ traitement.iftTraitement.numeroAmm ? traitement.iftTraitement.numeroAmm.idMetier : '-'}}</td>
-                                    <td>{{ traitement.iftTraitement.cible ? traitement.iftTraitement.cible.libelle : '-' }}</td>
-                                    <td>{{ traitement.iftTraitement.facteurDeCorrection }}%</td>
-                                    <td>{{ traitement.iftTraitement.dose }} {{ traitement.iftTraitement.dose && traitement.iftTraitement.unite ? traitement.iftTraitement.unite.libelle : '-' }}</td>
-                                    <td>{{ traitement.iftTraitement.segment.libelle }}</td>
-                                    <td>
-                                        <span *ngIf="traitement.total">{{ traitement.total.herbicide.toFixed(2) }}</span>
-                                        <span *ngIf="!traitement.total">
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span *ngIf="traitement.total">{{ traitement.total.horsHerbicide.toFixed(2) }}</span>
-                                        <span *ngIf="!traitement.total">
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn" type="button" (click)="editTraitementParcelle(indexBilan, indexTraitement)">
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn" type="button" (click)="copyTraitementParcelle(indexBilan, indexTraitement)">
-                                            <i class="fa fa-clone"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn" type="button" (click)="deleteTraitementParcelle(indexBilan, indexTraitement)">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-template>
-
-                <table class="table" style="margin-top: 40px" *ngIf="bilan.bilanParcelles.length > 0">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>IFT herbicide</th>
-                            <th>IFT hors herbicide</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Ift global</th>
-                            <td>
-                                <span *ngIf="bilan.total">{{ bilan.total.herbicide.toFixed(2) }}</span>
-                                <span *ngIf="!bilan.total">
-                                    <i class="fa fa-spinner fa-spin"></i>
-                                </span>
-                            </td>
-                            <td>
-                                <span *ngIf="bilan.total">{{ bilan.total.horsHerbicide.toFixed(2) }}</span>
-                                <span *ngIf="!bilan.total">
-                                    <i class="fa fa-spinner fa-spin"></i>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
-        <div class="sticky">
-            <button mat-fab class="fab" (click)="addTraitementParcelle()">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-        </div>
+        <app-liste-parcelles-cultivees [bilanParcellesCultivees]="bilan.bilanParcellesCultivees" [campagne]="bilan.campagne" [allowUpdate]="true"
+            [allowDownload]="true" (onRefreshBilanParcelle)="refreshBilanParcelle($event)" (onSelectBilanParcelle)="refreshSelectedBilanParcelle($event)"></app-liste-parcelles-cultivees>
+
+        <app-synthese [bilan]="selectedBilan"></app-synthese>
     </div>
 </section>
+
+<app-modal [headerTitle]="'Mon bilan IFT'">
+    <div modal-body>
+        <p>
+            Le bilan d'IFT expose :
+        </p>
+        <ul>
+            <li>
+                l'IFT de chaque parcelle pour différents segments (herbicides, traitement de semences, biocontrôle, etc.) qui se calcule
+                comme la somme des IFT traitements réalisés sur la parcelle au cours de la campagne culturale ;
+            </li>
+            <li>
+                l'IFT par culture pour différents segments qui se calcule comme la moyenne des IFT parcelles correspondantes à la culture
+                pondérée par la surface de chaque parcelle ;
+            </li>
+            <li>
+                l'IFT par groupes de parcelles qui se calcule comme la moyenne des IFT parcelles appartenant au groupe pondérée par la surface
+                de chaque parcelle.
+            </li>
+        </ul>
+    </div>
+</app-modal>

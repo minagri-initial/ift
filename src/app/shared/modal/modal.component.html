@@ -1,0 +1,22 @@
+<div *ngIf="visible" id="tooltip-message-overlay" class="modal show" role="dialog" autofocus tabindex="0">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="close">
+                        <button type="button" class="btn" (click)="hide()" aria-label="Fermer la fenêtre modale">
+                            <i class="icon icon-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <h1 class="modal-title">{{ headerTitle }}</h1>
+                </div>
+    
+                <div class="modal-body">
+                    <ng-content select="[modal-body]"></ng-content>
+                </div>
+    
+                <div class="modal-footer">
+                    <button id="myModalButton" type="button" class="btn btn-default confirm" (click)="hide()" (blur)="focus('.modal')">J'ai compris</button>
+                </div>
+            </div>
+        </div>
+    </div>

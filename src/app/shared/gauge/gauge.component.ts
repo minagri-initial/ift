@@ -1,7 +1,5 @@
-import { Component, OnInit, HostListener, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
-import { ViewEncapsulation } from '@angular/core';
-import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Gauge } from './gauge';
 

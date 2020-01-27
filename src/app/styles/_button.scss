@@ -1,21 +1,19 @@
 .btn {
-	border-radius: 0;
-    text-transform: uppercase;
-    font-family: Montserrat,sans-serif;
+    border-radius: 0;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
 }
 
-
 .btn-skin:hover,
 .btn-skin:focus,
 .btn-skin:active,
 .btn-skin.active {
-  color: #fff;
-  background-color: #666;
-  border-color: #666;
+    color: #fff;
+    background-color: #920b4e;
+    border-color: #920b4e;
 }
 
 .btn-default {
@@ -29,70 +27,28 @@
     background-color: #e6e6e6;
 }
 
-.btn-circle {
-    width: 70px;
-    height: 70px;
-    margin-top: 15px;
-    padding: 7px 16px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    font-size: 2.85em;
-    color: #fff;
-    background: 0 0;
-    -webkit-transition: background .3s ease-in-out;
-    -moz-transition: background .3s ease-in-out;
-    transition: background .3s ease-in-out;
-
-    &:hover,
-    &:focus {
-        color: #fff;
-        background: rgba(255,255,255,.1);
-    }
-
-    i.animated {
-        -webkit-transition-property: -webkit-transform;
-        -webkit-transition-duration: 1s;
-        -moz-transition-property: -moz-transform;
-        -moz-transition-duration: 1s;
-    }
-
-    &:hover i.animated {
-        -webkit-animation-name: pulse;
-        -moz-animation-name: pulse;
-        -webkit-animation-duration: 1.5s;
-        -moz-animation-duration: 1.5s;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-    }
-}
-
 .arrow {
     min-width: 30px;
 }
 
 .btn-arrow {
-    font-size: 3.5em;
+    font-size: 3.0rem;
     border: none;
     background: 0 0;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
     transition: background .3s ease-in-out;
-
     &:hover,
     &:focus {
         color: #000;
-        background: rgba(255,255,255,.1);
+        background: rgba(255, 255, 255, .1);
     }
-
     i.animated {
         -webkit-transition-property: -webkit-transform;
         -webkit-transition-duration: 1s;
         -moz-transition-property: -moz-transform;
         -moz-transition-duration: 1s;
     }
-
     &:hover i.animated {
         -webkit-animation-name: pulse;
         -moz-animation-name: pulse;
@@ -103,37 +59,32 @@
         -webkit-animation-timing-function: linear;
         -moz-animation-timing-function: linear;
     }
-
 }
 
-@-webkit-keyframes pulse {    
+@-webkit-keyframes pulse {
     0 {
         -webkit-transform: scale(1);
         transform: scale(1);
     }
-
     50% {
         -webkit-transform: scale(1.2);
         transform: scale(1.2);
     }
-
     100% {
         -webkit-transform: scale(1);
         transform: scale(1);
     }
 }
 
-@-moz-keyframes pulse {    
+@-moz-keyframes pulse {
     0 {
         -moz-transform: scale(1);
         transform: scale(1);
     }
-
     50% {
         -moz-transform: scale(1.2);
         transform: scale(1.2);
     }
-
     100% {
         -moz-transform: scale(1);
         transform: scale(1);
