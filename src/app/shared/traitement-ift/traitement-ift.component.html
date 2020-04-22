@@ -146,11 +146,6 @@
                         <span *ngIf="!downloading">Télécharger le PDF</span>
                     </button>
                 </div>
-                <div>
-                    <button (click)="generateSignatureElectronique()" class="btn outline margin-top-20">
-                        Signer électroniquement
-                    </button>
-                </div>
                 <div class="qr-code">
                     <img *ngIf="qrcode" [src]="qrcode">
                 </div>

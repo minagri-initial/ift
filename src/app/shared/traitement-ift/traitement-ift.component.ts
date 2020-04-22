@@ -166,24 +166,6 @@ export class TraitementIftComponent implements OnInit, AfterContentInit, OnDestr
         }
     }
 
-    public generateSignatureElectronique() {
-        if (this.traitementIftResult) {
-            if (this.parent.valid && !this.signature) {
-                this.traitementIftService.computeSigned(this.getTraitementIft())
-                    .subscribe((result: SignedTraitementIft) => {
-                        this.traitementIftResult = result.iftTraitement;
-                        this.signature = result.signature;
-
-                        const verifyUrl = `${FRONTEND_URL_VERIFIER}/${result.id}`;
-
-                        this.qrCodeService.generateQRCode(verifyUrl)
-                            .then(url => {
-                                this.qrcode = url;
-                            });
-                    });
-            }
-        }
-    }
 
     public onUpdate() {
         if (!this.parent.invalid) {

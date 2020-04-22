@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-generic": "ng build --prod --build-optimizer=false --output-path ./packaging/src/main/resources/static/ --base-href /ift/"
   },
   "private": true,
   "dependencies": {
